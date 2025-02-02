@@ -1,7 +1,7 @@
 import type { NextAdminOptions } from "@premieroctet/next-admin";
 
 const options: NextAdminOptions = {
-  title: "My awesome admin",
+  title: "Dashboard",
 
   model: {
     User: {
@@ -12,7 +12,7 @@ const options: NextAdminOptions = {
         search: ["name", "email"],
         filters: [
           {
-            name: "is Admin",
+            name: "Users",
             active: false,
             value: {
              

@@ -5,6 +5,8 @@ import prisma from "../../../../prisma";
 import "../../../../nextAdminCss.css";
 import options from "../../../../nextAdminOptions";
 
+import Dashboard from "../../../compoments/Dashboard";
+
 // Since we're in the App Directory, we can fetch data directly inside the component
 const AdminPage = async ({ params, searchParams }: PageProps) => {
   const resolvedParams =  await params;
@@ -20,7 +22,7 @@ const AdminPage = async ({ params, searchParams }: PageProps) => {
     options
   });
 
-  return <NextAdmin {...props} />;
+  return <NextAdmin {...props} dashboard={Dashboard}/>;
 };
 
 export default AdminPage;
