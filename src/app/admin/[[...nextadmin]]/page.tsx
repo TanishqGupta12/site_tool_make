@@ -22,7 +22,15 @@ const AdminPage = async ({ params, searchParams }: PageProps) => {
     options
   });
 
-  return <NextAdmin {...props} dashboard={Dashboard}/>;
+  return <NextAdmin {...props} 
+  dashboard={Dashboard}
+  user={{
+    data: {
+      name: "John Doe",
+    },
+    logout: "/api/auth/logout",
+  }}
+  />;
 };
 
 export default AdminPage;
