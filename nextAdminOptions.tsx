@@ -5,11 +5,11 @@ const options: NextAdminOptions = {
 
   model: {
     User: {
-      toString: (user) => `${user.name} (${user.email})`,
+      toString: (user) => ` (${user.email})`,
       title: "Users",
       icon: "UsersIcon",
       list: {
-        search: ["name", "email"],
+        search: ["email"],
         filters: [
           {
             name: "Users",
@@ -19,6 +19,13 @@ const options: NextAdminOptions = {
             },
           },
         ],
+      },
+    },
+    Role: {
+      toString: (role) => ` (${role.name})`,
+      title: "Role",
+      icon: "UsersIcon",
+      list: {
       },
     },
   },
