@@ -3,7 +3,7 @@ import { NextAdmin, PageProps } from "@premieroctet/next-admin";
 import { getNextAdminProps } from "@premieroctet/next-admin/appRouter";
 import prisma from "../../../../prisma";
 import "../../../../nextAdminCss.css";
-import options from "../../../../nextAdminOptions";
+import options from "../nextAdminOptions";
 
 import Dashboard from "../../../compoments/Dashboard";
 

@@ -1,6 +1,6 @@
 import prisma from "../../../../../prisma";
 import { createHandler } from "@premieroctet/next-admin/appHandler";
-import options from "../../../../../nextAdminOptions";
+import options from "../../../admin/nextAdminOptions";
 
 const { run } = createHandler({
   apiBasePath: "/api/admin",
