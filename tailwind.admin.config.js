@@ -6,7 +6,23 @@ module.exports = {
     "./nextAdminOptions.{js,ts,jsx,tsx}",
   ],
   darkMode: "class",
-  theme: {},
+  theme: {
+    extend: {
+      colors: {
+        nextadmin: {
+          background: {
+            default: '#FEFEFE'
+          }
+        },
+        // // Dark mode colors
+        // "dark-nextadmin": {
+        //   background: {
+        //     default: "#2F2F2F"
+        //   }
+        // }
+      }
+    }
+  },
   presets: [require("@premieroctet/next-admin/preset")],
 };
   

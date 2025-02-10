@@ -3,7 +3,7 @@ import { NextAdmin, PageProps } from "@premieroctet/next-admin";
 import { getNextAdminProps } from "@premieroctet/next-admin/appRouter";
 import prisma from "../../../../prisma";
 import "../../../../nextAdminCss.css";
-import options from "../../../../nextAdminOptions";
+import options from "../nextAdminOptions";
 
 import Dashboard from "../../../compoments/Dashboard";
 
@@ -22,7 +22,15 @@ const AdminPage = async ({ params, searchParams }: PageProps) => {
     options
   });
 
-  return <NextAdmin {...props} dashboard={Dashboard}/>;
+  return <NextAdmin {...props} 
+  dashboard={Dashboard}
+  user={{
+    data: {
+      name: "John Doe",
+    },
+    logout: "/api/auth/logout",
+  }}
+  />;
 };
 
 export default AdminPage;
