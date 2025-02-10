@@ -124,6 +124,7 @@ model User {
 
 
 model EventUser {
+  id        BigInt 
 
   userId  BigInt  
   eventId BigInt  
