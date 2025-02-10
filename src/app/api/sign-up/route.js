@@ -1,7 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcryptjs";
+
 import { NextResponse } from "next/server";
 
+import  hashPassword  from "../../../../lib/bcrypt";
+import  authentication_token  from "../../../../lib/authentication_token";
 // Initialize Prisma client
 const prisma = new PrismaClient();
 
@@ -32,15 +34,16 @@ export async function POST(req) {
     }
 
     // Hash the password before storing it
-    const hashedPassword = await bcrypt.hash(password, 10);
-
+    const hashedPassword = await hashPassword(password, 10);
+    
     // Create the user in the database
     const newUser = await prisma.user.create({
       data: {
         first_name,
         last_name,
         email,
-        encrypted_password: hashedPassword, // Store the hashed password
+        encrypted_password: hashedPassword,
+        authentication_token: authentication_token
       },
     });
 
@@ -57,12 +60,3 @@ export async function POST(req) {
     return NextResponse.json({ error: error.message || "Something went wrong" }, { status: 500 });
   }
 }
-
-// export async function GET(req, res) {
-//   try {
-    
-//     return NextResponse.json({data: "ok"});
-//   } catch (error) {
-//     return NextResponse.json({ data: "", Success: false }, { status: 500 });
-//   }
-// }

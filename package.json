@@ -13,6 +13,7 @@
     "@casl/prisma": "^1.5.1",
     "@premieroctet/next-admin": "^7.2.0",
     "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.12.0",
     "next": "15.1.6",
     "next-auth": "^4.24.11",
