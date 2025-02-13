@@ -70,6 +70,7 @@ model Event {
   domain                                   Domain?   @relation("DomainToEvents", fields: [domainId], references: [id])  // Many Events belong to one Domain
 
   users                                    EventUser[] // Relationship to UserEvent
+  Form                                     Form[]
 
   @@map("events")
 }
@@ -139,4 +140,27 @@ model EventUser {
 
   @@id([userId, eventId])
   @@map("event_uses")   
+}
+
+
+model Form {
+  id                                         BigInt   @id @default(autoincrement())
+  caption                                    String?  @db.VarChar(255)
+  Description                                String?  @db.Text
+  
+  event_id                                   BigInt? 
+  event Event? @relation(fields: [event_id], references: [id])
+
+  slug                                       String?  @db.VarChar(255)
+  is_active                                  Boolean  @default(true)
+
+  registration_successful_message            String   @default("Registered Successfully. A confirmation mail is sent to you. Thank you!") @db.VarChar(255)
+  registration_updated_successful_message    String   @default("Profile Updated Successfully") @db.VarChar(255)
+
+  created_at                                 DateTime @default(now())
+  updated_at                                 DateTime @updatedAt
+
+  @@map("forms")
+
+
 }
