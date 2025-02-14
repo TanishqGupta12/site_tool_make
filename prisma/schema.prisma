@@ -160,7 +160,68 @@ model Form {
   created_at                                 DateTime @default(now())
   updated_at                                 DateTime @updatedAt
 
+  form_sections FormSection[]  // Relationship to FormSection 
+  form_section_field FormSectionField[]  // Relationship to FormSectionField 
+
+
+
   @@map("forms")
 
 
+}
+
+model FormSection {
+  id                                             BigInt   @id @default(autoincrement())
+  caption                                        String?  @db.VarChar(255)
+  section_hint                                   String?  @db.Text
+  
+  form_id                                        BigInt?
+  form Form? @relation(fields: [form_id], references: [id])
+
+  created_at                                     DateTime @default(now())
+  updated_at                                     DateTime @updatedAt
+  sequence                                       Int? 
+  is_active                                      Boolean  @default(true)
+  is_payment_section                             Boolean  @default(false)
+  form_section_field FormSectionField[]  // Relationship to FormSectionField 
+
+
+   @@map("form_sections")
+
+}
+
+
+
+model FormSectionField {
+  id                                             BigInt   @id @default(autoincrement())
+  caption                                        String?  @db.Text
+  placeholder                                    String?  @db.VarChar(255)
+  
+  field_hint                                     String?  @db.Text
+
+  field_type                                     String?  @db.VarChar(255)
+  data_field                                     String?  @db.VarChar(255)
+
+  sequence                                       Int? 
+
+  is_required                                    Boolean  @default(false)
+  is_active                                      Boolean  @default(true)
+  
+  form_id                                        BigInt? 
+  form Form? @relation(fields: [form_id], references: [id])
+
+  form_section_id                                BigInt? 
+  form_section FormSection? @relation(fields: [form_section_id], references: [id])
+
+  
+  file_upload_filed                              Boolean? @default(false)
+  file_upload_type                               String?   @default("image/jpeg,image/jpg,image/png,application/pdf,application/msword,application/mspowerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document,audio/*,video/*") @db.VarChar(255)
+  
+  created_at                                     DateTime @default(now())
+  updated_at                                     DateTime @updatedAt
+
+   @@map("form_section_fields")
+
+
+  
 }
