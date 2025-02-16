@@ -1,12 +1,12 @@
-import Footer from "@/compoments/Footer";
+import Footer_v1 from "@/compoments/footer/Footer_v1";
 
-import Navbar from "@/compoments/Navbar";
+import Navbar_v1 from "@/compoments/navbar/Navbar_v1";
 
 export default function Home() {
   return (
  <>
-       <Navbar/>
-       <Footer/>
+       <Navbar_v1/>
+       <Footer_v1/>
  </>
   );
 }

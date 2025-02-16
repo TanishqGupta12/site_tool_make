@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/style.css";
 
-const Footer = () => {
+const Footer_v1 = () => {
   return (
     <>
       <div
