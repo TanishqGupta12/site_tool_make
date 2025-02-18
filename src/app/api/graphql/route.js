@@ -114,6 +114,9 @@ const resolvers = {
         } else {
         let domain =  prisma.domain.findUnique({ where: { sub_domain: String(sub_domain) } }).first
         let event =  prisma.event.findUnique({ where: { domainId: String(domain?.id) } }).first
+          if (event_id == event ) {
+            return event_id
+          }
         }
         return { event_id };
       },
@@ -138,7 +141,7 @@ const resolvers = {
         let domain =  prisma.domain.findUnique({ where: { sub_domain: String(sub_domain) } }).first
         let event =  prisma.event.findUnique({ where: { domainId: String(domain?.id) } }).first
           if (event_id == event ) {
-            
+            return event_id
           }
         }
         return { domain };

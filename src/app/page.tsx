@@ -4,7 +4,7 @@ import Navbar_v1 from "@/compoments/navbar/Navbar_v1";
 
 import CustomHead from "./CustomHead";
 
-import "../css/style.css";
+
 // import "../scss/style.scss";
 export default function Home() {
   return (
