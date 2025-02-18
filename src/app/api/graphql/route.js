@@ -1,37 +1,46 @@
 import { NextResponse } from "next/server";
 import { GraphQLBigInt } from "graphql-scalars";
-// import { ApolloServer } from "apollo-server-micro";
 import { ApolloServer } from "@apollo/server";
 import { PrismaClient } from "@prisma/client";
 import { makeExecutableSchema } from "@graphql-tools/schema";
-
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
-
+import { startStandaloneServer } from '@apollo/server/standalone';
+import { GraphQLError } from 'graphql';
 
 const prisma = new PrismaClient();
 
 // Define GraphQL schema
 const typeDefs = `
- scalar BigInt  # ✅ Define BigInt scalar
+  scalar BigInt
+  
   type User {
     id: BigInt!
     name: String!
     email: String!
   }
   
+  
+ type Query {
+    users: [User]
+    user(id: ID!): User  
+  }
+
+
  type Query {
     users: [User]
     user(id: ID!): User  
   }
 
   type Role {
-    id: BigInt! 
+    id: BigInt!
     name: String!
   }
-  
- type Query {
+
+  type Query {
+    users: [User]
+    user(id: ID!): User
     roles: [Role]
-    role(id: ID!): Role  
+    role(id: ID!): Role
   }
 
   type Mutation {
@@ -74,18 +83,65 @@ const resolvers = {
   };
 
   
-//   export default async function handler(req, res) {
-//       await apolloServer.start();
-//       return apolloServer.createHandler({ path: "/graphql" })(req, res);
-//     }
+
     
 
-  const handler = startServerAndCreateNextHandler(apolloServer);
+  // const handler = startServerAndCreateNextHandler(apolloServer);
+
+  // export async function GET(request) {
+  //   return handler(request);
+  // }
+  
+  // export async function POST(request) {
+  //   return handler(request);
+  // }
+
 
   export async function GET(request) {
-    return handler(request);
+    const { headers } = request;
+  
+    return startServerAndCreateNextHandler(apolloServer, {
+      context: async () => {
+        const event_id = headers.get('event_id') || '';
+        const sub_domain = headers.get('sub_domain') || '';
+        if (!event_id || !sub_domain ) {
+          throw new GraphQLError('Unauthorized', {
+            extensions: {
+              code: 'UNAUTHENTICATED',
+              http: { status: 401 },
+            }
+          });
+        } else {
+        let domain =  prisma.domain.findUnique({ where: { sub_domain: String(sub_domain) } }).first
+        let event =  prisma.event.findUnique({ where: { domainId: String(domain?.id) } }).first
+        }
+        return { event_id };
+      },
+    })(request);
   }
   
   export async function POST(request) {
-    return handler(request);
+    const { headers } = request;
+  
+    return startServerAndCreateNextHandler(apolloServer, {
+      context: async () => {
+        const event_id = headers.get('event_id') || '';
+        const sub_domain = headers.get('sub_domain') || '';
+        if (!event_id || !sub_domain ) {
+          throw new GraphQLError('Unauthorized', {
+            extensions: {
+              code: 'UNAUTHENTICATED',
+              http: { status: 401 },
+            }
+          });
+        } else {
+        let domain =  prisma.domain.findUnique({ where: { sub_domain: String(sub_domain) } }).first
+        let event =  prisma.event.findUnique({ where: { domainId: String(domain?.id) } }).first
+          if (event_id == event ) {
+            
+          }
+        }
+        return { domain };
+      },
+    })(request);
   }
