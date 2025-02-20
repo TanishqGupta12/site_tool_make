@@ -94,16 +94,16 @@ const resolvers = {
   const handler = startServerAndCreateNextHandler(apolloServer, {
     context: async (ctx)  => {
 
-      const event_id = ctx.headers.get("event_id") || "";
-      const sub_domain = ctx.headers.get("sub_domain") || "";
+      // const event_id = ctx.headers.get("event_id") || "";
+      // const sub_domain = ctx.headers.get("sub_domain") || "";
       
 
   
-      if (!event_id && !sub_domain) {
-        throw new GraphQLError('Unauthorized', {
-          extensions: { code: 'UNAUTHENTICATED', http: { status: 401 } },
-        });
-      }
+      // if (!event_id && !sub_domain) {
+      //   throw new GraphQLError('Unauthorized', {
+      //     extensions: { code: 'UNAUTHENTICATED', http: { status: 401 } },
+      //   });
+      // }
   
       // Ensure proper database queries
       // const domain = await prisma.domain.findUnique({
@@ -126,6 +126,8 @@ const resolvers = {
       //   });
       // }
   
+     const event_id = 73;
+      
       if (event_id === '73' || event_id === 73) {
         return { event_id };
       } 
