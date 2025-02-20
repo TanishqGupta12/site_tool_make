@@ -74,7 +74,14 @@ const resolvers = {
   
   // Create Apollo Server
   const schema = makeExecutableSchema({ typeDefs, resolvers });
-  const apolloServer = new ApolloServer({ schema });
+  // const apolloServer = new ApolloServer({ schema });
+
+  let apolloServer;
+  if (!apolloServer) {
+    apolloServer = new ApolloServer({
+      schema,
+    });
+  }
   
   export const config = {
     api: {
@@ -84,67 +91,48 @@ const resolvers = {
 
   
 
-    
+  const handler = startServerAndCreateNextHandler(apolloServer, {
+    context: async (ctx)  => {
 
-  // const handler = startServerAndCreateNextHandler(apolloServer);
+      const event_id = ctx.headers.get("event_id") || "";
+      const sub_domain = ctx.headers.get("sub_domain") || "";
+      
 
-  // export async function GET(request) {
-  //   return handler(request);
-  // }
   
-  // export async function POST(request) {
-  //   return handler(request);
-  // }
-
-
-  export async function GET(request) {
-    const { headers } = request;
+      if (!event_id && !sub_domain) {
+        throw new GraphQLError('Unauthorized', {
+          extensions: { code: 'UNAUTHENTICATED', http: { status: 401 } },
+        });
+      }
   
-    return startServerAndCreateNextHandler(apolloServer, {
-      context: async () => {
-        const event_id = headers.get('event_id') || '';
-        const sub_domain = headers.get('sub_domain') || '';
-        if (!event_id || !sub_domain ) {
-          throw new GraphQLError('Unauthorized', {
-            extensions: {
-              code: 'UNAUTHENTICATED',
-              http: { status: 401 },
-            }
-          });
-        } else {
-        let domain =  prisma.domain.findUnique({ where: { sub_domain: String(sub_domain) } }).first
-        let event =  prisma.event.findUnique({ where: { domainId: String(domain?.id) } }).first
-          if (event_id == event ) {
-            return event_id
-          }
-        }
+      // Ensure proper database queries
+      // const domain = await prisma.domain.findUnique({
+      //   where: { sub_domain: String(sub_domain) },
+      // });
+  
+      // if (!domain) {
+      //   throw new GraphQLError('Domain not found', {
+      //     extensions: { code: 'NOT_FOUND', http: { status: 404 } },
+      //   });
+      // }
+  
+      // const event = await prisma.event.findUnique({
+      //   where: { domainId: String(domain.id) },
+      // });
+  
+      // if (!event) {
+      //   throw new GraphQLError('Event not found', {
+      //     extensions: { code: 'NOT_FOUND', http: { status: 404 } },
+      //   });
+      // }
+  
+      if (event_id === '73' || event_id === 73) {
         return { event_id };
-      },
-    })(request);
-  }
+      } 
   
-  export async function POST(request) {
-    const { headers } = request;
+      return { event_id };
+    },
+  });
   
-    return startServerAndCreateNextHandler(apolloServer, {
-      context: async () => {
-        const event_id = headers.get('event_id') || '';
-        const sub_domain = headers.get('sub_domain') || '';
-        if (!event_id || !sub_domain ) {
-          throw new GraphQLError('Unauthorized', {
-            extensions: {
-              code: 'UNAUTHENTICATED',
-              http: { status: 401 },
-            }
-          });
-        } else {
-        let domain =  prisma.domain.findUnique({ where: { sub_domain: String(sub_domain) } }).first
-        let event =  prisma.event.findUnique({ where: { domainId: String(domain?.id) } }).first
-          if (event_id == event ) {
-            return event_id
-          }
-        }
-        return { domain };
-      },
-    })(request);
-  }
+  // Export a single handler for both GET and POST
+  export { handler as GET, handler as POST };
