@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link'
 import React from "react";
 import GetDomain  from "../../Hooks/useGetDmain";
 
@@ -69,33 +70,33 @@ export default function Navbar_v1() {
             >
               <div className="navbar-nav w-100">
                 <div className="nav-item dropdown">
-                  <a href="#" className="nav-link">
+                  <Link href="#" className="nav-link">
                     Web Design <i className="fa fa-angle-down float-right mt-1"></i>
-                  </a>
+                  </Link>
                   <div className="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                    <a href="#" className="dropdown-item">
+                    <Link href="#" className="dropdown-item">
                       HTML
-                    </a>
-                    <a href="#" className="dropdown-item">
+                    </Link>
+                    <Link href="#" className="dropdown-item">
                       CSS
-                    </a>
-                    <a href="#" className="dropdown-item">
+                    </Link>
+                    <Link href="#" className="dropdown-item">
                       jQuery
-                    </a>
+                    </Link>
                   </div>
                 </div>
-                <a href="#" className="nav-item nav-link">
+                <Link href="#" className="nav-item nav-link">
                   Apps Design
-                </a>
-                <a href="#" className="nav-item nav-link">
+                </Link>
+                <Link href="#" className="nav-item nav-link">
                   Marketing
-                </a>
-                <a href="#" className="nav-item nav-link">
+                </Link>
+                <Link href="#" className="nav-item nav-link">
                   Research
-                </a>
-                <a href="#" className="nav-item nav-link">
+                </Link>
+                <Link href="#" className="nav-item nav-link">
                   SEO
-                </a>
+                </Link>
               </div>
             </nav>
           </div>
@@ -116,38 +117,28 @@ export default function Navbar_v1() {
               </button>
               <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div className="navbar-nav py-0">
-                  <a href="index.html" className="nav-item nav-link active">
+                  <Link href="/" className="nav-item nav-link active">
                     Home
-                  </a>
-                  <a href="about.html" className="nav-item nav-link">
+                  </Link>
+                  <Link href="/academy/about" className="nav-item nav-link">
                     About
-                  </a>
-                  <a href="course.html" className="nav-item nav-link">
+                  </Link>
+                  <Link href="/academy/course" className="nav-item nav-link">
                     Courses
-                  </a>
-                  <a href="teacher.html" className="nav-item nav-link">
+                  </Link>
+                  <Link href="/academy/teacher" className="nav-item nav-link">
                     Teachers
-                  </a>
-                  <div className="nav-item dropdown">
-                    <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown">
-                      Blog
-                    </a>
-                    <div className="dropdown-menu rounded-0 m-0">
-                      <a href="blog.html" className="dropdown-item">
-                        Blog List
-                      </a>
-                      <a href="single.html" className="dropdown-item">
-                        Blog Detail
-                      </a>
-                    </div>
-                  </div>
-                  <a href="contact.html" className="nav-item nav-link">
+                  </Link>
+                  <Link href="/academy/blog" className="nav-link" data-toggle="dropdown">
+                    Blog
+                  </Link>
+                  <Link href="/academy/contact" className="nav-item nav-link">
                     Contact
-                  </a>
+                  </Link>
                 </div>
-                <a className="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="#">
+                <Link className="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="#">
                   Join Now
-                </a>
+                </Link>
               </div>
             </nav>
           </div>

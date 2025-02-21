@@ -1,5 +1,5 @@
 import React from "react";
-
+import Navbar_v1 from "@/compoments/navbar/Navbar_v1";
 const teachers = [
   { id: 1, name: "John Doe", role: "Web Designer", image: "img/team-1.jpg" },
   { id: 2, name: "Jane Smith", role: "Graphic Designer", image: "img/team-2.jpg" },
@@ -9,6 +9,8 @@ const teachers = [
 
 export default function Teacher() {
   return (
+    <>
+    <Navbar_v1/>
     <div className="container-fluid py-5">
       <div className="container pt-5 pb-3">
         <div className="text-center mb-5">
@@ -45,5 +47,6 @@ export default function Teacher() {
         </div>
       </div>
     </div>
+    </>
   );
 }
