@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 
 const GetDomain = (url) => {
     // 
-    console.log(url.href);
+    // console.log(url);
     
-    const [serverUrl, setServerUrl] = useState(url);
+    const [serverUrl] = useState(url);
     // const [serverUrl, setServerUrl] = useState('https://food.localhost:1234/event/73');
 
     

@@ -53,16 +53,17 @@ export default function Navbar_v1() {
       <div className="container-fluid">
         <div className="row border-top px-xl-5">
           <div className="col-lg-3 d-none d-lg-block">
-            <a
-              className="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none"
-              href="#"
-              style={{ height: "67px", padding: "0 30px" }}
-            >
+            <div  className="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none"  
+            style={{ height: "67px", padding: "0 30px" }}>
+
+              <input className="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none" placeholder='sarch..'
+              style={{ height: "67px", padding: "0 5px" }}
+              />
               <h5 className="text-primary m-0">
-                <i className="fa fa-book-open mr-2"></i>Subjects
+                <i className="fa fa-book-open mr-2"></i>
               </h5>
               <i className="fa fa-angle-down text-primary"></i>
-            </a>
+           </div>
             <nav
               className="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
               id="navbar-vertical"
