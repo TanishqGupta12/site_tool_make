@@ -1,13 +1,10 @@
 "use client"
 import React from "react";
-// import GetDomain  from "../../Hooks/useGetDmain";
-import { useRouter } from "next/navigation";
+import GetDomain  from "../../Hooks/useGetDmain";
+
 export default function Navbar_v1() {
   
-  const router = useRouter();
-  console.log(router.prefetch);
-  
-  // GetDomain(window.location)
+  GetDomain(window.location)
   return (
     <>
       {/* Topbar Start */}
