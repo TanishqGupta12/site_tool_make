@@ -18,19 +18,64 @@ const typeDefs = `
     name: String!
     email: String!
   }
-  
-  
- type Query {
-    users: [User]
-    user(id: ID!): User  
+
+  type Domain {
+    id               BigInt!  
+    domain_name      String!  
+    subdomain_name   String! 
+    host             String! 
+    description      String!  
+    logo_file_name   String!   
+    logo_meta        String!   
+    custom_font_name String!  
+
+    createdAt        DateTime!
+    updatedAt        DateTime!
   }
+  
+    type Event {
 
-
- type Query {
-    users: [User]
-    user(id: ID!): User  
+        id      ID!
+        name    String!
+        domainId  Int
+        description   String! 
+        startDate     DateTime
+        hasGallery    Boolean! 
+        hasInfo       Boolean! 
+        hasAboutPage  Boolean! 
+        hasContactPage Boolean! 
+        slug           String! 
+        latitude       Float! 
+        longitude      Float! 
+        endDate       DateTime
+        email         String! 
+        phone         String! 
+        logoMeta      String! 
+        timeZone      String! 
+        customCss     String! 
+        customJs      String! 
+        termsAndConditions  String! 
+        protectedGallery    Boolean! 
+        paymentNeeded       Boolean! 
+        publishableKey      String! 
+        secretKey           String! 
+        templateVersion     String! 
+        eventAgendaDescription String! 
+        landingPageContent  String! 
+        onlyLandingPage     Boolean! 
+        hideRegistrationButton  Boolean! 
+        sendRegistrationConfirmationEmailToGuest  Boolean! 
+        footerText  String! 
+        hideBlog    Boolean! 
+        hideForum   Boolean! 
+        createdAt   DateTime
+        updatedAt   DateTime
+        domain      Domain
+        users       [EventUser]
+        forms       [Form]
+        
   }
-
+  
   type Role {
     id: BigInt!
     name: String!
@@ -41,6 +86,12 @@ const typeDefs = `
     user(id: ID!): User
     roles: [Role]
     role(id: ID!): Role
+    
+    domains: [Domain]
+    domain(id: ID!): Domain
+
+    events: [Event]
+    event(id: ID!): Event
   }
 
   type Mutation {
@@ -60,6 +111,18 @@ const resolvers = {
       },
       role: async (_, { id }) => {
         return await prisma.role.findUnique({ where: { id: Number(id) } });
+      },
+      domains: async () => {
+        return await prisma.domain.findMany();
+      },
+      domain: async (_, { id }) => {
+        return await prisma.domain.findUnique({ where: { id: Number(id) } });
+      },
+      events: async () => {
+        return await prisma.event.findMany();
+      },
+      event: async (_, { id }) => {
+        return await prisma.event.findUnique({ where: { id: Number(id) } });
       },
     },
     // Mutation: {
