@@ -59,47 +59,8 @@ export default function Navbar_v1() {
               <input className="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none" placeholder='sarch..'
               style={{ height: "67px", padding: "0 5px" }}
               />
-              <h5 className="text-primary m-0">
-                <i className="fa fa-book-open mr-2"></i>
-              </h5>
-              <i className="fa fa-angle-down text-primary"></i>
+
            </div>
-            <nav
-              className="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light"
-              id="navbar-vertical"
-              style={{ width: "calc(100% - 30px)", zIndex: "9" }}
-            >
-              <div className="navbar-nav w-100">
-                <div className="nav-item dropdown">
-                  <Link href="#" className="nav-link">
-                    Web Design <i className="fa fa-angle-down float-right mt-1"></i>
-                  </Link>
-                  <div className="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                    <Link href="#" className="dropdown-item">
-                      HTML
-                    </Link>
-                    <Link href="#" className="dropdown-item">
-                      CSS
-                    </Link>
-                    <Link href="#" className="dropdown-item">
-                      jQuery
-                    </Link>
-                  </div>
-                </div>
-                <Link href="#" className="nav-item nav-link">
-                  Apps Design
-                </Link>
-                <Link href="#" className="nav-item nav-link">
-                  Marketing
-                </Link>
-                <Link href="#" className="nav-item nav-link">
-                  Research
-                </Link>
-                <Link href="#" className="nav-item nav-link">
-                  SEO
-                </Link>
-              </div>
-            </nav>
           </div>
           <div className="col-lg-9">
             <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">

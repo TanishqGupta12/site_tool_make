@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "../css/style.css";
-import ApolloProviderWrapper from "./ClientProvider"; // Import the client component
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,10 +12,14 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        />
+      </head>
       <body>
-        <ApolloProviderWrapper>
           {children}
-        </ApolloProviderWrapper>
       </body>
     </html>
   );
