@@ -16,7 +16,15 @@ const options: NextAdminOptions = {
       toString: (event) => `(${event.id})  (${event.name})`,
       title: "Event",
       icon: "Cog8ToothIcon",
-      list: {
+      list: {},
+      edit: {
+        fields: {
+          domains: {
+            relationOptionFormatter: (domain) => {
+              return `${domain.domain_name}`;
+            },
+          },
+        },
       },
     },
     User: {

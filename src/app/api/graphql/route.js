@@ -94,45 +94,25 @@ const resolvers = {
   const handler = startServerAndCreateNextHandler(apolloServer, {
     context: async (ctx)  => {
 
-      // const event_id = ctx.headers.get("event_id") || "";
-      // const sub_domain = ctx.headers.get("sub_domain") || "";
       
-
-  
-      // if (!event_id && !sub_domain) {
-      //   throw new GraphQLError('Unauthorized', {
-      //     extensions: { code: 'UNAUTHENTICATED', http: { status: 401 } },
-      //   });
-      // }
+      const sub_domain = ctx.headers.get("sub_domain") || "";
   
       // Ensure proper database queries
-      // const domain = await prisma.domain.findUnique({
-      //   where: { sub_domain: String(sub_domain) },
-      // });
+      try {
+        const domain = await prisma.domain.findMany({
+          where: { subdomain_name: sub_domain },
+          include:{
+            events: true
+          }
+        });
+        console.log(domain);
+        
+        return domain;
+      } catch (error) {
+        console.error("Database error:", error);
+        throw new Error("Internal Server Error");
+      }
   
-      // if (!domain) {
-      //   throw new GraphQLError('Domain not found', {
-      //     extensions: { code: 'NOT_FOUND', http: { status: 404 } },
-      //   });
-      // }
-  
-      // const event = await prisma.event.findUnique({
-      //   where: { domainId: String(domain.id) },
-      // });
-  
-      // if (!event) {
-      //   throw new GraphQLError('Event not found', {
-      //     extensions: { code: 'NOT_FOUND', http: { status: 404 } },
-      //   });
-      // }
-  
-     const event_id = 73;
-      
-      if (event_id === '73' || event_id === 73) {
-        return { event_id };
-      } 
-  
-      return { event_id };
     },
   });
   

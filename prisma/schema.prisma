@@ -12,7 +12,7 @@ datasource db {
 }
 
 model Domain {
-  id               BigInt   @id @default(autoincrement())
+  id               Int   @id @default(autoincrement())
   domain_name      String?  @db.VarChar(255)
   subdomain_name   String?  @db.VarChar(255)
   host             String?  @db.VarChar(255)
@@ -30,9 +30,9 @@ model Domain {
 }
 
 model Event {
-  id                                       BigInt    @id @default(autoincrement())
+  id                                       Int    @id @default(autoincrement())
   name                                     String?   @db.VarChar(255)
-  domainId                                 BigInt?
+  domainId                                 Int?
   description                              String?   @db.Text
   startDate                                DateTime?
   hasGallery                               Boolean?
@@ -76,7 +76,7 @@ model Event {
 }
 
 model Role {
-  id        BigInt    @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   name      String    @db.VarChar(255)
   in_active Boolean   @default(false)
 
@@ -90,7 +90,7 @@ model Role {
 
 
 model User {
-  id                     BigInt    @id @default(autoincrement())
+  id                     Int    @id @default(autoincrement())
   
   email                  String?   @db.VarChar(255)
   salutation             String?   @db.VarChar(255)
@@ -114,7 +114,7 @@ model User {
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
 
-  roleId                 BigInt?   // Foreign key reference to Role
+  roleId                 Int?   // Foreign key reference to Role
   role                   Role?     @relation("RoleToUsers", fields: [roleId], references: [id])  
 
 
@@ -125,10 +125,10 @@ model User {
 
 
 model EventUser {
-  id        BigInt 
+  id        Int 
 
-  userId  BigInt  
-  eventId BigInt  
+  userId  Int  
+  eventId Int  
 
   user  User?  @relation(fields: [userId], references: [id])
   event Event? @relation(fields: [eventId], references: [id])
@@ -144,11 +144,11 @@ model EventUser {
 
 
 model Form {
-  id                                         BigInt   @id @default(autoincrement())
+  id                                         Int   @id @default(autoincrement())
   caption                                    String?  @db.VarChar(255)
   Description                                String?  @db.Text
   
-  event_id                                   BigInt? 
+  event_id                                   Int? 
   event Event? @relation(fields: [event_id], references: [id])
 
   slug                                       String?  @db.VarChar(255)
@@ -171,11 +171,11 @@ model Form {
 }
 
 model FormSection {
-  id                                             BigInt   @id @default(autoincrement())
+  id                                             Int   @id @default(autoincrement())
   caption                                        String?  @db.VarChar(255)
   section_hint                                   String?  @db.Text
   
-  form_id                                        BigInt?
+  form_id                                        Int?
   form Form? @relation(fields: [form_id], references: [id])
 
   created_at                                     DateTime @default(now())
@@ -193,7 +193,7 @@ model FormSection {
 
 
 model FormSectionField {
-  id                                             BigInt   @id @default(autoincrement())
+  id                                             Int   @id @default(autoincrement())
   caption                                        String?  @db.Text
   placeholder                                    String?  @db.VarChar(255)
   
@@ -207,10 +207,10 @@ model FormSectionField {
   is_required                                    Boolean  @default(false)
   is_active                                      Boolean  @default(true)
   
-  form_id                                        BigInt? 
+  form_id                                        Int? 
   form Form? @relation(fields: [form_id], references: [id])
 
-  form_section_id                                BigInt? 
+  form_section_id                                Int? 
   form_section FormSection? @relation(fields: [form_section_id], references: [id])
 
   

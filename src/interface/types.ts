@@ -1,8 +1,8 @@
-interface roles {
-  id: string;
-  name: string;
+interface Role {
+   id: string;
+   name: string;
 }
 
 export interface GetDataResponse {
-  roles: roles[];
+  roles: Role[];
 }
