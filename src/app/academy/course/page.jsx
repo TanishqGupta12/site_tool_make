@@ -1,9 +1,10 @@
 import React from 'react';
 import Header_v1 from "../../../compoments/Header/Header_v1";
-
+import Navbar_v1 from "@/compoments/navbar/Navbar_v1";
 export default function Course() {
   return (
     <>
+      <Navbar_v1 />
       <Header_v1 />
 
       {/* Category Start */}
