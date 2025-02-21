@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 
 const GetDomain = (url) => {
     // 
-    console.log(url);
+    console.log(url.href);
     
-    // const [serverUrl, setServerUrl] = useState(url);
-    const [serverUrl, setServerUrl] = useState('https://food.localhost:1234/event/73');
+    const [serverUrl, setServerUrl] = useState(url);
+    // const [serverUrl, setServerUrl] = useState('https://food.localhost:1234/event/73');
 
     
 
@@ -14,7 +14,7 @@ const GetDomain = (url) => {
         const url = new URL(serverUrl);
 
         const hostParts = url.hostname.split('.');
-        const subdomain = hostParts.length > 2 ? hostParts[0] : null;
+        const subdomain = hostParts.length > 1 ? hostParts[0] : null;
     
 
 

@@ -1,8 +1,12 @@
+"use client"
 import React from "react";
-
+import Navbar_v1 from "@/compoments/navbar/Navbar_v1";
 export default function About() {
 
   return (
+    <>
+    <Navbar_v1/>
+   
     <div className="container-fluid py-5">
       <div className="container py-5">
         <div className="row">
@@ -102,5 +106,6 @@ export default function About() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -25,7 +25,6 @@ export default function Home() {
   // if (!data || !data?.roles) return <p>No data available </p>;
   return (
     <>
-      {/* {getDmain()} */}
       <CustomHead />
       <Navbar_v1 />
       
