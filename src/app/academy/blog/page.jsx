@@ -1,8 +1,10 @@
 import React from "react";
-
+import Navbar_v1 from "@/compoments/navbar/Navbar_v1";
+import Footer_v1 from "@/compoments/footer/Footer_v1";
 function Blog() {
   return (
     <>
+      <Navbar_v1/>
       <div className="container-fluid py-5">
         <div className="container py-5">
           <div className="row">
@@ -116,6 +118,7 @@ function Blog() {
           </div>
         </div>
       </div>
+      <Footer_v1/>
     </>
   );
 }

@@ -1,4 +1,9 @@
-import type { NextAdminOptions } from "@premieroctet/next-admin";
+import type { NextAdminOptions} from "@premieroctet/next-admin";
+
+
+import dynamic from "next/dynamic";
+
+
 
 const options: NextAdminOptions = {
   title: "Dashboard",
@@ -18,8 +23,19 @@ const options: NextAdminOptions = {
       icon: "Cog8ToothIcon",
       list: {},
       edit: {
+        display: [
+          "name",
+          {
+            title: "Email is mandatory",
+            id: "editor",
+            description: "You must add an email from now on",
+          } as const,
+        ],
         fields: {
-          domains: {
+          name: {
+            
+          },
+          domain: {
             relationOptionFormatter: (domain) => {
               return `${domain.domain_name}`;
             },

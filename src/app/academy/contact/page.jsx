@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar_v1 from "@/compoments/navbar/Navbar_v1";
-
+import Footer_v1 from "@/compoments/footer/Footer_v1";
 export default function Contact() {
     return (
         <>
@@ -41,6 +41,7 @@ export default function Contact() {
                     </div>
                 </div>
             </div>
+        <Footer_v1/>
         </>
     );
 }

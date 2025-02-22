@@ -2,8 +2,8 @@ import { PrismaClient } from "@prisma/client";
 
 import { NextResponse } from "next/server";
 
-import  hashPassword  from "../../../../lib/bcrypt";
-import  authentication_token  from "../../../../lib/authentication_token";
+import  hashPassword  from "../../../lib/bcrypt";
+import  authentication_token  from "../../../lib/authentication_token";
 // Initialize Prisma client
 const prisma = new PrismaClient();
 

@@ -1,5 +1,7 @@
 import React from "react";
 import Navbar_v1 from "@/compoments/navbar/Navbar_v1";
+import Footer_v1 from "@/compoments/footer/Footer_v1";
+
 const teachers = [
   { id: 1, name: "John Doe", role: "Web Designer", image: "img/team-1.jpg" },
   { id: 2, name: "Jane Smith", role: "Graphic Designer", image: "img/team-2.jpg" },
@@ -47,6 +49,7 @@ export default function Teacher() {
         </div>
       </div>
     </div>
+    <Footer_v1/>
     </>
   );
 }
