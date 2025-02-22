@@ -5,7 +5,7 @@ import GetDomain  from "../../Hooks/useGetDmain";
 
 export default function Navbar_v1() {
   
-  GetDomain(window.location)
+  GetDomain()
   return (
     <>
       {/* Topbar Start */}

@@ -1,28 +1,35 @@
+"use client"
+import {  useEffect } from 'react';
 
-import { useState, useEffect } from 'react';
-
-const GetDomain = (url) => {
+const GetDomain = () => {
     // 
     // console.log(url);
-    
-    const [serverUrl] = useState(url);
+
     // const [serverUrl, setServerUrl] = useState('https://food.localhost:1234/event/73');
 
     
 
     useEffect(() => {
-        const url = new URL(serverUrl);
+        var sub_domain = localStorage.getItem("subdomain");
 
-        const hostParts = url.hostname.split('.');
-        const subdomain = hostParts.length > 1 ? hostParts[0] : null;
-    
+        if (!sub_domain) {
+            const currentUrl = window.location.href; 
+            
+            const url = new URL(currentUrl);
+            const hostParts = url.hostname.split(".");
+            const subdomain = hostParts.length > 1 ? hostParts[0] : null;
 
+            if (subdomain) {
+                localStorage.setItem("subdomain", subdomain);
+            }
+        } else{
 
+            localStorage.setItem("subdomain", sub_domain);
 
-        if (subdomain) localStorage.setItem('subdomain', subdomain);
-      
- 
-    }, [serverUrl]);
+        }
+    }, [1000]);
+
+    return null; 
 
 }
 export default GetDomain
