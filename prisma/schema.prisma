@@ -29,61 +29,52 @@ model Domain {
   @@map("domains")
 }
 
-model Event {
-  id                                       Int    @id @default(autoincrement())
-  name                                     String?   @db.VarChar(255)
+model Event { 
+  id                                       Int         @id @default(autoincrement())
+  name                                     String?     @db.VarChar(255)
   domainId                                 Int?
-  description                              String?   @db.Text
+  description                              String?     @db.Text
   startDate                                DateTime?
-  hasGallery                               Boolean?
-  hasInfo                                  Boolean?
-  hasAboutPage                             Boolean?
-  hasContactPage                           Boolean?
-  slug                                     String?   @db.VarChar(191)
-  latitude                                 Decimal?  @db.Decimal(12, 6)
-  longitude                                Decimal?  @db.Decimal(12, 6)
-  endDate                                  DateTime?
-  email                                    String?   @db.VarChar(255)
-  phone                                    String?   @db.VarChar(255)
-  logoMeta                                 String?   @db.VarChar(255)
-  timeZone                                 String?   @db.VarChar(255) @default("Singapore")
-  customCss                                String?   @db.Text
-  customJs                                 String?   @db.Text
-  termsAndConditions                       String?   @db.LongText
-  protectedGallery                         Boolean?  @default(false)
-  paymentNeeded                            Boolean?  @default(false)
-  publishableKey                           String?   @db.VarChar(255) @default("pk_test_Hcw63Hd14F3WqABmHCZxfjqn")
-  secretKey                                String?   @db.VarChar(255) @default("sk_test_1UhxGTUteWDoPbS1aCAHQTd4")
-  templateVersion                          String?   @db.VarChar(255)
-  eventAgendaDescription                   String?   @db.Text
-  landingPageContent                       String?   @db.Text
-  onlyLandingPage                          Boolean?  @default(false)
-  hideRegistrationButton                   Boolean?  @default(false)
-  sendRegistrationConfirmationEmailToGuest Boolean?  @default(false)
-  footerText                               String?   @db.Text
-  hideBlog                                 Boolean?  @default(false)
-  hideForum                                Boolean?  @default(false)
-
-  createdAt                                DateTime @default(now())
-  updatedAt                                DateTime @updatedAt
-
-  domain                                   Domain?   @relation("DomainToEvents", fields: [domainId], references: [id])  // Many Events belong to one Domain
-
-  users                                    EventUser[] // Relationship to UserEvent
+  slug                                     String?
+  latitude                                 Decimal?    @db.Decimal(12, 6)
+  longitude                                Decimal?    @db.Decimal(12, 6)
+  email                                    String?     @db.VarChar(255)
+  phone                                    String?     @db.VarChar(255)
+  timeZone                                 String?     @default("Singapore") @db.VarChar(255)
+  customCss                                String?     @db.Text
+  customJs                                 String?     @db.Text
+  termsAndConditions                       String?     @db.LongText
+  paymentNeeded                            Boolean?    @default(false)
+  publishableKey                           String?     @default("") @db.VarChar(255)
+  secretKey                                String?     @default("") @db.VarChar(255)
+  sendRegistrationConfirmationEmailToGuest Boolean?    @default(false)
+  footerText                               String?     @db.Text
+  hideBlog                                 Boolean?    @default(false)
+  createdAt                                DateTime    @default(now())
+  updatedAt                                DateTime    @updatedAt
+  PageContent                              String?     @db.Text
+  hideAboutPage                            Boolean?    @default(false)
+  hideCategory                             Boolean?    @default(false)
+  hideCourses                              Boolean?    @default(false)
+  hideGallery                              Boolean?    @default(false)
+  galleryText                              String?     @db.VarChar(255)
+  hideInfo                                 Boolean?    @default(false)
+  hideTeacherPage                          Boolean?    @default(false)
+  users                                    EventUser[]
+  domain                                   Domain?     @relation("DomainToEvents", fields: [domainId], references: [id])
   Form                                     Form[]
+  PostGallery                              PostGallery[]
 
   @@map("events")
 }
 
 model Role {
-  id        Int    @id @default(autoincrement())
-  name      String    @db.VarChar(255)
-  in_active Boolean   @default(false)
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  users     User[]    @relation("RoleToUsers")  // One Role has many Users
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  in_active Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[]   @relation("RoleToUsers")
 
   @@map("roles")
 }
@@ -171,23 +162,20 @@ model Form {
 }
 
 model FormSection {
-  id                                             Int   @id @default(autoincrement())
-  caption                                        String?  @db.VarChar(255)
-  section_hint                                   String?  @db.Text
-  
-  form_id                                        Int?
-  form Form? @relation(fields: [form_id], references: [id])
+  id                 Int                @id @default(autoincrement())
+  caption            String?            @db.VarChar(255)
+  section_hint       String?            @db.Text
+  form_id            Int?
+  created_at         DateTime           @default(now())
+  updated_at         DateTime           @updatedAt
+  sequence           Int?
+  is_active          Boolean            @default(true)
+  is_payment_section Boolean            @default(false)
+  form_section_field FormSectionField[]
+  form               Form?              @relation(fields: [form_id], references: [id])
 
-  created_at                                     DateTime @default(now())
-  updated_at                                     DateTime @updatedAt
-  sequence                                       Int? 
-  is_active                                      Boolean  @default(true)
-  is_payment_section                             Boolean  @default(false)
-  form_section_field FormSectionField[]  // Relationship to FormSectionField 
-
-
-   @@map("form_sections")
-
+  @@index([form_id], map: "form_sections_form_id_fkey")
+  @@map("form_sections")
 }
 
 
@@ -224,4 +212,17 @@ model FormSectionField {
 
 
   
+}
+
+model PostGallery {
+  id                                       Int         @id @default(autoincrement())
+  name                                     String?     @db.VarChar(255)
+  poster                                   String?     @db.VarChar(255)
+  event_id                                 Int?
+  event                                    Event?      @relation(fields: [event_id], references: [id])
+
+  createdAt                                DateTime    @default(now())
+  updatedAt                                DateTime    @updatedAt
+
+  @@map("post_galleries")
 }

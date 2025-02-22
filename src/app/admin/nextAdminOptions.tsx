@@ -1,5 +1,6 @@
 import type { NextAdminOptions} from "@premieroctet/next-admin";
 
+import { handleCloudinaryRequest } from "@/lib/cloudinary";
 
 import dynamic from "next/dynamic";
 
@@ -23,15 +24,15 @@ const options: NextAdminOptions = {
       icon: "Cog8ToothIcon",
       list: {},
       edit: {
-        display: [
-          "name",
-          {
-            title: "Email is mandatory",
-            id: "editor",
-            description: "You must add an email from now on",
-          } as const,
-          "domain"
-        ],
+        // display: [
+        //   "name",
+        //   {
+        //     title: "Email is mandatory",
+        //     id: "editor",
+        //     description: "You must add an email from now on",
+        //   } as const,
+        //   "domain"
+        // ],
         fields: {
           name: {
             
@@ -40,6 +41,35 @@ const options: NextAdminOptions = {
             relationOptionFormatter: (domain) => {
               return `${domain.domain_name}`;
             },
+          },
+          gallery: {
+            format: "file",
+            handler: {
+              upload: async (buffer: any, infos: any) => {
+                console.log("Uploading file:", infos);
+                console.log(buffer);
+                
+                return "https://www.gravatar.com/avatar/00000000000000000000000000000000";
+              },
+              get: async (value: any) =>{
+                console.log(any);
+                
+              }
+            },
+            hooks: {
+              beforeDb: (value: any) => {
+                console.log("Storing in DB:", value);
+                return value; // Ensures the correct URL is stored
+              },
+            },
+          },
+          hooks: {
+            gallery: {
+              beforeDb: async(values: any) => {
+
+                console.log(values);
+              },
+            }
           },
         },
       },
@@ -68,6 +98,35 @@ const options: NextAdminOptions = {
       list: {
       },
     },
+    PostGallery: {
+      toString: (post_gallery) => `(${post_gallery.id.toString()}) (${post_gallery.name})  `,
+      title: "PostGallery",
+      icon: "IdentificationIcon",
+      edit: {
+        fields: {
+          name: {},
+          poster: {
+            format: "file",
+            handler: {
+              upload: async (buffer: any, infos: any) => {
+                const uploadResult = await handleCloudinaryRequest("POST", infos.name, buffer);
+                return uploadResult.secure_url;
+              },
+              get: async (value: any) => {
+                return value
+              }
+            },
+            hooks: {
+              beforeDb: (value: any) => {
+                console.log("Storing in DB:", value);
+                return value; // Ensures the correct URL is stored
+              },
+            },
+          }
+        },
+      },
+    }
+    
   },
   pages: {
     "/custom": {

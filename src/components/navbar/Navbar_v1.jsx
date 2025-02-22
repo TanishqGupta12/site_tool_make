@@ -1,22 +1,22 @@
 "use client"
 import Link from 'next/link'
 import React from "react";
-import GetDomain  from "../../Hooks/useGetDmain";
+// import GetDomain  from "../../Hooks/useGetDmain";
 
 export default function Navbar_v1() {
   
-  GetDomain()
+  // GetDomain()
   return (
     <>
       {/* Topbar Start */}
       <div className="container-fluid d-none d-lg-block">
         <div className="row align-items-center py-4 px-xl-5">
           <div className="col-lg-3">
-            <a href="#" className="text-decoration-none">
+            <Link href="/" className="text-decoration-none">
               <h1 className="m-0">
                 <span className="text-primary">E</span>COURSES
               </h1>
-            </a>
+            </Link>
           </div>
           <div className="col-lg-3 text-right">
             <div className="d-inline-flex align-items-center">
@@ -64,11 +64,11 @@ export default function Navbar_v1() {
           </div>
           <div className="col-lg-9">
             <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-              <a href="#" className="text-decoration-none d-block d-lg-none">
+              <Link href="/" className="text-decoration-none d-block d-lg-none">
                 <h1 className="m-0">
                   <span className="text-primary">E</span>COURSES
                 </h1>
-              </a>
+              </Link>
               <button
                 type="button"
                 className="navbar-toggler"
@@ -79,9 +79,9 @@ export default function Navbar_v1() {
               </button>
               <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div className="navbar-nav py-0">
-                  <Link href="/" className="nav-item nav-link active">
+                  <a href="/" className="nav-item nav-link active">
                     Home
-                  </Link>
+                  </a>
                   <Link href="/academy/about" className="nav-item nav-link">
                     About
                   </Link>
