@@ -1,6 +1,6 @@
 "use client"
-import Footer_v1 from "@/compoments/footer/Footer_v1";
-import Navbar_v1 from "@/compoments/navbar/Navbar_v1";
+import Footer_v1 from "@/components/footer/Footer_v1";
+import Navbar_v1 from "@/components/navbar/Navbar_v1";
 
 
 import { gql, useQuery } from '@apollo/client';

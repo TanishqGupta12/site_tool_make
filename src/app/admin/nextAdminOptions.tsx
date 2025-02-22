@@ -30,6 +30,7 @@ const options: NextAdminOptions = {
             id: "editor",
             description: "You must add an email from now on",
           } as const,
+          "domain"
         ],
         fields: {
           name: {
