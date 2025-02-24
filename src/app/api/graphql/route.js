@@ -154,27 +154,33 @@ const resolvers = {
   
 
   const handler = startServerAndCreateNextHandler(apolloServer, {
-    context: async (ctx)  => {
-
-      
+    context: async (ctx) => {
       const sub_domain = ctx.headers.get("sub_domain") || "";
   
-      // Ensure proper database queries
+      if (!sub_domain) {
+        throw new GraphQLError("Subdomain not found in headers");
+      }
+      console.log(sub_domain);
+      
       try {
         const domain = await prisma.domain.findMany({
           where: { subdomain_name: sub_domain },
-          include:{
+          include: {
             events: true
           }
         });
         console.log(domain);
         
-        return domain;
-      } catch (error) {
-        console.error("Database error:", error);
-        GraphQLError("Internal Server Error");
-      }
+        if (!domain || domain.length === 0) {
+            new GraphQLError("Domain and Event not found");
+            return 0;
+        }
   
+        return { domain };
+      } catch (error) {
+        console.error("Error fetching domain:", error);
+        throw new GraphQLError("Internal server error");
+      }
     },
   });
   

@@ -8,7 +8,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   // Retrieve the token from localStorage, sessionStorage, or cookies
 
-  const sub_domain = localStorage.getItem('subdomain');
+  const sub_domain = localStorage.getItem('sub_domain');
 
   return {
     headers: {

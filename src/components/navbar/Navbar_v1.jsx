@@ -1,11 +1,11 @@
 "use client"
 import Link from 'next/link'
 import React from "react";
-// import GetDomain  from "../../Hooks/useGetDmain";
+import GetDomain  from "../../Hooks/useGetDmain";
 
 export default function Navbar_v1() {
   
-  // GetDomain()
+  GetDomain()
   return (
     <>
       {/* Topbar Start */}
@@ -64,42 +64,62 @@ export default function Navbar_v1() {
           </div>
           <div className="col-lg-9">
             <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+              {/* Mobile Brand */}
               <Link href="/" className="text-decoration-none d-block d-lg-none">
                 <h1 className="m-0">
                   <span className="text-primary">E</span>COURSES
                 </h1>
               </Link>
+
+              {/* Navbar Toggler */}
               <button
                 type="button"
                 className="navbar-toggler"
-                data-toggle="collapse"
-                data-target="#navbarCollapse"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse"
               >
                 <span className="navbar-toggler-icon"></span>
               </button>
+
+              {/* Navbar Items */}
               <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div className="navbar-nav py-0">
-                  <a href="/" className="nav-item nav-link active">
-                    Home
-                  </a>
-                  <Link href="/academy/about" className="nav-item nav-link">
-                    About
+                  <Link href="/" legacyBehavior>
+                    <a className="nav-item nav-link active">Home</a>
                   </Link>
-                  <Link href="/academy/course" className="nav-item nav-link">
-                    Courses
+                  <Link href="/academy/about" legacyBehavior>
+                    <a className="nav-item nav-link">About</a>
                   </Link>
-                  <Link href="/academy/teacher" className="nav-item nav-link">
-                    Teachers
+                  <Link href="/academy/course" legacyBehavior>
+                    <a className="nav-item nav-link">Courses</a>
                   </Link>
-                  <Link href="/academy/blog" className="nav-link" data-toggle="dropdown">
-                    Blog
+                  <Link href="/academy/teacher" legacyBehavior>
+                    <a className="nav-item nav-link">Teachers</a>
                   </Link>
-                  <Link href="/academy/contact" className="nav-item nav-link">
-                    Contact
+
+                  {/* Blog Dropdown */}
+                  <div className="nav-item dropdown">
+                    <Link href="/academy/blog" legacyBehavior>
+                      <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Blog</a>
+                    </Link>
+                    <div className="dropdown-menu">
+                      <Link href="/academy/blog/category1" legacyBehavior>
+                        <a className="dropdown-item">Category 1</a>
+                      </Link>
+                      <Link href="/academy/blog/category2" legacyBehavior>
+                        <a className="dropdown-item">Category 2</a>
+                      </Link>
+                    </div>
+                  </div>
+
+                  <Link href="/academy/contact" legacyBehavior>
+                    <a className="nav-item nav-link">Contact</a>
                   </Link>
                 </div>
-                <Link className="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="#">
-                  Join Now
+
+                {/* Join Now Button */}
+                <Link href="#" legacyBehavior>
+                  <a className="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Join Now</a>
                 </Link>
               </div>
             </nav>

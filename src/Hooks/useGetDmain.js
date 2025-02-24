@@ -10,7 +10,7 @@ const GetDomain = () => {
     
 
     useEffect(() => {
-        var sub_domain = localStorage.getItem("subdomain");
+        var sub_domain = localStorage.getItem("sub_domain");
 
         if (!sub_domain) {
             const currentUrl = window.location.href; 
@@ -20,11 +20,11 @@ const GetDomain = () => {
             const subdomain = hostParts.length > 1 ? hostParts[0] : null;
 
             if (subdomain) {
-                localStorage.setItem("subdomain", subdomain);
+                localStorage.setItem("sub_domain", sub_domain);
             }
         } else{
 
-            localStorage.setItem("subdomain", sub_domain);
+            localStorage.setItem("sub_domain", sub_domain);
 
         }
     }, [1000]);
