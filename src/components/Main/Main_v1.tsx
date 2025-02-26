@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 
 import Blog from "../Main/blog";
@@ -11,8 +12,42 @@ import Category from "../Main/Category";
 import About from "../Main/about";
 
 import Carousel from "../Main/Carousel";
+import {GetDataResponse} from "@/interface/types";
+
+import { gql, useQuery } from '@apollo/client';
+
+const GET_DATA = gql`
+query {
+  domain(id: 5) {
+    id
+    domain_name
+    subdomain_name
+    host
+
+    description  
+    logo_file_name   
+    logo_meta   
+    custom_font_name
+    
+    createdAt
+    updatedAt
+  }
+  roles {
+     id
+     name
+   }
+
+}
+`;
 
 export default function Main_v1() {
+
+    const { loading, error, data } = useQuery<GetDataResponse>(GET_DATA);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error fkc: {error.message}</p>;
+    if (!data || !data?.domain) return <p>No data available </p>;
+
     return (
         <>
             <Carousel/>

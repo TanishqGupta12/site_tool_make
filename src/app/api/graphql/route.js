@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+// import { NextResponse } from "next/server";
 import { GraphQLBigInt } from "graphql-scalars";
 import { ApolloServer } from "@apollo/server";
 import { PrismaClient } from "@prisma/client";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
-import { startStandaloneServer } from '@apollo/server/standalone';
+// import { startStandaloneServer } from '@apollo/server/standalone';
 import { GraphQLError } from 'graphql';
 
 const prisma = new PrismaClient();
@@ -83,6 +83,7 @@ const typeDefs = `
   type Query {
     users: [User]
     user(id: ID!): User
+    
     roles: [Role]
     role(id: ID!): Role
     
@@ -114,8 +115,16 @@ const resolvers = {
       domains: async () => {
         return await prisma.domain.findMany();
       },
-      domain: async (_, { id }) => {
-        return await prisma.domain.findUnique({ where: { id: Number(id) } });
+      // domain: async (_, { id }) => {
+      //   return await prisma.domain.findUnique({ where: { id: Number(id) } });
+      // },
+      domain: async (_, { id }, ctx) => {
+        var sub_domain = ctx.domain[0].subdomain_name
+        
+        return await prisma.domain.findFirst({
+            where: { subdomain_name: sub_domain },
+            include: { events: true },
+        });
       },
       events: async () => {
         return await prisma.event.findMany();
@@ -160,7 +169,7 @@ const resolvers = {
       if (!sub_domain) {
         throw new GraphQLError("Subdomain not found in headers");
       }
-      console.log(sub_domain);
+
       
       try {
         const domain = await prisma.domain.findMany({
@@ -169,7 +178,7 @@ const resolvers = {
             events: true
           }
         });
-        console.log(domain);
+
         
         if (!domain || domain.length === 0) {
             new GraphQLError("Domain and Event not found");
