@@ -2,7 +2,7 @@ import type { NextAdminOptions} from "@premieroctet/next-admin";
 
 import { handleCloudinaryRequest } from "@/lib/cloudinary";
 
-import dynamic from "next/dynamic";
+
 
 
 
@@ -113,7 +113,7 @@ const options: NextAdminOptions = {
                 return uploadResult.secure_url;
               },
               get: async (value: any) => {
-                return value
+                return value;
               }
             },
             hooks: {
