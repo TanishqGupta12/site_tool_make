@@ -23,40 +23,76 @@ query {
     domain_name
     subdomain_name
     host
-
-    description  
-    logo_file_name   
-    logo_meta   
+    description
+    logo_file_name
+    logo_meta
     custom_font_name
-    
     createdAt
     updatedAt
+
+    events {
+      id
+      name
+      domainId
+      description
+      startDate
+      hasGallery
+      hasInfo
+      hasAboutPage
+      hasContactPage
+      slug
+      latitude
+      longitude
+      endDate
+      email
+      phone
+      logoMeta
+      timeZone
+      customCss
+      customJs
+      termsAndConditions
+      protectedGallery
+      paymentNeeded
+      publishableKey
+      secretKey
+      templateVersion
+      eventAgendaDescription
+      landingPageContent
+      onlyLandingPage
+      hideRegistrationButton
+      sendRegistrationConfirmationEmailToGuest
+      footerText
+      hideBlog
+      hideForum
+      createdAt
+      updatedAt
+    }
   }
   roles {
-     id
-     name
-   }
-
+    id
+    name
+  }
 }
 `;
 
 export default function Main_v1() {
 
-    const { loading, error, data } = useQuery<GetDataResponse>(GET_DATA);
+  const { loading, error, data } = useQuery<GetDataResponse>(GET_DATA);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error fkc: {error.message}</p>;
-    if (!data || !data?.domain) return <p>No data available </p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error fkc: {error.message}</p>;
+  if (!data || !data?.domain) return <p>No data available </p>;
 
-    return (
-        <>
-            <Carousel/>
-            <About/>
-            <Category/>
-            <Courses/>
-            <Teacher/>
-            <Testimonial/>
-            <Blog/>
-        </>
-    );
+  return (
+    <>
+      {console.log(data?.domain)}
+      <Carousel />
+      <About />
+      <Category />
+      <Courses />
+      <Teacher />
+      <Testimonial />
+      <Blog />
+    </>
+  );
 }
