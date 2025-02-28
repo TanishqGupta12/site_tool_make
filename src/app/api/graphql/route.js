@@ -20,14 +20,14 @@ const typeDefs = `
   }
 
   type Domain {
-    id:               BigInt!  
-    domain_name:      String!  
-    subdomain_name:   String! 
-    host:             String! 
-    description:      String!  
-    logo_file_name:   String!   
-    logo_meta:        String!   
-    custom_font_name: String!  
+    id:               BigInt  
+    domain_name:      String  
+    subdomain_name:   String 
+    host:             String 
+    description:      String  
+    logo_file_name:   String   
+    logo_meta:        String   
+    custom_font_name: String  
 
     createdAt:        String!
     updatedAt:        String!
@@ -36,38 +36,38 @@ const typeDefs = `
     type Event {
 
         id:      ID!
-        name:    String!
+        name:    String
         domainId:  Int
-        description:   String! 
+        description:   String 
         startDate:     String
-        hasGallery:    Boolean! 
-        hasInfo:       Boolean! 
-        hasAboutPage:  Boolean! 
-        hasContactPage: Boolean! 
-        slug:           String! 
-        latitude:       Float! 
-        longitude:      Float! 
+        hasGallery:    Boolean 
+        hasInfo:       Boolean 
+        hasAboutPage:  Boolean 
+        hasContactPage: Boolean 
+        slug:           String 
+        latitude:       Float 
+        longitude:      Float 
         endDate:       String
-        email:         String! 
-        phone:         String! 
-        logoMeta:      String! 
-        timeZone:      String! 
-        customCss:     String! 
-        customJs:      String! 
-        termsAndConditions:  String! 
-        protectedGallery:    Boolean! 
-        paymentNeeded:       Boolean! 
-        publishableKey:      String! 
-        secretKey:           String! 
-        templateVersion:     String! 
-        eventAgendaDescription: String! 
-        landingPageContent:  String! 
-        onlyLandingPage:     Boolean! 
-        hideRegistrationButton:  Boolean! 
-        sendRegistrationConfirmationEmailToGuest:  Boolean! 
-        footerText:  String! 
-        hideBlog:    Boolean! 
-        hideForum:   Boolean! 
+        email:         String 
+        phone:         String 
+        logoMeta:      String 
+        timeZone:      String 
+        customCss:     String 
+        customJs:      String 
+        termsAndConditions:  String 
+        protectedGallery:    Boolean 
+        paymentNeeded:       Boolean 
+        publishableKey:      String 
+        secretKey:           String 
+        templateVersion:     String 
+        eventAgendaDescription: String 
+        landingPageContent:  String 
+        onlyLandingPage:     Boolean 
+        hideRegistrationButton:  Boolean 
+        sendRegistrationConfirmationEmailToGuest:  Boolean 
+        footerText:  String 
+        hideBlog:    Boolean 
+        hideForum:   Boolean 
         createdAt:   String
         updatedAt:   String
         domain:      Domain
