@@ -99,7 +99,7 @@ export default function Navbar_v1() {
 
                   {/* Blog Dropdown */}
                   <Link href="/academy/blog" legacyBehavior>
-                    <a className="nav-item nav-link">Contact</a>
+                    <a className="nav-item nav-link">blog</a>
                   </Link>
 
                   <Link href="/academy/contact" legacyBehavior>
@@ -108,7 +108,7 @@ export default function Navbar_v1() {
                 </div>
 
                 {/* Join Now Button */}
-                <Link href="#" legacyBehavior>
+                <Link href="/academy/signup" legacyBehavior>
                   <a className="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Join Now</a>
                 </Link>
               </div>

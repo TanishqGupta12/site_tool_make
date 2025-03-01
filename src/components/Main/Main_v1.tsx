@@ -19,17 +19,6 @@ import { gql, useQuery } from '@apollo/client';
 const GET_DATA = gql`
 query {
   domain(id: 5) {
-    id
-    domain_name
-    subdomain_name
-    host
-    description
-    logo_file_name
-    logo_meta
-    custom_font_name
-    createdAt
-    updatedAt
-
     events {
       id
       name
@@ -72,7 +61,7 @@ export default function Main_v1() {
 
   const { loading, error, data } = useQuery<GetDataResponse>(GET_DATA);
   const [event , Setevent] = useState()
-  
+
     useEffect(() => {
       Setevent(data?.domain?.events[0])
     },[data?.domain]);
