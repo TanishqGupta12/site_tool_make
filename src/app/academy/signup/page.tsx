@@ -3,9 +3,56 @@ import React , { useState } from "react";
 import Footer_v1 from "@/components/footer/Footer_v1";
 import Navbar_v1 from "@/components/navbar/Navbar_v1";
 
+import {GetDataResponse} from "@/interface/types";
+
+import { gql, useQuery } from '@apollo/client';
+
+
+const GET_DATA = gql`
+query {
+
+    event(id: 1) {
+      id
+      name
+      domainId
+      description
+      startDate
+      slug
+      latitude
+      longitude
+      email
+      phone
+      timeZone
+      customCss
+      customJs
+      termsAndConditions
+      paymentNeeded
+      publishableKey
+      secretKey
+      sendRegistrationConfirmationEmailToGuest
+      footerText
+      PageContent
+      galleryText
+      hideAboutPage
+      hideCategory
+      hideCourses
+      hideGallery
+      hideInfo
+      hideTeacherPage
+      hideBlog
+    }
+}
+`;
+
 export default function Signup() {
 
     const [selectedOption, setSelectedOption] = useState("");
+      const { loading, error, data } = useQuery<GetDataResponse>(GET_DATA);
+
+      if (loading) return <p>Loading...</p>;
+      if (error) return <p>Error fkc: {error.message}</p>;
+      if (!data || !data?.event) return <p>No data available </p>;
+    {console.log(data)}
   return (
     <>
         <Navbar_v1 />

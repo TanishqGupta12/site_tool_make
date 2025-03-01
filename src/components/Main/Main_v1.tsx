@@ -64,6 +64,7 @@ export default function Main_v1() {
 
     useEffect(() => {
       Setevent(data?.domain?.events[0])
+      localStorage.setItem("event_id" ,data?.domain?.events[0]?.id)
     },[data?.domain]);
 
   if (loading) return <p>Loading...</p>;
