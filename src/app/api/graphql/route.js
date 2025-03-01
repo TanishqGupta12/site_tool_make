@@ -31,42 +31,37 @@ const typeDefs = `
     events: [Event]
   }
   
-  type Event {
+type Event {
     id: ID!
     name: String
     domainId: Int
     description: String
     startDate: String
-    hasGallery: String
-    hasInfo: Boolean
-    hasAboutPage: Boolean
-    hasContactPage: Boolean
     slug: String
     latitude: Float
     longitude: Float
-    endDate: String
     email: String
     phone: String
-    logoMeta: String
     timeZone: String
+
     customCss: String
     customJs: String
     termsAndConditions: String
-    protectedGallery: Boolean
     paymentNeeded: Boolean
     publishableKey: String
     secretKey: String
-    templateVersion: String
-    eventAgendaDescription: String
-    landingPageContent: String
-    onlyLandingPage: Boolean
-    hideRegistrationButton: Boolean
     sendRegistrationConfirmationEmailToGuest: Boolean
     footerText: String
     hideBlog: Boolean
-    hideForum: Boolean
-    createdAt: String
-    updatedAt: String
+
+    PageContent: String
+    galleryText: String
+    hideAboutPage: Boolean
+    hideCategory: Boolean
+    hideCourses: Boolean
+    hideGallery: Boolean
+    hideInfo: Boolean
+    hideTeacherPage: Boolean
 
   }
 
@@ -123,6 +118,11 @@ const resolvers = {
     },
     event: async (_, { id }) => await prisma.event.findUnique({ where: { id: Number(id) } }),
   },
+  // Event: {
+  //   domainsHas: async () => {
+  //     return true;
+  //   },
+  // },
   Mutation: {
     createUser: async (_, { name, email }) => {
       return await prisma.user.create({ data: { name, email } });

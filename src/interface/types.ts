@@ -4,41 +4,37 @@ interface Role {
 }
 
 interface Event {
-  id: string;
-  name: string;
-  domainId: string;
-  description: string;
-  startDate: string;
-  hasGallery: string;
-  hasInfo: boolean;
-  hasAboutPage: boolean;
-  hasContactPage: boolean;
-  slug: string;
-  latitude: number;
-  longitude: number;
-  endDate: string;
-  email: string;
-  phone: string;
-  logoMeta: string;
-  timeZone: string;
-  customCss: string;
-  customJs: string;
-  termsAndConditions: string;
-  protectedGallery: boolean;
-  paymentNeeded: boolean;
-  publishableKey: string;
-  secretKey: string;
-  templateVersion: string;
-  eventAgendaDescription: string;
-  landingPageContent: string;
-  onlyLandingPage: boolean;
-  hideRegistrationButton: boolean;
-  sendRegistrationConfirmationEmailToGuest: boolean;
-  footerText: string;
-  hideBlog: boolean;
-  hideForum: boolean;
-  createdAt: string;
-  updatedAt: string;
+
+    id: string;
+    name: string;
+    domainId: string;
+    description: string;
+    startDate: string;
+    slug: string;
+    latitude: GLfloat;
+    longitude: GLfloat;
+    email: string;
+    phone: string
+    timeZone: string;
+    customCss: string;
+    customJs: string;
+    termsAndConditions: string;
+    paymentNeeded: boolean;
+    publishableKey: string;
+    secretKey: string;
+    sendRegistrationConfirmationEmailToGuest: boolean;
+    footerText: string;
+    hideBlog: boolean;
+
+    PageContent: string;
+    galleryText: string;
+    hideAboutPage: boolean;
+    hideCategory: boolean;
+    hideCourses: boolean;
+    hideGallery: boolean;
+    hideInfo: boolean;
+    hideTeacherPage: boolean;
+  
 }
 
 interface Domain {

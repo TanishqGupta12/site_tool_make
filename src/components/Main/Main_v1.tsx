@@ -36,36 +36,29 @@ query {
       domainId
       description
       startDate
-      hasGallery
-      hasInfo
-      hasAboutPage
-      hasContactPage
       slug
       latitude
       longitude
-      endDate
       email
       phone
-      logoMeta
       timeZone
       customCss
       customJs
       termsAndConditions
-      protectedGallery
       paymentNeeded
       publishableKey
       secretKey
-      templateVersion
-      eventAgendaDescription
-      landingPageContent
-      onlyLandingPage
-      hideRegistrationButton
       sendRegistrationConfirmationEmailToGuest
       footerText
       hideBlog
-      hideForum
-      createdAt
-      updatedAt
+      PageContent
+      galleryText
+      hideAboutPage
+      hideCategory
+      hideCourses
+      hideGallery
+      hideInfo
+      hideTeacherPage
     }
   }
   roles {

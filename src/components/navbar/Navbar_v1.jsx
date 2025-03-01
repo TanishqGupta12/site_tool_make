@@ -98,19 +98,9 @@ export default function Navbar_v1() {
                   </Link>
 
                   {/* Blog Dropdown */}
-                  <div className="nav-item dropdown">
-                    <Link href="/academy/blog" legacyBehavior>
-                      <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Blog</a>
-                    </Link>
-                    <div className="dropdown-menu">
-                      <Link href="/academy/blog/category1" legacyBehavior>
-                        <a className="dropdown-item">Category 1</a>
-                      </Link>
-                      <Link href="/academy/blog/category2" legacyBehavior>
-                        <a className="dropdown-item">Category 2</a>
-                      </Link>
-                    </div>
-                  </div>
+                  <Link href="/academy/blog" legacyBehavior>
+                    <a className="nav-item nav-link">Contact</a>
+                  </Link>
 
                   <Link href="/academy/contact" legacyBehavior>
                     <a className="nav-item nav-link">Contact</a>
