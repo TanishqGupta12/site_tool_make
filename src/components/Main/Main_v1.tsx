@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React  , { useState , useEffect} from "react";
 
 import Blog from "../Main/blog";
 import Testimonial from "../Main/Testimonial";
@@ -50,7 +50,6 @@ query {
       secretKey
       sendRegistrationConfirmationEmailToGuest
       footerText
-      hideBlog
       PageContent
       galleryText
       hideAboutPage
@@ -59,6 +58,7 @@ query {
       hideGallery
       hideInfo
       hideTeacherPage
+      hideBlog
     }
   }
   roles {
@@ -71,6 +71,11 @@ query {
 export default function Main_v1() {
 
   const { loading, error, data } = useQuery<GetDataResponse>(GET_DATA);
+  const [event , Setevent] = useState()
+  
+    useEffect(() => {
+      Setevent(data?.domain?.events[0])
+    },[data?.domain]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error fkc: {error.message}</p>;
@@ -78,14 +83,30 @@ export default function Main_v1() {
 
   return (
     <>
-      {console.log(data?.domain)}
-      <Carousel />
-      <About />
-      <Category />
-      <Courses />
-      <Teacher />
-      <Testimonial />
-      <Blog />
+
+      {event && event?.hideGallery == false ? "" :  <Carousel /> }
+      {event && event?.hideAboutPage == false ? "" :  <About /> }
+      
+      {event && event?.hideCategory == false ? "" :  <Category /> }
+      {event && event?.hideCourses == false ? "" :  <Courses /> }
+      {event && event?.hideTeacherPage == false ? "" :  <Teacher /> }
+
+      {event && event?.hideInfo == false ? "" :  <Testimonial /> }
+      {event && event?.hideBlog == false ? "" :  <Blog /> }
+
+      <main className="wrap">
+        <section className="container">
+          <div className="container__heading">
+            <h2>Terms & Conditions</h2>
+          </div>
+          <div className="container__content">
+            <p>
+              {event && event?.termsAndConditions}
+            </p>
+
+          </div>
+        </section>
+      </main>
     </>
   );
 }
