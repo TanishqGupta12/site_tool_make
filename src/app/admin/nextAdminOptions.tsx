@@ -125,8 +125,14 @@ const options: NextAdminOptions = {
           }
         },
       },
+    },
+    Form: {
+      toString: (form) => `(${form.id.toString()}) (${form.caption})  `,
+      title: "Form",
+      icon: "Square2StackIcon",
+      edit: {
+      },
     }
-    
   },
   pages: {
     "/custom": {

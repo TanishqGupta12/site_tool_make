@@ -52,16 +52,7 @@ export default function Navbar_v1() {
       {/* Navbar Start */}
       <div className="container-fluid">
         <div className="row border-top px-xl-5">
-          <div className="col-lg-3 d-none d-lg-block">
-            <div  className="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none"  
-            style={{ height: "67px", padding: "0 30px" }}>
 
-              <input className="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none" placeholder='sarch..'
-              style={{ height: "67px", padding: "0 5px" }}
-              />
-
-           </div>
-          </div>
           <div className="col-lg-9">
             <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
               {/* Mobile Brand */}

@@ -1,8 +1,21 @@
 interface Role {
    id: string;
    name: string;
+
 }
 
+interface Form {
+  id: string;
+  caption: string;
+  Description: string;
+  startDate: string;
+  slug: string;
+  is_active: boolean;
+
+  registration_successful_message: string;
+  registration_updated_successful_message: string;
+
+}
 interface Event {
 
     id: string;
@@ -34,6 +47,8 @@ interface Event {
     hideGallery: boolean;
     hideInfo: boolean;
     hideTeacherPage: boolean;
+
+    forms: Form[]
   
 }
 
@@ -57,7 +72,11 @@ interface Domain {
 export interface GetDataResponse {
   role: Role;
   roles: Role[];
+
   domain: Domain;
 
+  forms: Form[]
+  form: Form
+  
   event: Event;
 }

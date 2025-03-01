@@ -31,6 +31,20 @@ const typeDefs = `
     events: [Event]
   }
   
+  type Form {
+    id: ID!
+    caption: String
+    Description: String
+    startDate: String
+    slug: String
+    is_active: Boolean
+
+    registration_successful_message: String
+    registration_updated_successful_message: String
+
+    eventId: ID!
+  }
+
 type Event {
     id: ID!
     name: String
@@ -63,6 +77,8 @@ type Event {
     hideInfo: Boolean
     hideTeacherPage: Boolean
 
+    forms: [Form] # Forms are now linked correctly!
+
   }
 
 
@@ -82,6 +98,9 @@ type Event {
 
     events: [Event]
     event(id: ID!): Event
+
+    forms: [Form]
+    form(id: ID!): Form
   }
 
   type Mutation {
@@ -112,17 +131,25 @@ const resolvers = {
       });
     },
     events: async () => {
-    const events = await prisma.event.findMany()
-    console.log('events');
+    const events = await prisma.event.findMany({include: { forms: true }})
       return  events
     },
     event: async (_, { id }) => await prisma.event.findUnique({ where: { id: Number(id) } }),
+    form: async (_, { id }) => await prisma.form.findUnique({ where: { id: Number(id) } }),
+    forms: async () => await prisma.form.findMany({ where: { is_active: true }}),
   },
-  // Event: {
-  //   domainsHas: async () => {
-  //     return true;
-  //   },
-  // },
+
+  Event: {
+    forms: async (parent) => {
+      return await prisma.form.findMany({
+        where: {
+          is_active: true,
+          event_id: parent.id
+        },
+      });
+    },
+  },
+
   Mutation: {
     createUser: async (_, { name, email }) => {
       return await prisma.user.create({ data: { name, email } });
