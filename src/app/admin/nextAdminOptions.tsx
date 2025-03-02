@@ -157,12 +157,12 @@ const options: NextAdminOptions = {
         fields: {
           field_type:{
             format: "select",
-            input: <CustomButton  value={Object.keys(Prisma.UserScalarFieldEnum)} name="field_type" disabled={false} required={true} />,
+            input: <CustomButton  options={Object.keys(Prisma.UserScalarFieldEnum)} name="field_type" disabled={false} required={true} />,
 
           },
           data_field: {
             format: "select",
-            input: <CustomButton value={inputTypes} />,
+            input: <CustomButton options={inputTypes}  name="data_field" disabled={false} required={true}  />,
 
           }
         }

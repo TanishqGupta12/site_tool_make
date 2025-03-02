@@ -36,6 +36,13 @@ query {
                 is_active
                 file_upload_filed
                 file_upload_type
+                form_field_choices{
+                    id
+                    sequence
+                    caption
+                    isActive
+                    specificFieldIfOther
+                }
             }
         }
     }

@@ -197,6 +197,8 @@ const resolvers = {
   },
   Form: {
     form_section_fields: async (parent) => {
+      // console.log(parent);
+      
       return await prisma.formSectionField.findMany({
         where: {
           is_active: true,
@@ -208,12 +210,13 @@ const resolvers = {
 
   FormSectionField: {
     form_field_choices: async (parent) => {
-      return await prisma.form_field_choices.findMany({
+      
+      const data = await prisma.formFieldChoice.findMany({
         where: {
-          is_active: true,
+          isActive: true, 
           form_section_field_id: parent.id
         },
-      });
+      });      return data;
     },
   },
   // FormFieldChoice: {
