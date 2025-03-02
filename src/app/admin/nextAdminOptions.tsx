@@ -162,6 +162,14 @@ const options: NextAdminOptions = {
           }
         }
       },
+    },
+    FormFieldChoice: {
+      toString: (choice) => `(${choice.id.toString()}) (${choice.caption})  `,
+      title: "FormFieldChoice",
+      icon: "Square2StackIcon",
+      edit: {
+ 
+      },
     }
   },
   pages: {
