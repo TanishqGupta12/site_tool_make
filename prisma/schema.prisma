@@ -223,6 +223,8 @@ model FormSectionField {
   created_at                                     DateTime @default(now())
   updated_at                                     DateTime @updatedAt
 
+  form_field_choices                             FormFieldChoice[]
+
    @@map("form_section_fields")
 
 
@@ -240,4 +242,24 @@ model PostGallery {
   updatedAt                                DateTime    @updatedAt
 
   @@map("post_galleries")
+}
+
+model FormFieldChoice {
+  id                              BigInt    @id @default(autoincrement())
+  sequence                        Int?      @db.Int
+
+  caption                         String?   @db.VarChar(255)
+  isActive                        Boolean   @default(true) @db.TinyInt
+
+  specificFieldIfOther            Boolean?  @db.TinyInt
+
+  createdAt                       DateTime  @db.DateTime
+  updatedAt                       DateTime  @db.DateTime
+
+  
+
+  // You can define the relationships if needed based on the foreign keys
+  form_section_field_id           Int?
+  form_section_field   FormSectionField? @relation(fields: [form_section_field_id], references: [id])
+  @@map("form_field_choices")
 }
