@@ -165,9 +165,9 @@ const options: NextAdminOptions = {
     }
   },
   pages: {
-    "/custom": {
-      title: "Custom page",
-      icon: "AdjustmentsHorizontalIcon",
+    "": {
+      title: "Home",
+      icon: "HomeIcon",
     },
   }
 }
