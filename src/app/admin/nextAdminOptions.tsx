@@ -142,6 +142,11 @@ const options: NextAdminOptions = {
       title: "Form",
       icon: "Square2StackIcon",
       edit: {
+        fields: {
+          Description:{
+            format: "richtext-html"
+          }
+        }
       },
     },
     FormSectionField: {
@@ -152,12 +157,12 @@ const options: NextAdminOptions = {
         fields: {
           field_type:{
             format: "select",
-            input: <CustomButton  options={Object.keys(Prisma.UserScalarFieldEnum)} />,
+            input: <CustomButton  value={Object.keys(Prisma.UserScalarFieldEnum)} name="field_type" disabled={false} required={true} />,
 
           },
           data_field: {
             format: "select",
-            input: <CustomButton options={inputTypes} />,
+            input: <CustomButton value={inputTypes} />,
 
           }
         }

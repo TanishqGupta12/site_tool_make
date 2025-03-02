@@ -16,7 +16,7 @@ const typeDefs = `
     name: String!
     email: String!
   }
-
+  
   type Domain {
     id: BigInt
     domain_name: String
@@ -30,6 +30,41 @@ const typeDefs = `
     updatedAt: String!
     events: [Event]
   }
+
+  type FormFieldChoice {
+
+    id: BigInt
+    sequence: Int
+    caption: String
+    isActive: Boolean
+    specificFieldIfOther: Boolean
+    createdAt: String
+    updatedAt: String
+
+    form_section_field: [FormSectionField]
+
+  }
+
+  type FormSectionField {
+    id: Int
+    caption: String
+    placeholder: String
+    field_hint: String
+    field_type: String
+    data_field: String
+    sequence: Int
+    is_required: Boolean
+    is_active: Boolean
+    form_id: Int
+    form_section_id: Int
+    file_upload_filed: Boolean
+    file_upload_type: String
+    created_at: String
+    updated_at: String
+    form: Form
+  
+    form_field_choices: [FormFieldChoice]
+}
   
   type Form {
     id: ID!
@@ -43,6 +78,8 @@ const typeDefs = `
     registration_updated_successful_message: String
 
     eventId: ID!
+
+    form_section_fields: [FormSectionField]
   }
 
 type Event {
@@ -101,6 +138,13 @@ type Event {
 
     forms: [Form]
     form(id: ID!): Form
+
+    form_section_fields: [FormSectionField]
+    form_section_field(id: ID!): FormSectionField
+
+    form_field_choices: [FormFieldChoice]
+    form_field_choice(id: ID!): FormFieldChoice
+  
   }
 
   type Mutation {
@@ -137,6 +181,8 @@ const resolvers = {
     event: async (_, { id }) => await prisma.event.findUnique({ where: { id: Number(id) } }),
     form: async (_, { id }) => await prisma.form.findUnique({ where: { id: Number(id) } }),
     forms: async () => await prisma.form.findMany({ where: { is_active: true }}),
+    form_section_fields: async () => await prisma.formSectionField.findMany({ where: { is_active: true }}),
+    form_field_choices: async () => await prisma.form_field_choices.findMany({ where: { is_active: true }}),
   },
 
   Event: {
@@ -149,6 +195,37 @@ const resolvers = {
       });
     },
   },
+  Form: {
+    form_section_fields: async (parent) => {
+      return await prisma.formSectionField.findMany({
+        where: {
+          is_active: true,
+          form_id: parent.id
+        },
+      });
+    },
+  },
+
+  FormSectionField: {
+    form_field_choices: async (parent) => {
+      return await prisma.form_field_choices.findMany({
+        where: {
+          is_active: true,
+          form_section_field_id: parent.id
+        },
+      });
+    },
+  },
+  // FormFieldChoice: {
+  //   forms: async (parent) => {
+  //     return await prisma.form.findMany({
+  //       where: {
+  //         is_active: true,
+  //         event_id: parent.form_section_field.form_id
+  //       },
+  //     });
+  //   },
+  // },
 
   Mutation: {
     createUser: async (_, { name, email }) => {

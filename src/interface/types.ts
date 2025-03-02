@@ -4,6 +4,39 @@ interface Role {
 
 }
 
+interface FormFieldChoice {
+  id: string
+  sequence: string
+  caption: string
+  isActive: Boolean
+  specificFieldIfOther: Boolean
+  createdAt: string
+  updatedAt: string
+  form_section_field_id: string
+
+}
+
+interface FormSectionField {
+  id: string;
+  caption: string;
+  placeholder: string;
+  field_hint: string;
+  field_type: string;
+  data_field: string;
+  sequence: string
+  is_required: Boolean;
+  is_active: Boolean;
+  form_id: string;
+  form_section_id: string;
+  file_upload_filed: Boolean;
+  file_upload_type: string;
+  created_at: string;
+  updated_at: string;
+  form: Form[];
+  // form_section: FormSection[];
+  form_field_choices: FormFieldChoice[];
+}
+
 interface Form {
   id: string;
   caption: string;
@@ -12,6 +45,7 @@ interface Form {
   slug: string;
   is_active: boolean;
 
+  form_section_fields: FormSectionField[]
   registration_successful_message: string;
   registration_updated_successful_message: string;
 

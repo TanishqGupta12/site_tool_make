@@ -32,9 +32,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({ options }) => {
           label="Age"
           onChange={handleChange}
         >
-          {options && options.map((type, index) => (
-              <MenuItem key={index} value={type}>{type}</MenuItem>
-          ))}
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem>
         </Select>
       </FormControl>
     </Box>

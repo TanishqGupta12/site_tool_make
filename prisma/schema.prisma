@@ -245,7 +245,7 @@ model PostGallery {
 }
 
 model FormFieldChoice {
-  id                              BigInt    @id @default(autoincrement())
+  id                              Int    @id @default(autoincrement())
   sequence                        Int?      @db.Int
 
   caption                         String?   @db.VarChar(255)

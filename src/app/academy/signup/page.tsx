@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 const GET_DATA = gql`
 query {
 
-    event(id: 1) {
+    event(id: 2) {
         id
         forms {
             id
@@ -24,6 +24,19 @@ query {
 
             registration_successful_message
             registration_updated_successful_message
+            form_section_fields{
+                id
+                caption
+                placeholder
+                field_hint
+                field_type
+                data_field
+                sequence
+                is_required
+                is_active
+                file_upload_filed
+                file_upload_type
+            }
         }
     }
 }
