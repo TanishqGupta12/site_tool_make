@@ -74,15 +74,15 @@ export default function Main_v1() {
   return (
     <>
 
-      {event && event?.hideGallery == false ? "" :  <Carousel /> }
-      {event && event?.hideAboutPage == false ? "" :  <About /> }
+      {event && event?.hideGallery == true ? "" :  <Carousel /> }
+      {event && event?.hideAboutPage == true ? "" :  <About /> }
       
-      {event && event?.hideCategory == false ? "" :  <Category /> }
-      {event && event?.hideCourses == false ? "" :  <Courses /> }
-      {event && event?.hideTeacherPage == false ? "" :  <Teacher /> }
+      {event && event?.hideCategory == true ? "" :  <Category /> }
+      {event && event?.hideCourses == true ? "" :  <Courses /> }
+      {event && event?.hideTeacherPage == true ? "" :  <Teacher /> }
 
-      {event && event?.hideInfo == false ? "" :  <Testimonial /> }
-      {event && event?.hideBlog == false ? "" :  <Blog /> }
+      {event && event?.hideInfo == true ? "" :  <Testimonial /> }
+      {event && event?.hideBlog == true ? "" :  <Blog /> }
 
       <main className="wrap">
         <section className="container">
