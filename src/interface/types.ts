@@ -32,6 +32,7 @@ interface FormSectionField {
   file_upload_type: string;
   created_at: string;
   updated_at: string;
+  is_single_column: boolean;
   form: Form[];
   // form_section: FormSection[];
   form_field_choices: FormFieldChoice[];

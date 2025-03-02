@@ -209,7 +209,7 @@ model FormSectionField {
 
   is_required                                    Boolean  @default(false)
   is_active                                      Boolean  @default(true)
-  
+  is_single_column                               Boolean  @default(false)
   form_id                                        Int? 
   form Form? @relation(fields: [form_id], references: [id])
 

@@ -61,6 +61,7 @@ const typeDefs = `
     file_upload_type: String
     created_at: String
     updated_at: String
+    is_single_column: Boolean
     form: Form
   
     form_field_choices: [FormFieldChoice]
