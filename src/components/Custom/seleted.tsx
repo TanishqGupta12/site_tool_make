@@ -10,29 +10,35 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 type Props = CustomInputProps;
 
-export default function Seleted() { // ✅ Capitalized component name
-  const [age, setAge] = useState("");
+
+interface CustomButtonProps {
+  options: string[]; // The options prop will be an array of strings
+}
+const CustomButton: React.FC<CustomButtonProps> = ({ options }) => {
+  const [value, setvalue] = useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setvalue(event.target.value as string);
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+    <Box sx={{ minWidth: 120, border:'none' }}>
+      <FormControl fullWidth className="ring-nextadmin-border-default dark:ring-dark-nextadmin-border-strong dark:bg-dark-nextadmin-background-subtle flex w-full cursor-default justify-between rounded-md px-3 py-2 text-sm placeholder-gray-500 shadow-sm ring-1">
         <Select
           labelId="demo-simple-select-label"
+          sx={{ border:'none' }}
           id="demo-simple-select"
-          value={age}
+          value={value}
           label="Age"
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {options && options.map((type, index) => (
+              <MenuItem key={index} value={type}>{type}</MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>
   );
 }
+
+export default CustomButton;

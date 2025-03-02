@@ -3,11 +3,17 @@ import type { NextAdminOptions} from "@premieroctet/next-admin";
 import { handleCloudinaryRequest } from "@/lib/cloudinary";
 
 
-import { PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
-import CusitomBuutn from "@/components/Custom/seleted";
 
-const prisma = new PrismaClient();
+import CustomButton from "@/components/Custom/seleted";
+
+let inputTypes = [
+  "text", "password", "checkbox", "radio", "file", "date", 
+  "email", "number", "tel", "url", "search", "range", 
+  "color", "datetime-local", "month", "week", "time", 
+  "button", "submit", "reset", "image", "hidden"
+];
 const options: NextAdminOptions = {
   title: "Dashboard",
 
@@ -145,17 +151,13 @@ const options: NextAdminOptions = {
       edit: {
         fields: {
           field_type:{
-            input: CusitomBuutn
-            // format: "Dropdown", // Dropdown selection
-            // label: "Field Type",
-            // value: {
-            //   "admin": "lunj",
-            //   "admina": "lunj"
-            // },
+            format: "select",
+            input: <CustomButton  options={Object.keys(Prisma.UserScalarFieldEnum)} />,
 
           },
           data_field: {
-            format: "select", // Dropdown selection
+            format: "select",
+            input: <CustomButton options={inputTypes} />,
 
           }
         }
