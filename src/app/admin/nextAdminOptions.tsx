@@ -3,9 +3,11 @@ import type { NextAdminOptions} from "@premieroctet/next-admin";
 import { handleCloudinaryRequest } from "@/lib/cloudinary";
 
 
+import { PrismaClient } from "@prisma/client";
 
+import CusitomBuutn from "@/components/Custom/seleted";
 
-
+const prisma = new PrismaClient();
 const options: NextAdminOptions = {
   title: "Dashboard",
 
@@ -34,6 +36,9 @@ const options: NextAdminOptions = {
         //   "domain"
         // ],
         fields: {
+          termsAndConditions: {
+            format: "richtext-html"
+          },
           name: {
             
           },
@@ -131,6 +136,29 @@ const options: NextAdminOptions = {
       title: "Form",
       icon: "Square2StackIcon",
       edit: {
+      },
+    },
+    FormSectionField: {
+      toString: (field) => `(${field.id.toString()}) (${field.caption})  `,
+      title: "FormSectionField",
+      icon: "Square2StackIcon",
+      edit: {
+        fields: {
+          field_type:{
+            input: CusitomBuutn
+            // format: "Dropdown", // Dropdown selection
+            // label: "Field Type",
+            // value: {
+            //   "admin": "lunj",
+            //   "admina": "lunj"
+            // },
+
+          },
+          data_field: {
+            format: "select", // Dropdown selection
+
+          }
+        }
       },
     }
   },

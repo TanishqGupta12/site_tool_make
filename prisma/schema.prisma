@@ -106,8 +106,23 @@ model User {
   updatedAt              DateTime  @updatedAt
 
   roleId                 Int?   // Foreign key reference to Role
-  role                   Role?     @relation("RoleToUsers", fields: [roleId], references: [id])  
+  role                   Role?     @relation("RoleToUsers", fields: [roleId], references: [id]) 
 
+  f1                    String?    @db.VarChar(255) 
+  f2                    String?    @db.VarChar(255) 
+  f3                    String?    @db.VarChar(255) 
+  f4                    String?    @db.VarChar(255) 
+  f5                    String?    @db.VarChar(255) 
+  f6                    String?    @db.VarChar(255) 
+  f7                    String?    @db.VarChar(255) 
+  f8                    String?    @db.VarChar(255) 
+  f9                    String?    @db.VarChar(255) 
+  f10                   String?    @db.VarChar(255) 
+  f11                   String?    @db.VarChar(255) 
+  f12                   String?    @db.VarChar(255) 
+  f13                   String?    @db.VarChar(255) 
+  f14                   String?    @db.VarChar(255) 
+  f15                   String?    @db.VarChar(255) 
 
   events EventUser[]  // Relationship to UserEvent 
 
