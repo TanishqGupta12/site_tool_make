@@ -9,8 +9,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 // Define the Props type, extending CustomInputProps
 type Props = CustomInputProps;
 
-const CustomButton = ({ options, name, onChange, disabled, required }: Props) => {
-  const [value, setValue] = useState<string>("");
+const CustomButton = ({ options, value,name, onChange, disabled, required }: Props) => {
+  const [currentvalue, setValue] = useState<string>("");
 
   // Handle the select value change
   const handleChange = (event: SelectChangeEvent) => {
@@ -35,7 +35,7 @@ const CustomButton = ({ options, name, onChange, disabled, required }: Props) =>
             labelId="demo-simple-select-label"
             sx={{ border: "none" }}
             id="demo-simple-select"
-            value={value}
+            value={currentvalue != "" ? currentvalue : value}
             label="Select Option"
             required={required}
             disabled={disabled}
@@ -52,7 +52,7 @@ const CustomButton = ({ options, name, onChange, disabled, required }: Props) =>
       </Box>
 
       {/* Hidden input for form submission */}
-      <input type="hidden" name={name} value={value ?? ""} />
+      <input type="hidden" name={name} value={currentvalue != "" ? currentvalue : value} />
     </>
   );
 };
