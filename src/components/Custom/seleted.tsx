@@ -9,8 +9,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 // Define the Props type, extending CustomInputProps
 type Props = CustomInputProps;
 
-const CustomButton = ({ options, value,name, onChange, disabled, required }: Props) => {
-  const [currentvalue, setValue] = useState<string>("");
+const CustomButton = ({ options, value, name, onChange, disabled, required }: Props) => {
+  const [currentValue, setValue] = useState<string>(value || ""); // Ensures initial state
 
   // Handle the select value change
   const handleChange = (event: SelectChangeEvent) => {
@@ -26,33 +26,33 @@ const CustomButton = ({ options, value,name, onChange, disabled, required }: Pro
 
   return (
     <>
-      <Box sx={{ minWidth: 120, border: "none" }} className="ring-nextadmin-border-default dark:ring-dark-nextadmin-border-strong dark:bg-dark-nextadmin-background-subtle flex w-full cursor-default justify-between rounded-md px-3 py-2 text-sm placeholder-gray-500 shadow-sm ring-1">
-        <FormControl
-          fullWidth
-          
-        >
+      <Box
+         className="ring-nextadmin-border-default dark:ring-dark-nextadmin-border-strong 
+           dark:bg-dark-nextadmin-background-subtle w-full rounded-md text-sm 
+           shadow-sm ring-1 ring-gray-300 dark:ring-gray-700 focus:ring-2 
+           focus:ring-blue-500"  
+      >
+        <FormControl fullWidth>
           <Select
-            labelId="demo-simple-select-label"
-            sx={{ border: "none" }}
-            id="demo-simple-select"
-            value={currentvalue != "" ? currentvalue : value}
-            label="Select Option"
+            labelId="custom-select-label"
+            id="custom-select"
+            value={currentValue}
             required={required}
             disabled={disabled}
-            onChange={handleChange} // Use handleChange here
+            onChange={handleChange}
+            className="w-full bg-transparent focus:ring-0"
           >
-            {options &&
-              options.map((type, index) => (
-                <MenuItem key={index} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
+            {options?.map((type, index) => (
+              <MenuItem key={index} value={type}>
+                {type}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>
 
       {/* Hidden input for form submission */}
-      <input type="hidden" name={name} value={currentvalue != "" ? currentvalue : value} />
+      <input type="hidden" name={name} value={currentValue} />
     </>
   );
 };

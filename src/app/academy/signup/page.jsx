@@ -134,6 +134,28 @@ export default function Signup() {
                           </div>
                         )}
 
+                        {/* number Field */}
+                        {item.data_field === "number" && (
+                          <div className="col-md-12 mb-4">
+                            <div className="form-outline">
+                              <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
+                                {item.caption}
+                              </label>
+                              <input
+                                type="number"
+                                id={`${item.data_field}-${index}`}
+                                name={item.field_type}
+                                className="form-control form-control-lg"
+                                placeholder={item.placeholder}
+                                required={item.is_required}
+                              />
+                              <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
+                                Hint: {item.field_hint}
+                              </small>
+                            </div>
+                          </div>
+                        )}
+
                         {/* Radio Field */}
                         {item.data_field === "radio" && (
         

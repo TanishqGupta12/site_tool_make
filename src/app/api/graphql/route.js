@@ -205,6 +205,9 @@ const resolvers = {
           is_active: true,
           form_id: parent.id
         },
+        orderBy: {
+          sequence: "asc" // Use "desc" for descending order
+        }
       });
     },
   },
@@ -217,6 +220,9 @@ const resolvers = {
           isActive: true, 
           form_section_field_id: parent.id
         },
+        orderBy: {
+          sequence: "asc" // Use "desc" for descending order
+        }
       });      return data;
     },
   },
