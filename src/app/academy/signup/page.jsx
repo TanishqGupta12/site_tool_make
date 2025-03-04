@@ -127,9 +127,9 @@ export default function Signup() {
                                 placeholder={item.placeholder}
                                 required={item.is_required}
                               />
-                              <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
+                              <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
                                 Hint: {item.field_hint}
-                              </label>
+                              </small>
                             </div>
                           </div>
                         )}
