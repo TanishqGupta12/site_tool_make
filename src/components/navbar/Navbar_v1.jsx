@@ -62,46 +62,38 @@ export default function Navbar_v1() {
                 </h1>
               </Link>
 
-              {/* Navbar Toggler */}
-              <button
-                type="button"
-                className="navbar-toggler"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse"
-              >
-                <span className="navbar-toggler-icon"></span>
-              </button>
 
               {/* Navbar Items */}
-              <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div className="navbar-nav py-0">
-                  <Link href="/" legacyBehavior>
-                    <a className="nav-item nav-link active">Home</a>
-                  </Link>
-                  <Link href="/academy/about" legacyBehavior>
-                    <a className="nav-item nav-link">About</a>
-                  </Link>
-                  <Link href="/academy/course" legacyBehavior>
-                    <a className="nav-item nav-link">Courses</a>
-                  </Link>
-                  <Link href="/academy/teacher" legacyBehavior>
-                    <a className="nav-item nav-link">Teachers</a>
-                  </Link>
+              <div className="d-flex align-items-center">
+                <div className="navbar-nav  justify-content-between">
+                  <div className="navbar-nav py-0">
+                    <Link href="/" legacyBehavior>
+                      <a className="nav-item nav-link active">Home</a>
+                    </Link>
+                    <Link href="/academy/about" legacyBehavior>
+                      <a className="nav-item nav-link">About</a>
+                    </Link>
+                    <Link href="/academy/course" legacyBehavior>
+                      <a className="nav-item nav-link">Courses</a>
+                    </Link>
+                    <Link href="/academy/teacher" legacyBehavior>
+                      <a className="nav-item nav-link">Teachers</a>
+                    </Link>
 
-                  {/* Blog Dropdown */}
-                  <Link href="/academy/blog" legacyBehavior>
-                    <a className="nav-item nav-link">blog</a>
-                  </Link>
+                    <Link href="/academy/blog" legacyBehavior>
+                      <a className="nav-item nav-link">blog</a>
+                    </Link>
 
-                  <Link href="/academy/contact" legacyBehavior>
-                    <a className="nav-item nav-link">Contact</a>
+                    <Link href="/academy/contact" legacyBehavior>
+                      <a className="nav-item nav-link">Contact</a>
+                    </Link>
+                  </div>
+
+                  {/* Join Now Button */}
+                  <Link href="/academy/signup" legacyBehavior>
+                    <a className="btn btn-primary py-2 px-4 ml-3">Join Now</a>
                   </Link>
                 </div>
-
-                {/* Join Now Button */}
-                <Link href="/academy/signup" legacyBehavior>
-                  <a className="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block">Join Now</a>
-                </Link>
               </div>
             </nav>
           </div>

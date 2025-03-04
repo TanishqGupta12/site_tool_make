@@ -90,10 +90,8 @@ export default function Main_v1() {
             <h2>Terms & Conditions</h2>
           </div>
           <div className="container__content">
-            <p>
-              {event && event?.termsAndConditions}
-            </p>
 
+            <div dangerouslySetInnerHTML={{ __html: event?.termsAndConditions }} />
           </div>
         </section>
       </main>

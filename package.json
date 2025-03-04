@@ -32,7 +32,8 @@
     "react-datepicker": "^8.1.0",
     "react-dom": "^19.0.0",
     "react-loading-skeleton": "^3.5.0",
-    "react-multi-carousel": "^2.8.5"
+    "react-multi-carousel": "^2.8.5",
+    "sanitize-html": "^2.14.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
