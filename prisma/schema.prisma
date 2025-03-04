@@ -253,8 +253,8 @@ model FormFieldChoice {
 
   specificFieldIfOther            Boolean?  @db.TinyInt
 
-  createdAt                       DateTime  @db.DateTime
-  updatedAt                       DateTime  @db.DateTime
+  createdAt                       DateTime?  @db.DateTime
+  updatedAt                       DateTime?  @db.DateTime
 
   
 
