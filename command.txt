@@ -1,0 +1,4 @@
+npx prisma migrate dev --name <migration-name>
+
+
+npx prisma migrate deploy
