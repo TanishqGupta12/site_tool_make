@@ -125,6 +125,18 @@ type Event {
     name: String!
   }
 
+  type Contact {
+  
+    id:                             Int    
+    name:                            String   
+    email:                          String
+
+    subject:                       String   
+    message:                         String   
+
+    eventId:                         Int 
+  }
+
   type Query {
     users: [User]
     user(id: ID!): User
@@ -145,12 +157,19 @@ type Event {
 
     form_field_choices: [FormFieldChoice]
     form_field_choice(id: ID!): FormFieldChoice
-  
+
+    contacts: [Contact]
+    contact(id: ID!): Contact
   }
 
   type Mutation {
     createUser(name: String!, email: String!): User
+
   }
+  type Mutation {
+      addcontact(name: String!, email: String!, subject: String!, message: String!, event_id: String!): Contact
+  }
+
 `;
 
 // Define resolvers
@@ -241,6 +260,33 @@ const resolvers = {
     createUser: async (_, { name, email }) => {
       return await prisma.user.create({ data: { name, email } });
     },
+
+    addcontact: async (_, { name, email, subject, message, event_id }) => {
+      try {
+        // Simulating database insertion logic
+        if (!name || !email || !subject ||  !message || !event_id) {
+          throw new Error("somrthing missage");
+        }
+
+        console.log(name, email  , subject , message , event_id );
+
+        // const emailRegex = /\S+@\S+\.\S+/;
+        // if (!emailRegex.test(email)) {
+        //   throw new GraphQLError("Invalid email format");
+        // }
+        
+        const newUser = await prisma.contact.create({ data: {  name: name, email: email  , subject: subject , message: message , eventId: Number(event_id) } })
+
+       console.log(newUser);
+       
+    
+        return newUser;
+      } catch (error) {
+        
+        throw new Error(error.message || "An error occurred while adding the user.");
+      }
+    },
+  
   },
 };
 

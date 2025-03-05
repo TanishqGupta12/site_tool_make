@@ -65,6 +65,7 @@ model Event {
   Form                                     Form[]
   PostGallery                              PostGallery[]
 
+  Contact                                  Contact[]
   @@map("events")
 }
 
@@ -262,4 +263,27 @@ model FormFieldChoice {
   form_section_field_id           Int?
   form_section_field   FormSectionField? @relation(fields: [form_section_field_id], references: [id])
   @@map("form_field_choices")
+}
+
+model Contact {
+  
+  id                              Int    @id @default(autoincrement())
+  name                            String?   @db.VarChar(255)
+  email                           String?   @db.VarChar(255)
+
+  subject                         String?   @db.VarChar(255)
+  message                         String?   @db.VarChar(255)
+
+  createdAt                       DateTime?  @db.DateTime
+  updatedAt                       DateTime?  @db.DateTime
+
+  eventId                         Int  
+
+ 
+  event Event? @relation(fields: [eventId], references: [id])
+
+
+  // You can define the relationships if needed based on the foreign keys
+
+  @@map("Contact")
 }
