@@ -1,4 +1,4 @@
-name: MySQL CI
+name: CI with MySQL
 
 on: 
   push:
@@ -15,8 +15,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: testdb
-          MYSQL_USER: testuser
-          MYSQL_PASSWORD: testpassword
         ports:
           - 3306:3306
         options: >-
@@ -24,6 +22,7 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
+          --default-authentication-plugin=mysql_native_password
 
     steps:
       - name: Checkout repository
@@ -36,6 +35,16 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+
+      - name: Grant MySQL permissions
+        run: |
+          sudo apt-get install mysql-client
+          mysql -h 127.0.0.1 -u root -proot -e "CREATE USER 'testuser'@'%' IDENTIFIED BY 'testpassword';"
+          mysql -h 127.0.0.1 -u root -proot -e "GRANT ALL PRIVILEGES ON testdb.* TO 'testuser'@'%';"
+          mysql -h 127.0.0.1 -u root -proot -e "FLUSH PRIVILEGES;"
+
+      - name: Wait for MySQL to be ready
+        run: sleep 10
 
       - name: Set up Prisma and MySQL
         env:
