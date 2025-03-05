@@ -4,7 +4,7 @@ import React from "react";
 import GetDomain  from "../../Hooks/useGetDmain";
 
 export default function Navbar_v1() {
-  
+
   GetDomain()
   return (
     <>
