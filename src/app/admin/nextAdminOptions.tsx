@@ -7,7 +7,7 @@ import { Prisma } from "@prisma/client";
 
 
 import CustomButton from "@/components/Custom/seleted";
-
+import TinyEditor from "@/components/Custom/tinyEditor";
 let inputTypes = [
   "text", "password", "checkbox", "radio", "file", "date", 
   "email", "number", "tel", "url", "search", "range", 
@@ -23,6 +23,15 @@ const options: NextAdminOptions = {
       title: "Domain",
       icon: "AdjustmentsVerticalIcon",
       list: {
+      },
+      edit: {
+        fields: { 
+          description: {
+            format: "textarea",
+            input: <TinyEditor  name="description" disabled={false} required={true} />,
+
+          },
+        },
       },
     },
 
