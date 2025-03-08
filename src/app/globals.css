@@ -72,3 +72,7 @@ body {
   text-align: left;
   background-color: #fff;
 }
+
+.ql-container .ql-snow{
+  height: 200px
+}

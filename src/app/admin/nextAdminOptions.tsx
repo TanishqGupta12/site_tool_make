@@ -7,7 +7,8 @@ import { Prisma } from "@prisma/client";
 
 
 import CustomButton from "@/components/Custom/seleted";
-import Editer from "@/components/Custom/Editer";
+import CustomQuill from "@/components/Custom/CustomQuill";
+
 let inputTypes = [
   "text", "password", "checkbox", "radio", "file", "date", 
   "email", "number", "tel", "url", "search", "range", 
@@ -28,7 +29,7 @@ const options: NextAdminOptions = {
         fields: { 
           description: {
             format: "textarea",
-            input: <Editer  name="description" disabled={false} required={true} />,
+            input: <CustomQuill  name="description" disabled={false} required={true} />,
 
           },
         },
