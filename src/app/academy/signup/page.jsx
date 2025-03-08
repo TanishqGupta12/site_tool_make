@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import Footer_v1 from "@/components/footer/Footer_v1";
 import Navbar_v1 from "@/components/navbar/Navbar_v1";
 
+import { useForm } from 'react-hook-form';
+
 const GET_DATA = gql`
   query EventData($eventId: ID!) {
     event(id: $eventId) {
@@ -45,6 +47,7 @@ const GET_DATA = gql`
 `;
 
 export default function Signup() {
+  const { register,handleSubmit, formState: { errors },} = useForm();
   const [eventId, setEventId] = useState(null);
 
   useEffect(() => {
@@ -87,7 +90,7 @@ export default function Signup() {
                   {form?.caption}
                 </Typography>
                 <div className="card-body p-4 p-md-5">
-                  <form className="d-flex flex-wrap">
+                  <form  onSubmit={handleSubmit((data) => console.log(data))} className="d-flex flex-wrap">
                     {section_fields.map((item, index) => (
                       <div key={item.id} style={item.is_single_column ? { width: "100%" } : { width: "50%" }}>
                         {/* Email Field */}
@@ -104,7 +107,9 @@ export default function Signup() {
                                 className="form-control form-control-lg"
                                 placeholder={item.placeholder}
                                 required={item.is_required}
+                                {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
                               />
+                                {errors[item.field_type] && <p style={{ color: "red" }}>{errors[item.field_type].message}</p>}
                               <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
                                 Hint: {item.field_hint}
                               </small>
@@ -126,7 +131,9 @@ export default function Signup() {
                                 className="form-control form-control-lg"
                                 placeholder={item.placeholder}
                                 required={item.is_required}
+                                {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
                               />
+                                  {errors[item.field_type] && <p style={{ color: "red" }}>{errors[item.field_type].message}</p>}
                               <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
                                 Hint: {item.field_hint}
                               </small>
@@ -148,7 +155,9 @@ export default function Signup() {
                                 className="form-control form-control-lg"
                                 placeholder={item.placeholder}
                                 required={item.is_required}
+                                {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
                               />
+                                  {errors[item.field_type] && <p style={{ color: "red" }}>{errors[item.field_type].message}</p>}
                               <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
                                 Hint: {item.field_hint}
                               </small>
@@ -172,12 +181,14 @@ export default function Signup() {
                                     value={choice.caption}
                                     required={item.is_required}
                                     defaultChecked={idx === 0}
+                                    {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
                                   />
                                   <label className="form-check-label fw-bold text-primary" htmlFor={`${item.data_field}-${index}-${idx}`}>
                                     {choice.caption}
                                   </label>
                                 </div>
                               ))}
+                                  {errors[item.field_type] && <p style={{ color: "red" }}>{errors[item.field_type].message}</p>}
                                 <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
                                   {item.field_hint}
                                 </small>
