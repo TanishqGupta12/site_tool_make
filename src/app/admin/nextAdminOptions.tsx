@@ -196,7 +196,7 @@ const options: NextAdminOptions = {
     },
     Contact: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
-      title: "EmailContent",
+      title: "Contact",
       icon: "InboxIcon",
       edit: {
  
@@ -204,7 +204,7 @@ const options: NextAdminOptions = {
     },
     category: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
-      title: "EmailContent",
+      title: "category",
       icon: "InboxIcon",
       edit: {
  
@@ -212,7 +212,7 @@ const options: NextAdminOptions = {
     },
     QuizTopic: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
-      title: "EmailContent",
+      title: "QuizTopic",
       icon: "InboxIcon",
       edit: {
  
@@ -220,7 +220,7 @@ const options: NextAdminOptions = {
     },
     QuizQuestion: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
-      title: "EmailContent",
+      title: "QuizQuestion",
       icon: "InboxIcon",
       edit: {
  
@@ -228,7 +228,7 @@ const options: NextAdminOptions = {
     },
     QuizQuestionOption: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
-      title: "EmailContent",
+      title: "QuizQuestionOption",
       icon: "InboxIcon",
       edit: {
  
@@ -236,7 +236,7 @@ const options: NextAdminOptions = {
     },
     QuizAttemptResult: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
-      title: "EmailContent",
+      title: "QuizAttemptResult",
       icon: "InboxIcon",
       edit: {
  
@@ -244,7 +244,7 @@ const options: NextAdminOptions = {
     },
     QuizAttempt: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
-      title: "EmailContent",
+      title: "QuizAttempt",
       icon: "InboxIcon",
       edit: {
  
@@ -252,7 +252,7 @@ const options: NextAdminOptions = {
     },
     QuizResult: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
-      title: "EmailContent",
+      title: "QuizResult",
       icon: "InboxIcon",
       edit: {
  
