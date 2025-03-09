@@ -103,6 +103,8 @@ model User {
   reset_password_token   String?
   reset_password_sent_at DateTime?
 
+  current_event_id       String?
+
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
 

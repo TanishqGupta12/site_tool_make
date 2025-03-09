@@ -268,8 +268,6 @@ const resolvers = {
           throw new Error("somrthing missage");
         }
 
-        console.log(name, email  , subject , message , event_id );
-
         // const emailRegex = /\S+@\S+\.\S+/;
         // if (!emailRegex.test(email)) {
         //   throw new GraphQLError("Invalid email format");

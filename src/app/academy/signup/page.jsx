@@ -6,6 +6,9 @@ import Footer_v1 from "@/components/footer/Footer_v1";
 import Navbar_v1 from "@/components/navbar/Navbar_v1";
 
 import { useForm } from 'react-hook-form';
+import axios from "axios";
+
+import { ToastContainer, toast } from 'react-toastify';
 
 const GET_DATA = gql`
   query EventData($eventId: ID!) {
@@ -64,6 +67,35 @@ export default function Signup() {
   const [form, setForm] = useState(null);
   const [section_fields, setFields] = useState([]);
 
+  const formhandleSubmit = async (data) => {
+    try {
+      const response = await axios.post("/api/sign-up", data);
+      console.log(response);
+      
+      toast.success(`Data posted: ${response.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+    } catch (error) {      
+      toast.error(`Error posting data: ${error.response.data.message}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
+    }
+  };
+  
   useEffect(() => {
     if (data?.event?.forms?.length > 0) {
       setForm(data.event.forms[0]);
@@ -90,7 +122,7 @@ export default function Signup() {
                   {form?.caption}
                 </Typography>
                 <div className="card-body p-4 p-md-5">
-                  <form  onSubmit={handleSubmit((data) => console.log(data))} className="d-flex flex-wrap">
+                  <form  onSubmit={handleSubmit(formhandleSubmit)} className="d-flex flex-wrap">
                     {section_fields.map((item, index) => (
                       <div key={item.id} style={item.is_single_column ? { width: "100%" } : { width: "50%" }}>
                         {/* Email Field */}
@@ -199,11 +231,29 @@ export default function Signup() {
                     ))}
 
                   <div className="mt-auto pt-2 text-center">
+                  <input 
+                    type="hidden"
+                    value={eventId || ''} 
+                    name="current_event_id" 
+                    {...register("current_event_id")}
+                    onChange={(e) => setEventId(e.target.value)} 
+                  />
                     <button className="btn btn-primary btn-lg px-4 py-2 fw-semibold shadow-sm" type="submit">
                       Submit
                     </button>
                   </div>
-
+                  <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                  />
                   </form>
                 </div>
               </div>
