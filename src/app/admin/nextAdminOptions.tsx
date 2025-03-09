@@ -122,7 +122,7 @@ const options: NextAdminOptions = {
     PostGallery: {
       toString: (post_gallery) => `(${post_gallery.id.toString()}) (${post_gallery.name})  `,
       title: "PostGallery",
-      icon: "IdentificationIcon",
+      icon: "PhotoIcon",
       edit: {
         fields: {
           name: {},
@@ -197,7 +197,7 @@ const options: NextAdminOptions = {
     Contact: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
       title: "Contact",
-      icon: "InboxIcon",
+      icon: "PhoneIcon",
       edit: {
  
       },
@@ -205,7 +205,7 @@ const options: NextAdminOptions = {
     category: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
       title: "category",
-      icon: "InboxIcon",
+      icon: "FunnelIcon",
       edit: {
  
       },
@@ -213,7 +213,7 @@ const options: NextAdminOptions = {
     QuizTopic: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
       title: "QuizTopic",
-      icon: "InboxIcon",
+      icon: "AcademicCapIcon",
       edit: {
  
       },
@@ -221,7 +221,7 @@ const options: NextAdminOptions = {
     QuizQuestion: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
       title: "QuizQuestion",
-      icon: "InboxIcon",
+      icon: "PuzzlePieceIcon",
       edit: {
  
       },
@@ -229,7 +229,7 @@ const options: NextAdminOptions = {
     QuizQuestionOption: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
       title: "QuizQuestionOption",
-      icon: "InboxIcon",
+      icon: "PlusIcon",
       edit: {
  
       },
@@ -237,7 +237,7 @@ const options: NextAdminOptions = {
     QuizAttemptResult: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
       title: "QuizAttemptResult",
-      icon: "InboxIcon",
+      icon: "QueueListIcon",
       edit: {
  
       },
@@ -245,7 +245,7 @@ const options: NextAdminOptions = {
     QuizAttempt: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
       title: "QuizAttempt",
-      icon: "InboxIcon",
+      icon: "PresentationChartBarIcon",
       edit: {
  
       },
@@ -253,7 +253,7 @@ const options: NextAdminOptions = {
     QuizResult: {
       toString: (Contact) => `(${Contact.id.toString()})  `,
       title: "QuizResult",
-      icon: "InboxIcon",
+      icon: "TrophyIcon",
       edit: {
  
       },
@@ -264,6 +264,23 @@ const options: NextAdminOptions = {
       title: "Home",
       icon: "HomeIcon",
     },
+  },
+  sidebar: {
+    groups: [
+      {
+        title: "configuration",
+        className: " bg-green-600 p-2 rounded-md", // group title extra classes. (optional)
+        models: ["Domain" , 'Event' , "PostGallery" , "Contact" ,"EmailContent" , "Role"],
+      },
+      {
+        title: "Registration",
+        models: ["User" , "Form" , "FormSectionField" , "FormFieldChoice"],
+      },
+      {
+        title: "Quiz Builder",
+        models: ["category" ,"QuizTopic" , "QuizQuestion" , "QuizQuestionOption" , "QuizAttemptResult" , "QuizAttempt" , "QuizResult"],
+      },
+    ],
   }
 }
 
