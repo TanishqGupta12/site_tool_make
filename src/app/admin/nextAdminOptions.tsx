@@ -185,6 +185,14 @@ const options: NextAdminOptions = {
       edit: {
  
       },
+    },
+    EmailContent: {
+      toString: (content) => `(${content.id.toString()})  `,
+      title: "EmailContent",
+      icon: "InboxIcon",
+      edit: {
+ 
+      },
     }
   },
   pages: {

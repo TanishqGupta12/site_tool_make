@@ -68,6 +68,9 @@ model Event {
   Contact                                  Contact[]  
 
   email_content                            EmailContent[]
+  category                                 category[]
+  QuizTopic                                QuizTopic[]
+
   @@map("events")
 }
 
@@ -132,7 +135,9 @@ model User {
   f15                   String?    @db.VarChar(255) 
 
   events EventUser[]  // Relationship to UserEvent 
-
+  QuizAttemptResults QuizAttemptResult[]
+  QuizAttempts  QuizAttempt[]
+  QuizResults QuizResult[]
   @@map("users")
 }
 
@@ -319,4 +324,183 @@ model EmailContent {
 
   @@map("email_contents")
 
+}
+
+model category {
+
+  id                     Int    @id @default(autoincrement())
+
+  content                String?   @db.Text 
+  eventId                Int?   
+
+  createdAt              DateTime  
+  updatedAt              DateTime  
+
+  event  Event?  @relation(fields: [eventId], references: [id])
+  QuizTopics QuizTopic[]
+
+  @@map("categorys")
+
+}
+
+model QuizTopic {
+
+  id                                      Int  @id @default(autoincrement())
+
+  category_id Int?
+  category  category?  @relation(fields: [category_id], references: [id])
+
+  event_id                                Int?
+  event  Event?  @relation(fields: [event_id], references: [id])
+  title                                   String? @db.VarChar(255)
+
+  description                             String?
+
+  is_paid                                 Boolean @default(false)
+  sequence                                Int?
+
+  is_active                               Boolean @default(true)
+  has_download_certificate                Boolean @default(false)
+
+  total_marks                             Float  @default(0)
+  passing_points                          Float? @default(0)
+
+  has_pass_fail_page                      Boolean @default(false)
+  embedded_video                          String?
+
+
+  duration                                String? @db.VarChar(255)
+  valid_from                              DateTime?
+  valid_upto                              DateTime?
+
+  max_attempts                            Int?  @default(0)
+  practise_quiz                           Boolean @default(false)
+
+  QuizQuestions                          QuizQuestion[]
+  QuizAttemptResults                     QuizAttemptResult[]
+
+  @@map("quiz_topics")
+}
+
+model QuizQuestion {
+
+  id                                             Int  @id @default(autoincrement())
+  sequence                                       Int?
+
+  title                                          String  @db.Text
+  question_type                                  String? @db.VarChar(255)
+
+  quiz_topic_id                                  Int?
+  quiz_topic  QuizTopic?  @relation(fields: [quiz_topic_id], references: [id])
+
+  created_at                                     DateTime @default(now())
+  updated_at                                     DateTime @updatedAt
+
+  wrong_answer_explanation                       String? @db.Text
+  
+ 
+  is_required                                    Boolean @default(false)
+
+  correct_answer_explanation                     String? @db.Text
+
+  marks                                          Float?
+  negative_marks                                 Float?
+  QuizQuestionOptions QuizQuestionOption[]
+  
+
+
+  @@map("quiz_questions")
+}
+
+
+model QuizQuestionOption {
+
+  id                        Int  @id @default(autoincrement())
+  title                     String  @db.Text
+
+  is_right                  Boolean @default(false)
+  is_last_option            Boolean @default(false)
+
+  points                    String? @db.VarChar(255)
+
+  quiz_question_id          Int?
+  QuizQuestion  QuizQuestion?  @relation(fields: [quiz_question_id], references: [id])
+
+  created_at                DateTime @default(now())
+  updated_at                DateTime @updatedAt
+
+
+  check_to_enable_other_field Boolean @default(false)
+
+  @@map("quiz_question_options")
+}
+
+model QuizAttemptResult {
+
+  id                Int  @id @default(autoincrement())
+
+  user_id           Int?
+  user              User?  @relation(fields: [user_id], references: [id])
+
+
+  quiz_topic_id     Int?
+  quiz_topic        QuizTopic?  @relation(fields: [quiz_topic_id], references: [id])
+
+  question          String?     @db.Text
+  answer            String?     @db.Text
+
+  QuizAttempts       QuizAttempt[]
+
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+
+
+  @@map("quiz_attempts")
+
+}
+
+
+model QuizAttempt {
+
+  id            Int  @id @default(autoincrement())
+
+  user_id           Int?
+  user              User?  @relation(fields: [user_id], references: [id])
+
+  quiz_attempt_result_id  Int?
+  quiz_attempt_result  QuizAttemptResult?  @relation(fields: [quiz_attempt_result_id], references: [id])
+
+  marks_gained  Float?
+  is_pass       Boolean? @default(false)
+  time_spent    Int?
+
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  QuizResult    QuizResult[]
+
+  @@map("quiz_attempt_logs")
+}
+
+
+model QuizResult {
+
+  id                      Int  @id @default(autoincrement())
+  user_id           Int?
+  user              User?  @relation(fields: [user_id], references: [id])
+
+  marks_scored            Float?
+  is_pass                 Boolean? @default(false)
+
+  quiz_attempt_id         Int?
+  QuizAttempt  QuizAttempt?  @relation(fields: [quiz_attempt_id], references: [id])
+
+  points                  String? @db.VarChar(255)
+
+  created_at              DateTime @default(now())
+  updated_at              DateTime @updatedAt
+
+
+  @@map("quiz_results")
 }
