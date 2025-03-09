@@ -134,7 +134,7 @@ model User {
 
 
 model EventUser {
-  id        Int 
+  id                     Int    @id @default(autoincrement())
 
   userId  Int  
   eventId Int  
@@ -147,7 +147,7 @@ model EventUser {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@id([userId, eventId])
+
   @@map("event_uses")   
 }
 
