@@ -2,8 +2,8 @@ import { PrismaClient } from "@prisma/client";
 
 import { NextResponse } from "next/server";
 
-import  hashPassword  from "../../../lib/bcrypt";
-import  authentication_token  from "../../../lib/authentication_token";
+import  hashPassword  from "@/lib/bcrypt";
+import  authentication_token  from "@/lib/authentication_token";
 // Initialize Prisma client
 const prisma = new PrismaClient();
 
@@ -54,18 +54,17 @@ export async function POST(req) {
 
     
     // Create the user in the database
-    let token = authentication_token()
-    console.log(token);
+
     
     const newUser = await prisma.user.create({
       data: {
         ...field,
-        authentication_token: token,
+        authentication_token: authentication_token(12),
         current_event_id: current_event_id,
       },
     });
 
-    console.log(Number(newUser.id));
+  
     
     // // Create the user in the database
     const evnt_user = await prisma.eventUser.create({
@@ -75,7 +74,6 @@ export async function POST(req) {
       },
     });
 
-    console.log(evnt_user);
     
 
     // Respond with success message and user data

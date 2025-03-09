@@ -65,7 +65,9 @@ model Event {
   Form                                     Form[]
   PostGallery                              PostGallery[]
 
-  Contact                                  Contact[]
+  Contact                                  Contact[]  
+
+  email_content                            EmailContent[]
   @@map("events")
 }
 
@@ -76,6 +78,8 @@ model Role {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   users     User[]   @relation("RoleToUsers")
+
+  email_content  EmailContent[]
 
   @@map("roles")
 }
@@ -288,4 +292,31 @@ model Contact {
   // You can define the relationships if needed based on the foreign keys
 
   @@map("Contact")
+}
+model EmailContent {
+
+  id                     Int    @id @default(autoincrement())
+  emailType              String?   @db.VarChar(255)
+  subject                String?   @db.VarChar(255)
+  content                String?   @db.Text
+
+  roleId                 Int?   
+  eventId                Int?   
+
+  createdAt              DateTime  
+  updatedAt              DateTime  
+  fromEmail              String?   @db.VarChar(255)
+  ccEmail                String?   @db.Text
+
+  hasAttachment          Boolean?  
+  Attachment             String?   @db.Text
+  
+  scheduleEmail          DateTime? 
+
+
+  role   Role?   @relation(fields: [roleId], references: [id])
+  event  Event?  @relation(fields: [eventId], references: [id])
+
+  @@map("email_contents")
+
 }
