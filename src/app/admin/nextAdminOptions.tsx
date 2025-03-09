@@ -193,7 +193,71 @@ const options: NextAdminOptions = {
       edit: {
  
       },
-    }
+    },
+    Contact: {
+      toString: (Contact) => `(${Contact.id.toString()})  `,
+      title: "EmailContent",
+      icon: "InboxIcon",
+      edit: {
+ 
+      },
+    },
+    category: {
+      toString: (Contact) => `(${Contact.id.toString()})  `,
+      title: "EmailContent",
+      icon: "InboxIcon",
+      edit: {
+ 
+      },
+    },
+    QuizTopic: {
+      toString: (Contact) => `(${Contact.id.toString()})  `,
+      title: "EmailContent",
+      icon: "InboxIcon",
+      edit: {
+ 
+      },
+    },
+    QuizQuestion: {
+      toString: (Contact) => `(${Contact.id.toString()})  `,
+      title: "EmailContent",
+      icon: "InboxIcon",
+      edit: {
+ 
+      },
+    },
+    QuizQuestionOption: {
+      toString: (Contact) => `(${Contact.id.toString()})  `,
+      title: "EmailContent",
+      icon: "InboxIcon",
+      edit: {
+ 
+      },
+    },
+    QuizAttemptResult: {
+      toString: (Contact) => `(${Contact.id.toString()})  `,
+      title: "EmailContent",
+      icon: "InboxIcon",
+      edit: {
+ 
+      },
+    },
+    QuizAttempt: {
+      toString: (Contact) => `(${Contact.id.toString()})  `,
+      title: "EmailContent",
+      icon: "InboxIcon",
+      edit: {
+ 
+      },
+    },
+    QuizResult: {
+      toString: (Contact) => `(${Contact.id.toString()})  `,
+      title: "EmailContent",
+      icon: "InboxIcon",
+      edit: {
+ 
+      },
+    },
   },
   pages: {
     "": {
