@@ -285,8 +285,8 @@ model Contact {
   subject                         String?   @db.VarChar(255)
   message                         String?   @db.VarChar(255)
 
-  createdAt                       DateTime?  @db.DateTime
-  updatedAt                       DateTime?  @db.DateTime
+  created_at                                     DateTime @default(now())
+  updated_at                                     DateTime @updatedAt
 
   eventId                         Int  
 
@@ -308,8 +308,8 @@ model EmailContent {
   roleId                 Int?   
   eventId                Int?   
 
-  createdAt              DateTime  
-  updatedAt              DateTime  
+  created_at                                     DateTime @default(now())
+  updated_at                                     DateTime @updatedAt
   fromEmail              String?   @db.VarChar(255)
   ccEmail                String?   @db.Text
 
@@ -333,8 +333,8 @@ model category {
   content                String?   @db.Text 
   eventId                Int?   
 
-  createdAt              DateTime  
-  updatedAt              DateTime  
+  created_at             DateTime @default(now())
+  updated_at             DateTime @updatedAt
 
   event  Event?  @relation(fields: [eventId], references: [id])
   QuizTopics QuizTopic[]
@@ -378,6 +378,9 @@ model QuizTopic {
 
   QuizQuestions                          QuizQuestion[]
   QuizAttemptResults                     QuizAttemptResult[]
+
+  created_at                                     DateTime @default(now())
+  updated_at                                     DateTime @updatedAt
 
   @@map("quiz_topics")
 }
