@@ -12,64 +12,64 @@ datasource db {
 }
 
 model Domain {
-  id               Int   @id @default(autoincrement())
-  domain_name      String?  @db.VarChar(255)
-  subdomain_name   String?  @db.VarChar(255)
-  host             String?  @db.VarChar(255)
-  description      String?  @db.Text
-  logo_file_name   String?  @db.VarChar(255)
-  logo_meta        String?  @db.VarChar(255)
-  custom_font_name String?  @db.VarChar(255)
+  id               Int     @id @default(autoincrement())
+  domain_name      String? @db.VarChar(255)
+  subdomain_name   String? @db.VarChar(255)
+  host             String? @db.VarChar(255)
+  description      String? @db.Text
+  logo_file_name   String? @db.VarChar(255)
+  logo_meta        String? @db.VarChar(255)
+  custom_font_name String? @db.VarChar(255)
 
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  events           Event[]  @relation("DomainToEvents")  // One Domain has many Events
+  events Event[] @relation("DomainToEvents") // One Domain has many Events
 
   @@map("domains")
 }
 
-model Event { 
-  id                                       Int         @id @default(autoincrement())
-  name                                     String?     @db.VarChar(255)
+model Event {
+  id                                       Int           @id @default(autoincrement())
+  name                                     String?       @db.VarChar(255)
   domainId                                 Int?
-  description                              String?     @db.Text
+  description                              String?       @db.Text
   startDate                                DateTime?
   slug                                     String?
-  latitude                                 Decimal?    @db.Decimal(12, 6)
-  longitude                                Decimal?    @db.Decimal(12, 6)
-  email                                    String?     @db.VarChar(255)
-  phone                                    String?     @db.VarChar(255)
-  timeZone                                 String?     @default("Singapore") @db.VarChar(255)
-  customCss                                String?     @db.Text
-  customJs                                 String?     @db.Text
-  termsAndConditions                       String?     @db.LongText
-  paymentNeeded                            Boolean?    @default(false)
-  publishableKey                           String?     @default("") @db.VarChar(255)
-  secretKey                                String?     @default("") @db.VarChar(255)
-  sendRegistrationConfirmationEmailToGuest Boolean?    @default(false)
-  footerText                               String?     @db.Text
-  hideBlog                                 Boolean?    @default(false)
-  createdAt                                DateTime    @default(now())
-  updatedAt                                DateTime    @updatedAt
-  PageContent                              String?     @db.Text
-  hideAboutPage                            Boolean?    @default(false)
-  hideCategory                             Boolean?    @default(false)
-  hideCourses                              Boolean?    @default(false)
-  hideGallery                              Boolean?    @default(false)
-  galleryText                              String?     @db.VarChar(255)
-  hideInfo                                 Boolean?    @default(false)
-  hideTeacherPage                          Boolean?    @default(false)
+  latitude                                 Decimal?      @db.Decimal(12, 6)
+  longitude                                Decimal?      @db.Decimal(12, 6)
+  email                                    String?       @db.VarChar(255)
+  phone                                    String?       @db.VarChar(255)
+  timeZone                                 String?       @default("Singapore") @db.VarChar(255)
+  customCss                                String?       @db.Text
+  customJs                                 String?       @db.Text
+  termsAndConditions                       String?       @db.LongText
+  paymentNeeded                            Boolean?      @default(false)
+  publishableKey                           String?       @default("") @db.VarChar(255)
+  secretKey                                String?       @default("") @db.VarChar(255)
+  sendRegistrationConfirmationEmailToGuest Boolean?      @default(false)
+  footerText                               String?       @db.Text
+  hideBlog                                 Boolean?      @default(false)
+  createdAt                                DateTime      @default(now())
+  updatedAt                                DateTime      @updatedAt
+  PageContent                              String?       @db.Text
+  hideAboutPage                            Boolean?      @default(false)
+  hideCategory                             Boolean?      @default(false)
+  hideCourses                              Boolean?      @default(false)
+  hideGallery                              Boolean?      @default(false)
+  galleryText                              String?       @db.VarChar(255)
+  hideInfo                                 Boolean?      @default(false)
+  hideTeacherPage                          Boolean?      @default(false)
   users                                    EventUser[]
-  domain                                   Domain?     @relation("DomainToEvents", fields: [domainId], references: [id])
+  domain                                   Domain?       @relation("DomainToEvents", fields: [domainId], references: [id])
   Form                                     Form[]
   PostGallery                              PostGallery[]
 
-  Contact                                  Contact[]  
+  Contact Contact[]
 
-  email_content                            EmailContent[]
-  category                                 category[]
-  QuizTopic                                QuizTopic[]
+  email_content EmailContent[]
+  category      category[]
+  QuizTopic     QuizTopic[]
 
   @@map("events")
 }
@@ -82,15 +82,14 @@ model Role {
   updatedAt DateTime @updatedAt
   users     User[]   @relation("RoleToUsers")
 
-  email_content  EmailContent[]
+  email_content EmailContent[]
 
   @@map("roles")
 }
 
-
 model User {
-  id                     Int    @id @default(autoincrement())
-  
+  id Int @id @default(autoincrement())
+
   email                  String?   @db.VarChar(255)
   salutation             String?   @db.VarChar(255)
   first_name             String?   @db.Text
@@ -106,86 +105,78 @@ model User {
   avatar                 String?   @db.VarChar(255)
   authentication_token   String?   @db.VarChar(255)
   custom_fields          String?   @db.LongText
-  encrypted_password     String?    @db.VarChar(255)
+  encrypted_password     String?   @db.VarChar(255)
   reset_password_token   String?
   reset_password_sent_at DateTime?
 
-  current_event_id       String?
-
-  createdAt              DateTime  @default(now())
-  updatedAt              DateTime  @updatedAt
-
-  roleId                 Int?   // Foreign key reference to Role
-  role                   Role?     @relation("RoleToUsers", fields: [roleId], references: [id]) 
-
-  f1                    String?    @db.VarChar(255) 
-  f2                    String?    @db.VarChar(255) 
-  f3                    String?    @db.VarChar(255) 
-  f4                    String?    @db.VarChar(255) 
-  f5                    String?    @db.VarChar(255) 
-  f6                    String?    @db.VarChar(255) 
-  f7                    String?    @db.VarChar(255) 
-  f8                    String?    @db.VarChar(255) 
-  f9                    String?    @db.VarChar(255) 
-  f10                   String?    @db.VarChar(255) 
-  f11                   String?    @db.VarChar(255) 
-  f12                   String?    @db.VarChar(255) 
-  f13                   String?    @db.VarChar(255) 
-  f14                   String?    @db.VarChar(255) 
-  f15                   String?    @db.VarChar(255) 
-
-  events EventUser[]  // Relationship to UserEvent 
-  QuizAttemptResults QuizAttemptResult[]
-  QuizAttempts  QuizAttempt[]
-  QuizResults QuizResult[]
-  @@map("users")
-}
-
-
-model EventUser {
-  id                     Int    @id @default(autoincrement())
-
-  userId  Int  
-  eventId Int  
-
-  user  User?  @relation(fields: [userId], references: [id])
-  event Event? @relation(fields: [eventId], references: [id])
-
-  
+  current_event_id String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  roleId Int? // Foreign key reference to Role
+  role   Role? @relation("RoleToUsers", fields: [roleId], references: [id])
 
-  @@map("event_uses")   
+  f1  String? @db.VarChar(255)
+  f2  String? @db.VarChar(255)
+  f3  String? @db.VarChar(255)
+  f4  String? @db.VarChar(255)
+  f5  String? @db.VarChar(255)
+  f6  String? @db.VarChar(255)
+  f7  String? @db.VarChar(255)
+  f8  String? @db.VarChar(255)
+  f9  String? @db.VarChar(255)
+  f10 String? @db.VarChar(255)
+  f11 String? @db.VarChar(255)
+  f12 String? @db.VarChar(255)
+  f13 String? @db.VarChar(255)
+  f14 String? @db.VarChar(255)
+  f15 String? @db.VarChar(255)
+
+  events             EventUser[] // Relationship to UserEvent 
+  QuizAttemptResults QuizAttemptResult[]
+  QuizAttempts       QuizAttempt[]
+  QuizResults        QuizResult[]
+
+  @@map("users")
 }
 
+model EventUser {
+  id Int @id @default(autoincrement())
+
+  userId  Int
+  eventId Int
+
+  user  User?  @relation(fields: [userId], references: [id])
+  event Event? @relation(fields: [eventId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("event_uses")
+}
 
 model Form {
-  id                                         Int   @id @default(autoincrement())
-  caption                                    String?  @db.VarChar(255)
-  Description                                String?  @db.Text
-  
-  event_id                                   Int? 
-  event Event? @relation(fields: [event_id], references: [id])
+  id          Int     @id @default(autoincrement())
+  caption     String? @db.VarChar(255)
+  Description String? @db.Text
 
-  slug                                       String?  @db.VarChar(255)
-  is_active                                  Boolean  @default(true)
+  event_id Int?
+  event    Event? @relation(fields: [event_id], references: [id])
 
-  registration_successful_message            String   @default("Registered Successfully. A confirmation mail is sent to you. Thank you!") @db.VarChar(255)
-  registration_updated_successful_message    String   @default("Profile Updated Successfully") @db.VarChar(255)
+  slug      String? @db.VarChar(255)
+  is_active Boolean @default(true)
 
-  created_at                                 DateTime @default(now())
-  updated_at                                 DateTime @updatedAt
+  registration_successful_message         String @default("Registered Successfully. A confirmation mail is sent to you. Thank you!") @db.VarChar(255)
+  registration_updated_successful_message String @default("Profile Updated Successfully") @db.VarChar(255)
 
-  form_sections FormSection[]  // Relationship to FormSection 
-  form_section_field FormSectionField[]  // Relationship to FormSectionField 
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-
+  form_sections      FormSection[] // Relationship to FormSection 
+  form_section_field FormSectionField[] // Relationship to FormSectionField 
 
   @@map("forms")
-
-
 }
 
 model FormSection {
@@ -205,233 +196,210 @@ model FormSection {
   @@map("form_sections")
 }
 
-
-
 model FormSectionField {
-  id                                             Int   @id @default(autoincrement())
-  caption                                        String?  @db.Text
-  placeholder                                    String?  @db.VarChar(255)
-  
-  field_hint                                     String?  @db.Text
+  id          Int     @id @default(autoincrement())
+  caption     String? @db.Text
+  placeholder String? @db.VarChar(255)
 
-  field_type                                     String?  @db.VarChar(255)
-  data_field                                     String?  @db.VarChar(255)
+  field_hint String? @db.Text
 
-  sequence                                       Int? 
+  field_type String? @db.VarChar(255)
+  data_field String? @db.VarChar(255)
 
-  is_required                                    Boolean  @default(false)
-  is_active                                      Boolean  @default(true)
-  is_single_column                               Boolean  @default(false)
-  form_id                                        Int? 
-  form Form? @relation(fields: [form_id], references: [id])
+  sequence Int?
 
-  form_section_id                                Int? 
-  form_section FormSection? @relation(fields: [form_section_id], references: [id])
+  is_required      Boolean @default(false)
+  is_active        Boolean @default(true)
+  is_single_column Boolean @default(false)
+  form_id          Int?
+  form             Form?   @relation(fields: [form_id], references: [id])
 
-  
-  file_upload_filed                              Boolean? @default(false)
-  file_upload_type                               String?   @default("image/jpeg,image/jpg,image/png,application/pdf,application/msword,application/mspowerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document,audio/*,video/*") @db.VarChar(255)
-  
-  created_at                                     DateTime @default(now())
-  updated_at                                     DateTime @updatedAt
+  form_section_id Int?
+  form_section    FormSection? @relation(fields: [form_section_id], references: [id])
 
-  form_field_choices                             FormFieldChoice[]
+  file_upload_filed Boolean? @default(false)
+  file_upload_type  String?  @default("image/jpeg,image/jpg,image/png,application/pdf,application/msword,application/mspowerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document,audio/*,video/*") @db.VarChar(255)
 
-   @@map("form_section_fields")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
+  form_field_choices FormFieldChoice[]
 
-  
+  @@map("form_section_fields")
 }
 
 model PostGallery {
-  id                                       Int         @id @default(autoincrement())
-  name                                     String?     @db.VarChar(255)
-  poster                                   String?     @db.VarChar(255)
-  event_id                                 Int?
-  event                                    Event?      @relation(fields: [event_id], references: [id])
+  id       Int     @id @default(autoincrement())
+  name     String? @db.VarChar(255)
+  poster   String? @db.VarChar(255)
+  event_id Int?
+  event    Event?  @relation(fields: [event_id], references: [id])
 
-  createdAt                                DateTime    @default(now())
-  updatedAt                                DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("post_galleries")
 }
 
 model FormFieldChoice {
-  id                              Int    @id @default(autoincrement())
-  sequence                        Int?      @db.Int
+  id       Int  @id @default(autoincrement())
+  sequence Int? @db.Int
 
-  caption                         String?   @db.VarChar(255)
-  isActive                        Boolean   @default(true) @db.TinyInt
+  caption  String? @db.VarChar(255)
+  isActive Boolean @default(true) @db.TinyInt
 
-  specificFieldIfOther            Boolean?  @db.TinyInt
+  specificFieldIfOther Boolean? @db.TinyInt
 
-  createdAt                       DateTime?  @db.DateTime
-  updatedAt                       DateTime?  @db.DateTime
-
-  
+  createdAt DateTime? @db.DateTime
+  updatedAt DateTime? @db.DateTime
 
   // You can define the relationships if needed based on the foreign keys
-  form_section_field_id           Int?
-  form_section_field   FormSectionField? @relation(fields: [form_section_field_id], references: [id])
+  form_section_field_id Int?
+  form_section_field    FormSectionField? @relation(fields: [form_section_field_id], references: [id])
+
   @@map("form_field_choices")
 }
 
 model Contact {
-  
-  id                              Int    @id @default(autoincrement())
-  name                            String?   @db.VarChar(255)
-  email                           String?   @db.VarChar(255)
+  id    Int     @id @default(autoincrement())
+  name  String? @db.VarChar(255)
+  email String? @db.VarChar(255)
 
-  subject                         String?   @db.VarChar(255)
-  message                         String?   @db.VarChar(255)
+  subject String? @db.VarChar(255)
+  message String? @db.VarChar(255)
 
-  created_at                                     DateTime @default(now())
-  updated_at                                     DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  eventId                         Int  
+  eventId Int
 
- 
   event Event? @relation(fields: [eventId], references: [id])
-
 
   // You can define the relationships if needed based on the foreign keys
 
   @@map("Contact")
 }
+
 model EmailContent {
+  id        Int     @id @default(autoincrement())
+  emailType String? @db.VarChar(255)
+  subject   String? @db.VarChar(255)
+  content   String? @db.Text
 
-  id                     Int    @id @default(autoincrement())
-  emailType              String?   @db.VarChar(255)
-  subject                String?   @db.VarChar(255)
-  content                String?   @db.Text
+  roleId  Int?
+  eventId Int?
 
-  roleId                 Int?   
-  eventId                Int?   
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  fromEmail  String?  @db.VarChar(255)
+  ccEmail    String?  @db.Text
 
-  created_at                                     DateTime @default(now())
-  updated_at                                     DateTime @updatedAt
-  fromEmail              String?   @db.VarChar(255)
-  ccEmail                String?   @db.Text
+  hasAttachment Boolean?
+  Attachment    String?  @db.Text
 
-  hasAttachment          Boolean?  
-  Attachment             String?   @db.Text
-  
-  scheduleEmail          DateTime? 
+  scheduleEmail DateTime?
 
-
-  role   Role?   @relation(fields: [roleId], references: [id])
-  event  Event?  @relation(fields: [eventId], references: [id])
+  role  Role?  @relation(fields: [roleId], references: [id])
+  event Event? @relation(fields: [eventId], references: [id])
 
   @@map("email_contents")
-
 }
 
 model category {
+  id Int @id @default(autoincrement())
 
-  id                     Int    @id @default(autoincrement())
+  content String? @db.Text
+  eventId Int?
 
-  content                String?   @db.Text 
-  eventId                Int?   
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  created_at             DateTime @default(now())
-  updated_at             DateTime @updatedAt
-
-  event  Event?  @relation(fields: [eventId], references: [id])
+  event      Event?      @relation(fields: [eventId], references: [id])
   QuizTopics QuizTopic[]
 
   @@map("categorys")
-
 }
 
 model QuizTopic {
-
-  id                                      Int  @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   category_id Int?
-  category  category?  @relation(fields: [category_id], references: [id])
+  category    category? @relation(fields: [category_id], references: [id])
 
-  event_id                                Int?
-  event  Event?  @relation(fields: [event_id], references: [id])
-  title                                   String? @db.VarChar(255)
+  event_id Int?
+  event    Event?  @relation(fields: [event_id], references: [id])
+  title    String? @db.VarChar(255)
 
-  description                             String?
+  description String?
 
-  is_paid                                 Boolean @default(false)
-  sequence                                Int?
+  is_paid  Boolean @default(false)
+  sequence Int?
 
-  is_active                               Boolean @default(true)
-  has_download_certificate                Boolean @default(false)
+  is_active                Boolean @default(true)
+  has_download_certificate Boolean @default(false)
 
-  total_marks                             Float  @default(0)
-  passing_points                          Float? @default(0)
+  total_marks    Float  @default(0)
+  passing_points Float? @default(0)
 
-  has_pass_fail_page                      Boolean @default(false)
-  embedded_video                          String?
+  has_pass_fail_page Boolean @default(false)
+  embedded_video     String?
 
+  duration   String?   @db.VarChar(255)
+  valid_from DateTime?
+  valid_upto DateTime?
 
-  duration                                String? @db.VarChar(255)
-  valid_from                              DateTime?
-  valid_upto                              DateTime?
+  max_attempts  Int?    @default(0)
+  practise_quiz Boolean @default(false)
 
-  max_attempts                            Int?  @default(0)
-  practise_quiz                           Boolean @default(false)
+  QuizQuestions      QuizQuestion[]
+  QuizAttemptResults QuizAttemptResult[]
 
-  QuizQuestions                          QuizQuestion[]
-  QuizAttemptResults                     QuizAttemptResult[]
-
-  created_at                                     DateTime @default(now())
-  updated_at                                     DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("quiz_topics")
 }
 
 model QuizQuestion {
+  id       Int  @id @default(autoincrement())
+  sequence Int?
 
-  id                                             Int  @id @default(autoincrement())
-  sequence                                       Int?
+  title         String  @db.Text
+  question_type String? @db.VarChar(255)
 
-  title                                          String  @db.Text
-  question_type                                  String? @db.VarChar(255)
+  quiz_topic_id Int?
+  quiz_topic    QuizTopic? @relation(fields: [quiz_topic_id], references: [id])
 
-  quiz_topic_id                                  Int?
-  quiz_topic  QuizTopic?  @relation(fields: [quiz_topic_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  created_at                                     DateTime @default(now())
-  updated_at                                     DateTime @updatedAt
+  wrong_answer_explanation String? @db.Text
 
-  wrong_answer_explanation                       String? @db.Text
-  
- 
-  is_required                                    Boolean @default(false)
+  is_required Boolean @default(false)
 
-  correct_answer_explanation                     String? @db.Text
+  correct_answer_explanation String? @db.Text
 
-  marks                                          Float?
-  negative_marks                                 Float?
+  marks               Float?
+  negative_marks      Float?
   QuizQuestionOptions QuizQuestionOption[]
-  
-
 
   @@map("quiz_questions")
 }
 
-
 model QuizQuestionOption {
+  id    Int    @id @default(autoincrement())
+  title String @db.Text
 
-  id                        Int  @id @default(autoincrement())
-  title                     String  @db.Text
+  is_right       Boolean @default(false)
+  is_last_option Boolean @default(false)
 
-  is_right                  Boolean @default(false)
-  is_last_option            Boolean @default(false)
+  points String? @db.VarChar(255)
 
-  points                    String? @db.VarChar(255)
+  quiz_question_id Int?
+  QuizQuestion     QuizQuestion? @relation(fields: [quiz_question_id], references: [id])
 
-  quiz_question_id          Int?
-  QuizQuestion  QuizQuestion?  @relation(fields: [quiz_question_id], references: [id])
-
-  created_at                DateTime @default(now())
-  updated_at                DateTime @updatedAt
-
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   check_to_enable_other_field Boolean @default(false)
 
@@ -439,71 +407,61 @@ model QuizQuestionOption {
 }
 
 model QuizAttemptResult {
+  id Int @id @default(autoincrement())
 
-  id                Int  @id @default(autoincrement())
+  user_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
 
-  user_id           Int?
-  user              User?  @relation(fields: [user_id], references: [id])
+  quiz_topic_id Int?
+  quiz_topic    QuizTopic? @relation(fields: [quiz_topic_id], references: [id])
 
+  question String? @db.Text
+  answer   String? @db.Text
 
-  quiz_topic_id     Int?
-  quiz_topic        QuizTopic?  @relation(fields: [quiz_topic_id], references: [id])
+  quiz_attempt_id Int?
+  quiz_attempts   QuizAttempt? @relation(fields: [quiz_attempt_id], references: [id])
 
-  question          String?     @db.Text
-  answer            String?     @db.Text
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  QuizAttempts       QuizAttempt[]
-
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
-
-
-
-  @@map("quiz_attempts")
-
+  @@map("quiz_attempt_results")
 }
-
 
 model QuizAttempt {
+  id Int @id @default(autoincrement())
 
-  id            Int  @id @default(autoincrement())
+  user_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
 
-  user_id           Int?
-  user              User?  @relation(fields: [user_id], references: [id])
+  QuizAttemptResults QuizAttemptResult[]
 
-  quiz_attempt_result_id  Int?
-  quiz_attempt_result  QuizAttemptResult?  @relation(fields: [quiz_attempt_result_id], references: [id])
+  marks_gained Float?
+  is_pass      Boolean? @default(false)
+  time_spent   Int?
 
-  marks_gained  Float?
-  is_pass       Boolean? @default(false)
-  time_spent    Int?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  QuizResult QuizResult[]
 
-  QuizResult    QuizResult[]
-
-  @@map("quiz_attempt_logs")
+  @@map("quiz_attempts")
 }
 
-
 model QuizResult {
+  id      Int   @id @default(autoincrement())
+  user_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
 
-  id                      Int  @id @default(autoincrement())
-  user_id           Int?
-  user              User?  @relation(fields: [user_id], references: [id])
+  marks_scored Float?
+  is_pass      Boolean? @default(false)
 
-  marks_scored            Float?
-  is_pass                 Boolean? @default(false)
+  quiz_attempt_id Int?
+  QuizAttempt     QuizAttempt? @relation(fields: [quiz_attempt_id], references: [id])
 
-  quiz_attempt_id         Int?
-  QuizAttempt  QuizAttempt?  @relation(fields: [quiz_attempt_id], references: [id])
+  points String? @db.VarChar(255)
 
-  points                  String? @db.VarChar(255)
-
-  created_at              DateTime @default(now())
-  updated_at              DateTime @updatedAt
-
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("quiz_results")
 }

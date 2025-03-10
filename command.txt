@@ -1,4 +1,23 @@
 npx prisma migrate dev --name <migration-name>
-
+Creates & applies migrations (for development)
 
 npx prisma migrate deploy
+Applies existing migrations to the database (for production).
+
+npx prisma migrate push
+Directly updates the database schema without migrations (good for prototyping)
+
+npx prisma migrate reset
+Drops, recreates, and reapplies migrations (⚠ Deletes all data).
+
+npx prisma db pull
+Fetches database schema and updates schema.prisma.
+
+npx prisma db push
+Syncs schema.prisma with the database without creating migration files.
+
+npx prisma migrate diff
+Compares database and schema.prisma differences.
+
+npx prisma format
+Formats the schema.prisma file.
