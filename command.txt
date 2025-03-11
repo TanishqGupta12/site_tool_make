@@ -26,20 +26,19 @@ Formats the schema.prisma file.
 
 
 
+model UserCourse {
+  id             Int  @id @default(autoincrement())
+
+  user_id         Int  
+  user  User?  @relation(fields: [user_id], references: [id])
 
 
-model User_ticket {
-    
-  id      Int   @id @default(autoincrement())
+  eventAgendaId  Int  
+  completed      Boolean @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  feedback       String?  
+  certificateUrl String?  
 
-  userId  Int
-  eventId Int
-
-  user  User?  @relation(fields: [userId], references: [id])
-  event Event? @relation(fields: [eventId], references: [id])
-
-
-@@map("user_tickets")
-
+  @@map("user_courses")
 }
-

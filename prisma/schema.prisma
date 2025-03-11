@@ -73,7 +73,7 @@ model Event {
 
   email_content EmailContent[]
   category      category[]
-  QuizTopic     QuizTopic[]
+  EventAgendas   EventAgenda[]
   Captions      Caption[]
 
   @@map("events")
@@ -323,40 +323,57 @@ model category {
   updated_at DateTime @updatedAt
 
   event      Event?      @relation(fields: [eventId], references: [id])
-  QuizTopics QuizTopic[]
+  EventAgendas EventAgenda[]
 
   @@map("categorys")
 }
 
-model QuizTopic {
-  id Int @id @default(autoincrement())
+model EventAgenda {
+
+  id             Int  @id @default(autoincrement())
+  is_active                Boolean @default(true)
+
+  duration   String?   @db.VarChar(255)
 
   category_id Int?
   category    category? @relation(fields: [category_id], references: [id])
 
   event_id Int?
   event    Event?  @relation(fields: [event_id], references: [id])
-  title    String? @db.VarChar(255)
 
-  description String?
+  has_download_certificate Boolean @default(false)
 
   is_paid  Boolean @default(false)
-  sequence Int?
-
-  is_active                Boolean @default(true)
-  has_download_certificate Boolean @default(false)
 
   total_marks    Float  @default(0)
   passing_points Float? @default(0)
 
   has_pass_fail_page Boolean @default(false)
-  embedded_video     String?
 
-  duration   String?   @db.VarChar(255)
+  max_attempts  Int?    @default(0)
+
   valid_from DateTime?
   valid_upto DateTime?
 
-  max_attempts  Int?    @default(0)
+  QuizTopics  QuizTopic[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+}
+
+model QuizTopic {
+  id Int @id @default(autoincrement())
+
+  sequence Int?
+  title    String? @db.VarChar(255)
+  description String? @db.VarChar(255)
+
+  event_agenda_id Int?
+  event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
+
+  embedded_video     String?
+
   practise_quiz Boolean @default(false)
 
   QuizQuestions      QuizQuestion[]
