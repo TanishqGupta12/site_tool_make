@@ -145,6 +145,7 @@ model User {
   QuizAttempts       QuizAttempt[]
   QuizResults        QuizResult[]
   User_Tickets User_Ticket[]
+  UserCourses UserCourse[]
 
   @@map("users")
 }
@@ -365,6 +366,10 @@ model EventAgenda {
   Tickets Tricket[]
   User_Tickets User_Ticket[]
 
+  QuizResults QuizResult[]
+
+  UserCourses UserCourse[]
+
 }
 
 model QuizTopic {
@@ -422,15 +427,11 @@ model QuizQuestionOption {
   is_right       Boolean @default(false)
   is_last_option Boolean @default(false)
 
-  points String? @db.VarChar(255)
-
   quiz_question_id Int?
   QuizQuestion     QuizQuestion? @relation(fields: [quiz_question_id], references: [id])
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-
-  check_to_enable_other_field Boolean @default(false)
 
   @@map("quiz_question_options")
 }
@@ -446,6 +447,10 @@ model QuizAttemptResult {
 
   question String? @db.Text
   answer   String? @db.Text
+
+  is_right Float?
+
+  is_wrong Float?
 
   quiz_attempts QuizAttempt[]
 
@@ -465,8 +470,6 @@ model QuizAttempt {
   quiz_attempt_result    QuizAttemptResult? @relation(fields: [quiz_attempt_result_id], references: [id])
 
   marks_gained Float?
-  is_pass      Boolean? @default(false)
-  time_spent   Int?
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -481,13 +484,15 @@ model QuizResult {
   user_id Int?
   user    User? @relation(fields: [user_id], references: [id])
 
-  marks_scored Float?
   is_pass      Boolean? @default(false)
 
   quiz_attempt_id Int?
   QuizAttempt     QuizAttempt? @relation(fields: [quiz_attempt_id], references: [id])
 
-  points String? @db.VarChar(255)
+  event_agenda_id Int?
+  EventAgenda EventAgenda? @relation(fields: [event_agenda_id], references: [id])
+
+  points Float?
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -609,4 +614,25 @@ model User_Ticket {
 
   @@map("user_tickets")
 
+}
+
+model UserCourse {
+  id             Int  @id @default(autoincrement())
+
+  user_id         Int  
+  user  User?  @relation(fields: [user_id], references: [id])
+
+
+  event_agenda_id Int?
+  EventAgenda EventAgenda? @relation(fields: [event_agenda_id], references: [id])
+  
+  completed      Boolean @default(false)
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  feedback       String?  
+  certificateUrl String?  
+
+  @@map("user_courses")
 }
