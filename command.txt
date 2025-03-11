@@ -29,10 +29,17 @@ Formats the schema.prisma file.
 
 
 model User_ticket {
+    
   id      Int   @id @default(autoincrement())
 
+  userId  Int
+  eventId Int
 
-@@map("trickets")
+  user  User?  @relation(fields: [userId], references: [id])
+  event Event? @relation(fields: [eventId], references: [id])
+
+
+@@map("user_tickets")
 
 }
 
