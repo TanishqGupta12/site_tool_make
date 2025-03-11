@@ -418,8 +418,8 @@ model QuizAttemptResult {
   question String? @db.Text
   answer   String? @db.Text
 
-  quiz_attempt_id Int?
-  quiz_attempts   QuizAttempt? @relation(fields: [quiz_attempt_id], references: [id])
+
+  quiz_attempts   QuizAttempt[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -433,7 +433,8 @@ model QuizAttempt {
   user_id Int?
   user    User? @relation(fields: [user_id], references: [id])
 
-  QuizAttemptResults QuizAttemptResult[]
+  quiz_attempt_result_id Int?
+  quiz_attempt_result   QuizAttemptResult? @relation(fields: [quiz_attempt_result_id], references: [id])
 
   marks_gained Float?
   is_pass      Boolean? @default(false)
