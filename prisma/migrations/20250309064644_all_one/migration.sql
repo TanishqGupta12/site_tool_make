@@ -197,7 +197,7 @@ CREATE TABLE `form_field_choices` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Contact` (
+CREATE TABLE `contact` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NULL,
     `email` VARCHAR(255) NULL,
@@ -241,4 +241,4 @@ ALTER TABLE `post_galleries` ADD CONSTRAINT `post_galleries_event_id_fkey` FOREI
 ALTER TABLE `form_field_choices` ADD CONSTRAINT `form_field_choices_form_section_field_id_fkey` FOREIGN KEY (`form_section_field_id`) REFERENCES `form_section_fields`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Contact` ADD CONSTRAINT `Contact_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `events`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `contact` ADD CONSTRAINT `contact_eventId_fkey` FOREIGN KEY (`eventId`) REFERENCES `events`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

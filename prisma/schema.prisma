@@ -65,7 +65,7 @@ model Event {
   Form                                     Form[]
   PostGallery                              PostGallery[]
 
-  Contact Contact[]
+  contact contact[]
 
   email_content EmailContent[]
   category      category[]
@@ -260,7 +260,7 @@ model FormFieldChoice {
   @@map("form_field_choices")
 }
 
-model Contact {
+model contact {
   id    Int     @id @default(autoincrement())
   name  String? @db.VarChar(255)
   email String? @db.VarChar(255)
@@ -277,7 +277,7 @@ model Contact {
 
   // You can define the relationships if needed based on the foreign keys
 
-  @@map("Contact")
+  @@map("contact")
 }
 
 model EmailContent {

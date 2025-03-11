@@ -194,8 +194,8 @@ const options: NextAdminOptions = {
  
       },
     },
-    Contact: {
-      toString: (Contact) => `(${Contact.id.toString()})  `,
+    contact: {
+      toString: (Contacts) => `(${Contacts.id.toString()})  `,
       title: "Contact",
       icon: "PhoneIcon",
       edit: {

@@ -125,7 +125,7 @@ type Event {
     name: String!
   }
 
-  type Contact {
+  type contact {
   
     id:                             Int    
     name:                            String   
@@ -158,8 +158,8 @@ type Event {
     form_field_choices: [FormFieldChoice]
     form_field_choice(id: ID!): FormFieldChoice
 
-    contacts: [Contact]
-    contact(id: ID!): Contact
+    contacts: [contact]
+    contact(id: ID!): contact
   }
 
   type Mutation {
@@ -167,7 +167,7 @@ type Event {
 
   }
   type Mutation {
-      addcontact(name: String!, email: String!, subject: String!, message: String!, event_id: String!): Contact
+      addcontact(name: String!, email: String!, subject: String!, message: String!, event_id: String!): contact
   }
 
 `;
