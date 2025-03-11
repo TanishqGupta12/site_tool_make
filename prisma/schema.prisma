@@ -70,6 +70,7 @@ model Event {
   email_content EmailContent[]
   category      category[]
   QuizTopic     QuizTopic[]
+  Captions      Caption[]
 
   @@map("events")
 }
@@ -418,8 +419,7 @@ model QuizAttemptResult {
   question String? @db.Text
   answer   String? @db.Text
 
-
-  quiz_attempts   QuizAttempt[]
+  quiz_attempts QuizAttempt[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -434,7 +434,7 @@ model QuizAttempt {
   user    User? @relation(fields: [user_id], references: [id])
 
   quiz_attempt_result_id Int?
-  quiz_attempt_result   QuizAttemptResult? @relation(fields: [quiz_attempt_result_id], references: [id])
+  quiz_attempt_result    QuizAttemptResult? @relation(fields: [quiz_attempt_result_id], references: [id])
 
   marks_gained Float?
   is_pass      Boolean? @default(false)
@@ -465,4 +465,18 @@ model QuizResult {
   updated_at DateTime @updatedAt
 
   @@map("quiz_results")
+}
+
+model Caption {
+
+  id      Int   @id @default(autoincrement())
+
+
+  title String? @db.VarChar(255)
+
+  event_id                                Int?
+  event  Event?  @relation(fields: [event_id], references: [id])
+
+  @@map("captions")
+
 }
