@@ -66,6 +66,9 @@ model Event {
   PostGallery                              PostGallery[]
 
   contact contact[]
+  Discounts Discount[]
+  Trickets Tricket[]
+  User_Notes User_Note[]
 
   email_content EmailContent[]
   category      category[]
@@ -117,6 +120,8 @@ model User {
 
   roleId Int? // Foreign key reference to Role
   role   Role? @relation("RoleToUsers", fields: [roleId], references: [id])
+
+  User_Notes User_Note[]
 
   f1  String? @db.VarChar(255)
   f2  String? @db.VarChar(255)
@@ -478,5 +483,76 @@ model Caption {
   event  Event?  @relation(fields: [event_id], references: [id])
 
   @@map("captions")
+
+}
+
+model Discount {
+
+  id                                       Int           @id @default(autoincrement())
+  event_id                                Int?
+  event  Event?  @relation(fields: [event_id], references: [id])
+
+  code                      String? @db.VarChar(255)
+  is_active                 Boolean? @default(false)
+  is_percentage             Boolean? @default(false)
+  discount_amount           String? @db.VarChar(255)
+
+  min_discount               Float
+  max_discount               Float
+
+  valid_from                DateTime
+  valid_still               DateTime
+
+  created_at                DateTime @default(now())
+  updated_at                DateTime @updatedAt
+
+    @@map("discounts")
+}
+
+model Tricket {
+
+  id                                       Int           @id @default(autoincrement()) 
+  title                                   String? @db.VarChar(255)
+
+  event_id                                Int?
+  event  Event?  @relation(fields: [event_id], references: [id])
+
+  Price                     Float? 
+  is_active                 Boolean? @default(false)
+  currency                  String? @db.VarChar(255)
+
+  min_user_limit             Float?
+  is_group                   Boolean? @default(false)
+
+  is_donation                Boolean? @default(false)
+
+
+  valid_from                DateTime?
+  valid_still               DateTime?
+
+  created_at                DateTime @default(now())
+  updated_at                DateTime @updatedAt
+
+      @@map("trickets")
+}
+
+model User_Note {
+  id      Int   @id @default(autoincrement())
+
+
+  subject                                     String?       @db.VarChar(255)
+  description                              String?       @db.Text
+
+  userId  Int
+  eventId Int
+
+  user  User?  @relation(fields: [userId], references: [id])
+  event Event? @relation(fields: [eventId], references: [id])
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("user_notes")
 
 }
