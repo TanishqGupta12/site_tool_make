@@ -360,6 +360,11 @@ model EventAgenda {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  User_Notes User_Note[]
+
+  Tickets Tricket[]
+  User_Tickets User_Ticket[]
+
 }
 
 model QuizTopic {
@@ -372,7 +377,6 @@ model QuizTopic {
   event_agenda_id Int?
   event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
-  embedded_video     String?
 
   practise_quiz Boolean @default(false)
 
@@ -381,10 +385,7 @@ model QuizTopic {
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  User_Notes User_Note[]
 
-  Tickets Tricket[]
-  User_Tickets User_Ticket[]
   @@map("quiz_topics")
 }
 
@@ -539,8 +540,8 @@ model Tricket {
   event_id                                Int?
   event  Event?  @relation(fields: [event_id], references: [id])
 
-  quiz_topic_id Int?
-  quiz_topic    QuizTopic? @relation(fields: [quiz_topic_id], references: [id])
+  event_agenda_id Int?
+  event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
   Price                     Float? 
   is_active                 Boolean? @default(false)
@@ -576,8 +577,8 @@ model User_Note {
   user  User?  @relation(fields: [userId], references: [id])
   event Event? @relation(fields: [eventId], references: [id])
 
-  quiz_topic_id Int?
-  quiz_topic    QuizTopic? @relation(fields: [quiz_topic_id], references: [id])
+  event_agenda_id Int?
+  event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
 
   createdAt DateTime @default(now())
@@ -597,8 +598,8 @@ model User_Ticket {
   user  User?  @relation(fields: [userId], references: [id])
   event Event? @relation(fields: [eventId], references: [id])
 
-  quiz_topic_id Int?
-  quiz_topic    QuizTopic? @relation(fields: [quiz_topic_id], references: [id])
+  event_agenda_id Int?
+  event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
   Tricket_id Int?
   Tricket  Tricket? @relation(fields: [Tricket_id], references: [id])
