@@ -65,15 +65,15 @@ model Event {
   Form                                     Form[]
   PostGallery                              PostGallery[]
 
-  contact contact[]
-  Discounts Discount[]
-  Trickets Tricket[]
-  User_Notes User_Note[]
+  contact      contact[]
+  Discounts    Discount[]
+  Trickets     Tricket[]
+  User_Notes   User_Note[]
   User_Tickets User_Ticket[]
 
   email_content EmailContent[]
   category      category[]
-  EventAgendas   EventAgenda[]
+  EventAgendas  EventAgenda[]
   Captions      Caption[]
 
   @@map("events")
@@ -144,8 +144,8 @@ model User {
   QuizAttemptResults QuizAttemptResult[]
   QuizAttempts       QuizAttempt[]
   QuizResults        QuizResult[]
-  User_Tickets User_Ticket[]
-  UserCourses UserCourse[]
+  User_Tickets       User_Ticket[]
+  UserCourses        UserCourse[]
 
   @@map("users")
 }
@@ -277,8 +277,8 @@ model contact {
   subject String? @db.VarChar(255)
   message String? @db.VarChar(255)
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
   eventId Int
 
@@ -298,8 +298,8 @@ model EmailContent {
   roleId  Int?
   eventId Int?
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
   fromEmail  String?  @db.VarChar(255)
   ccEmail    String?  @db.Text
 
@@ -320,76 +320,74 @@ model category {
   content String? @db.Text
   eventId Int?
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
-  event      Event?      @relation(fields: [eventId], references: [id])
+  event        Event?        @relation(fields: [eventId], references: [id])
   EventAgendas EventAgenda[]
 
   @@map("categorys")
 }
 
 model EventAgenda {
+  id        Int     @id @default(autoincrement())
+  is_active Boolean? @default(true)
 
-  id             Int  @id @default(autoincrement())
-  is_active                Boolean @default(true)
-
-  duration   String?   @db.VarChar(255)
+  duration String? @db.VarChar(255)
 
   category_id Int?
   category    category? @relation(fields: [category_id], references: [id])
 
   event_id Int?
-  event    Event?  @relation(fields: [event_id], references: [id])
+  event    Event? @relation(fields: [event_id], references: [id])
 
   has_download_certificate Boolean @default(false)
 
-  is_paid  Boolean @default(false)
+  is_paid Boolean? @default(false)
 
-  total_marks    Float  @default(0)
+  total_marks    Float?  @default(0)
   passing_points Float? @default(0)
+  negative_marks      Float? @default(0)
 
-  has_pass_fail_page Boolean @default(false)
+  has_pass_fail_page Boolean? @default(false)
 
-  max_attempts  Int?    @default(0)
+  max_attempts Int? @default(0)
 
   valid_from DateTime?
   valid_upto DateTime?
 
-  QuizTopics  QuizTopic[]
+  QuizTopics QuizTopic[]
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
   User_Notes User_Note[]
 
-  Tickets Tricket[]
+  Tickets      Tricket[]
   User_Tickets User_Ticket[]
 
   QuizResults QuizResult[]
 
   UserCourses UserCourse[]
-
 }
 
 model QuizTopic {
   id Int @id @default(autoincrement())
 
-  sequence Int?
-  title    String? @db.VarChar(255)
+  sequence    Int?
+  title       String? @db.VarChar(255)
   description String? @db.VarChar(255)
 
   event_agenda_id Int?
   event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
-
-  practise_quiz Boolean @default(false)
+  practise_quiz Boolean? @default(false)
 
   QuizQuestions      QuizQuestion[]
   QuizAttemptResults QuizAttemptResult[]
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
   @@map("quiz_topics")
 }
@@ -398,23 +396,23 @@ model QuizQuestion {
   id       Int  @id @default(autoincrement())
   sequence Int?
 
-  title         String  @db.Text
+  title         String?  @db.Text
   question_type String? @db.VarChar(255)
 
   quiz_topic_id Int?
   quiz_topic    QuizTopic? @relation(fields: [quiz_topic_id], references: [id])
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
   wrong_answer_explanation String? @db.Text
 
-  is_required Boolean @default(false)
+  is_required Boolean? @default(false)
 
-  correct_answer_explanation String? @db.Text
+  correct_answer_explanation Boolean? @default(false)
 
   marks               Float?
-  negative_marks      Float?
+
   QuizQuestionOptions QuizQuestionOption[]
 
   @@map("quiz_questions")
@@ -422,16 +420,16 @@ model QuizQuestion {
 
 model QuizQuestionOption {
   id    Int    @id @default(autoincrement())
-  title String @db.Text
+  title String? @db.Text
 
-  is_right       Boolean @default(false)
-  is_last_option Boolean @default(false)
+  is_right       Boolean? @default(false)
+  is_last_option Boolean? @default(false)
 
   quiz_question_id Int?
   QuizQuestion     QuizQuestion? @relation(fields: [quiz_question_id], references: [id])
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
   @@map("quiz_question_options")
 }
@@ -454,8 +452,8 @@ model QuizAttemptResult {
 
   quiz_attempts QuizAttempt[]
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
   @@map("quiz_attempt_results")
 }
@@ -471,8 +469,8 @@ model QuizAttempt {
 
   marks_gained Float?
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
   QuizResult QuizResult[]
 
@@ -484,100 +482,93 @@ model QuizResult {
   user_id Int?
   user    User? @relation(fields: [user_id], references: [id])
 
-  is_pass      Boolean? @default(false)
+  is_pass Boolean? @default(false)
 
   quiz_attempt_id Int?
   QuizAttempt     QuizAttempt? @relation(fields: [quiz_attempt_id], references: [id])
 
   event_agenda_id Int?
-  EventAgenda EventAgenda? @relation(fields: [event_agenda_id], references: [id])
+  EventAgenda     EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
   points Float?
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
   @@map("quiz_results")
 }
 
 model Caption {
-
-  id      Int   @id @default(autoincrement())
-
+  id Int @id @default(autoincrement())
 
   title String? @db.VarChar(255)
 
-  event_id                                Int?
-  event  Event?  @relation(fields: [event_id], references: [id])
+  event_id Int?
+  event    Event? @relation(fields: [event_id], references: [id])
 
   @@map("captions")
-
 }
 
 model Discount {
+  id       Int    @id @default(autoincrement())
+  event_id Int?
+  event    Event? @relation(fields: [event_id], references: [id])
 
-  id                                       Int           @id @default(autoincrement())
-  event_id                                Int?
-  event  Event?  @relation(fields: [event_id], references: [id])
+  code            String?  @db.VarChar(255)
+  is_active       Boolean? @default(false)
+  is_percentage   Boolean? @default(false)
+  discount_amount String?  @db.VarChar(255)
 
-  code                      String? @db.VarChar(255)
-  is_active                 Boolean? @default(false)
-  is_percentage             Boolean? @default(false)
-  discount_amount           String? @db.VarChar(255)
+  min_discount Float?
+  max_discount Float?
 
-  min_discount               Float
-  max_discount               Float
+  valid_from  DateTime?
+  valid_still DateTime?
 
-  valid_from                DateTime
-  valid_still               DateTime
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 
-  created_at                DateTime @default(now())
-  updated_at                DateTime @updatedAt
-
-    @@map("discounts")
+  @@map("discounts")
 }
 
 model Tricket {
+  id    Int     @id @default(autoincrement())
+  title String? @db.VarChar(255)
 
-  id                                       Int           @id @default(autoincrement()) 
-  title                                   String? @db.VarChar(255)
-
-  event_id                                Int?
-  event  Event?  @relation(fields: [event_id], references: [id])
+  event_id Int?
+  event    Event? @relation(fields: [event_id], references: [id])
 
   event_agenda_id Int?
   event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
-  Price                     Float? 
-  is_active                 Boolean? @default(false)
-  currency                  String? @db.VarChar(255)
+  Price     Float?
+  is_active Boolean? @default(false)
+  currency  String?  @db.VarChar(255)
 
-  min_user_limit             Float?
-  is_group                   Boolean? @default(false)
+  min_user_limit Float?
+  is_group       Boolean? @default(false)
 
-  is_donation                Boolean? @default(false)
+  is_donation Boolean? @default(false)
 
+  valid_from  DateTime?
+  valid_still DateTime?
 
-  valid_from                DateTime?
-  valid_still               DateTime?
-
-  created_at                DateTime @default(now())
-  updated_at                DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   User_Tickets User_Ticket[]
 
-      @@map("trickets")
+  @@map("trickets")
 }
 
 model User_Note {
-  id      Int   @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
+  subject     String? @db.VarChar(255)
+  description String? @db.Text
 
-  subject                                     String?       @db.VarChar(255)
-  description                              String?       @db.Text
-
-  userId  Int
-  eventId Int
+  userId  Int?
+  eventId Int?
 
   user  User?  @relation(fields: [userId], references: [id])
   event Event? @relation(fields: [eventId], references: [id])
@@ -585,20 +576,18 @@ model User_Note {
   event_agenda_id Int?
   event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
   @@map("user_notes")
-
 }
 
 model User_Ticket {
-  id      Int   @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  discount_code  String?       @db.VarChar(255)
-  userId  Int
-  eventId Int
+  discount_code String? @db.VarChar(255)
+  userId        Int?
+  eventId       Int?
 
   user  User?  @relation(fields: [userId], references: [id])
   event Event? @relation(fields: [eventId], references: [id])
@@ -607,32 +596,30 @@ model User_Ticket {
   event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
   Tricket_id Int?
-  Tricket  Tricket? @relation(fields: [Tricket_id], references: [id])
+  Tricket    Tricket? @relation(fields: [Tricket_id], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
   @@map("user_tickets")
-
 }
 
 model UserCourse {
-  id             Int  @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  user_id         Int  
-  user  User?  @relation(fields: [user_id], references: [id])
-
+  user_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
 
   event_agenda_id Int?
-  EventAgenda EventAgenda? @relation(fields: [event_agenda_id], references: [id])
-  
-  completed      Boolean @default(false)
+  EventAgenda     EventAgenda? @relation(fields: [event_agenda_id], references: [id])
 
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  completed Boolean? @default(false)
 
-  feedback       String?  
-  certificateUrl String?  
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  feedback       String?
+  certificateUrl String?
 
   @@map("user_courses")
 }
