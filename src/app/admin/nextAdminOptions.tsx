@@ -258,6 +258,62 @@ const options: NextAdminOptions = {
  
       },
     },
+    EventAgenda: {
+      toString: (agenda) => `(${agenda.id.toString()})  `,
+      title: "EventAgenda",
+      icon: "TrophyIcon",
+      edit: {
+ 
+      },
+    },
+    Caption: {
+      toString: (agenda) => `(${agenda.id.toString()})  `,
+      title: "Caption",
+      icon: "BoldIcon",
+      edit: {
+ 
+      },
+    },
+    Discount: {
+      toString: (discount) => `(${discount.id.toString()})  `,
+      title: "Discount",
+      icon: "PercentBadgeIcon",
+      edit: {
+ 
+      },
+    },
+    Tricket: {
+      toString: (ticket) => `(${ticket.id.toString()})  `,
+      title: "Ticket",
+      icon: "CalculatorIcon",
+      edit: {
+ 
+      },
+    },
+    User_Note: {
+      toString: (Note) => `(${Note.id.toString()})  `,
+      title: "User Note",
+      icon: "ClipboardDocumentIcon",
+      edit: {
+ 
+      },
+    },
+    User_Ticket: {
+      toString: (Note) => `(${Note.id.toString()})  `,
+      title: "User Ticket",
+      icon: "ClipboardDocumentIcon",
+      edit: {
+ 
+      },
+    },
+    UserCourse: {
+      toString: (Note) => `(${Note.id.toString()})  `,
+      title: "User Course",
+      icon: "NewspaperIcon",
+      edit: {
+ 
+      },
+    },
   },
   pages: {
     "": {
@@ -270,15 +326,19 @@ const options: NextAdminOptions = {
       {
         title: "configuration",
         className: " bg-green-600 p-2 rounded-md", // group title extra classes. (optional)
-        models: ["Domain" , 'Event' , "PostGallery" , "Contact" ,"EmailContent" , "Role"],
+        models: ["Domain" , 'Event' , "PostGallery" ,"category", "EventAgenda" ,"Caption" ,"EmailContent"],
       },
       {
         title: "Registration",
-        models: ["User" , "Form" , "FormSectionField" , "FormFieldChoice"],
+        models: ["Role","User" , "Form" , "FormSectionField" , "FormFieldChoice"],
       },
       {
         title: "Quiz Builder",
-        models: ["category" ,"QuizTopic" , "QuizQuestion" , "QuizQuestionOption" , "QuizAttemptResult" , "QuizAttempt" , "QuizResult"],
+        models: ["QuizTopic" , "QuizQuestion" , "QuizQuestionOption" , "QuizAttemptResult" , "QuizAttempt" , "QuizResult"],
+      },
+      {
+        title: "More Link",
+        models: ["contact" , "Discount" , "Tricket" , "User_Note" ,"User_Ticket" , "UserCourse"],
       },
     ],
   }
