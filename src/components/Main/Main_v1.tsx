@@ -14,6 +14,8 @@ import About from "../Main/about";
 import Carousel from "../Main/Carousel";
 import {GetDataResponse} from "@/interface/types";
 
+import Error from "@/components/error/error";
+import Loading from "@/components/loading/loading";
 import { gql, useQuery } from '@apollo/client';
 
 const GET_DATA = gql`
@@ -68,7 +70,7 @@ export default function Main_v1() {
     },[data?.domain]);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error fkc: {error.message}</p>;
+  if (error) return <Error error={error}/>;
   if (!data || !data?.domain) return <p>No data available </p>;
 
   return (

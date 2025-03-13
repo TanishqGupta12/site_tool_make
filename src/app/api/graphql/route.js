@@ -217,7 +217,6 @@ const resolvers = {
   },
   Form: {
     form_section_fields: async (parent) => {
-      // console.log(parent);
       
       return await prisma.formSectionField.findMany({
         where: {
@@ -225,7 +224,7 @@ const resolvers = {
           form_id: parent.id
         },
         orderBy: {
-          sequence: "asc" // Use "desc" for descending order
+          sequence: "asc" 
         }
       });
     },
@@ -240,7 +239,7 @@ const resolvers = {
           form_section_field_id: parent.id
         },
         orderBy: {
-          sequence: "asc" // Use "desc" for descending order
+          sequence: "asc" 
         }
       });      return data;
     },
@@ -293,6 +292,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 const apolloServer = new ApolloServer({
   schema,
+  introspection: true, 
 });
 
 export const config = {
@@ -314,15 +314,9 @@ const handler = startServerAndCreateNextHandler(apolloServer, {
         include: { events: true },
       });
 
-      
-      if (!domain || domain.length === 0) {
-        throw new GraphQLError("Domain and Event not found");
-      }
-
       return { domain };
     } catch (error) {
-      console.error("Error fetching domain:", error);
-      throw new GraphQLError("Internal server error");
+      throw new GraphQLError( error.message ||"Internal Server Error");
     }
   },
 });
