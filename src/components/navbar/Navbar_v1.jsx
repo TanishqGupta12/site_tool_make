@@ -90,7 +90,7 @@ export default function Navbar_v1() {
                   </div>
 
                   {/* Join Now Button */}
-                  <Link href="/academy/signup" legacyBehavior>
+                  <Link href="/signup" legacyBehavior>
                     <a className="btn btn-primary py-2 px-4 ml-3">Join Now</a>
                   </Link>
                 </div>
