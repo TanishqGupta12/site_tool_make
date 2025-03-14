@@ -69,7 +69,7 @@ export default function Main_v1() {
       localStorage.setItem("event_id" ,data?.domain?.events[0]?.id)
     },[data?.domain]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loading/>;
   if (error) return <Error error={error}/>;
   if (!data || !data?.domain) return <p>No data available </p>;
 
