@@ -192,6 +192,10 @@ model FormSectionField {
   field_hint         String?           @db.Text
   field_type         String?           @db.VarChar(255)
   data_field         String?           @db.VarChar(255)
+
+  value              String?           @db.VarChar(255)
+  onlyReady          Boolean?          @default(false)
+  
   sequence           Int?
   is_required        Boolean           @default(false)
   is_active          Boolean           @default(true)

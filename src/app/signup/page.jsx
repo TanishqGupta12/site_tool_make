@@ -36,6 +36,8 @@ const GET_DATA = gql`
           is_active
           file_upload_filed
           file_upload_type
+          onlyReady
+          value
           form_field_choices {
             id
             sequence
@@ -105,10 +107,14 @@ export default function Signup() {
                 <div className="card-body p-4 p-md-5">
                   <form  onSubmit={handleSubmit(formhandleSubmit)} className="d-flex flex-wrap">
                     {section_fields.map((item, index) => (
-                      <div key={item.id} style={item.is_single_column ? { width: "100%" } : { width: "50%" }}>
+                      <div key={item.id}   style={{
+                        ...item.is_single_column ? { width: "100%" } : { width: "50%" },
+                        ...(item.readOnly ? { display: 'none' } : {})
+                      }}>
                         {/* Email Field */}
                         {item.data_field === "email" && (
-                          <div className="col-md-12 mb-4">
+
+                          <div className="col-md-12 mb-4" >
                             <div className="form-outline">
                               <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
                                 {item.caption}
@@ -132,7 +138,8 @@ export default function Signup() {
 
                         {/* Password Field */}
                         {item.data_field === "password" && (
-                          <div className="col-md-12 mb-4">
+
+                          <div className="col-md-12 mb-4" >
                             <div className="form-outline">
                               <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
                                 {item.caption}
@@ -156,7 +163,8 @@ export default function Signup() {
 
                         {/* number Field */}
                         {item.data_field === "number" && (
-                          <div className="col-md-12 mb-4">
+
+                          <div className="col-md-12 mb-4" >
                             <div className="form-outline">
                               <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
                                 {item.caption}
@@ -208,6 +216,36 @@ export default function Signup() {
                             </div>
                           </div>
                         )}
+
+                        {item.data_field === "hidden" && (
+                          
+                          <div className="col-md-12 mb-4">
+                            <div className="form-outline">
+                              <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
+                                {item.caption}
+                              </label>
+                              <input
+                                type="text"
+                                id={`${item.data_field}-${index}`}
+                                name={item.field_type}
+                                value={item.value} 
+                                className="form-control form-control-lg"
+                                placeholder={item.placeholder}
+                                required={item.is_required}
+                                {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
+                              />
+                              {errors[item.field_type] && (
+                                <p style={{ color: "red" }}>
+                                  {errors[item.field_type].message}
+                                </p>
+                              )}
+                              <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
+                                Hint: {item.field_hint}
+                              </small>
+                            </div>
+                          </div>
+                        )}
+
                       </div>
                     ))}
 

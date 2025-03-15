@@ -63,6 +63,8 @@ const typeDefs = `
     updated_at: String
     is_single_column: Boolean
     form: Form
+    value: String           
+    onlyReady: Boolean  
   
     form_field_choices: [FormFieldChoice]
 }

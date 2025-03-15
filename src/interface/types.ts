@@ -33,6 +33,8 @@ interface FormSectionField {
   created_at: string;
   updated_at: string;
   is_single_column: boolean;
+  value: String;           
+  onlyReady: Boolean;  
   form: Form[];
   // form_section: FormSection[];
   form_field_choices: FormFieldChoice[];

@@ -13,7 +13,8 @@ export async function POST(req) {
   try {
   
     const body = await req.json();
-
+    console.log(body);
+    
     const {email , salutation ,current_event_id  , first_name , last_name , position , organization , address , city , mobile , avatar , encrypted_password , f1 , f2 , f3 , f4 , f5 ,f6 ,f7 ,f8 ,f9 ,f10 ,f11 , f12 , f13 , f14, f15 } = body;
 
 
@@ -37,6 +38,7 @@ export async function POST(req) {
           // Hash the password before storing it
           field[form.field_type] = password
 
+        } else if (form.field_type == 'roleId' ) {
         } else {
           field[form.field_type] = body[form.field_type];
         }
