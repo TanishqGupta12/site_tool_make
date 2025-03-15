@@ -1,10 +1,22 @@
 "use client"
 import Link from 'next/link'
 import React from "react";
-import GetDomain  from "../../Hooks/useGetDmain";
+import GetDomain from "../../Hooks/useGetDmain";
+
+import { useSession , signOut } from "next-auth/react"
 
 export default function Navbar_v1() {
 
+  const session = useSession()
+
+  console.log(session.data?.user?.user);
+
+  const handleLogout = async () => {
+    // Call the signOut function
+    await signOut();
+  };
+
+  
   GetDomain()
   return (
     <>
@@ -64,8 +76,8 @@ export default function Navbar_v1() {
 
 
               {/* Navbar Items */}
-              <div className="d-flex align-items-center">
-                <div className="navbar-nav  justify-content-between">
+              <div className="d-flex  align-items-center justify-content-center">
+                <div className="navbar-nav ">
                   <div className="navbar-nav py-0">
                     <Link href="/" legacyBehavior>
                       <a className="nav-item nav-link active">Home</a>
@@ -87,12 +99,19 @@ export default function Navbar_v1() {
                     <Link href="/academy/contact" legacyBehavior>
                       <a className="nav-item nav-link">Contact</a>
                     </Link>
-                  </div>
 
-                  {/* Join Now Button */}
-                  <Link href="/signup" legacyBehavior>
-                    <a className="btn btn-primary py-2 px-4 ml-3">Join Now</a>
-                  </Link>
+                    {session.data ? (
+                      <Link href="#" legacyBehavior>
+                        <a className="nav-item nav-link ml-5" onClick={handleLogout}>
+                          Logout
+                        </a>
+                      </Link>
+                    ) : (
+                      <Link href="/signup" legacyBehavior>
+                        <a className="nav-item nav-link ml-5">Signup</a>
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </div>
             </nav>

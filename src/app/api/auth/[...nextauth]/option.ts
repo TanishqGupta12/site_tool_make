@@ -40,7 +40,7 @@ export const authOptions: AuthOptions = {
           
           if (isValidPassword) {
             return {
-              CurrentUser: user,
+              user,
             };
           } else {
             throw new Error('Invalid password');
@@ -55,22 +55,22 @@ export const authOptions: AuthOptions = {
     async signIn({ user, account, profile, email, credentials }) {
       return true;
     },
-    async redirect({ url, baseUrl }) {
-      return baseUrl;
-    },
+    // async redirect({ url, baseUrl }) {
+    //   return baseUrl;
+    // },
     async jwt({ token, user }) {
-      if (user) token.user = user as User; 
+      if (user) token.user = user; 
       return token;
     },
     async session({ session, token }) {
-      session.user = token.user as User; 
+      session.user = token.user; 
       return session;
     },
   },
   pages: {
     signIn: "/login",
     signOut: "/signout",
-    error: "/error", 
+    // error: "/error", 
     verifyRequest: "/verify-request",
     newUser: "/signup", 
   },

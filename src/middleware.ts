@@ -7,9 +7,6 @@ export async function middleware(request: any) {
   const token = await getToken({ req: request }); 
   const url = request.nextUrl;
 
-  // console.log(url);
-
-  // Redirect authenticated users from login and signup pages to the home page
   if (token && (url.pathname.startsWith('/signup') || url.pathname.startsWith('/login'))) {
     return NextResponse.redirect(new URL('/', request.url));
   }
@@ -21,7 +18,7 @@ export const config = {
   matcher: [
     "/signup",
     "/login",
-    "/error", 
+    // "/error", 
     "/verify-request", 
     "/signout",
   ],
