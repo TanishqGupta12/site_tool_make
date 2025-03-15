@@ -4,11 +4,11 @@ import { gql, useQuery } from "@apollo/client";
 import Typography from "@mui/material/Typography";
 import Footer_v1 from "@/components/footer/Footer_v1";
 import Navbar_v1 from "@/components/navbar/Navbar_v1";
-
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 import axios from "axios";
-import { toast , ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import toaster from "@/util/toaster";
+import { CircularProgress, FormHelperText } from "@mui/material";
 
 const GET_DATA = gql`
   query EventData($eventId: ID!) {
@@ -52,14 +52,13 @@ const GET_DATA = gql`
 `;
 
 export default function Signup() {
-  const { register,handleSubmit, formState: { errors },} = useForm();
+  const { register, handleSubmit, formState: { errors }, } = useForm();
   const [eventId, setEventId] = useState(null);
 
   useEffect(() => {
     const storedEventId = localStorage.getItem("event_id");
     if (storedEventId) setEventId(storedEventId);
   }, []);
-
 
   const { loading, error, data } = useQuery(GET_DATA, {
     variables: { eventId },
@@ -72,21 +71,20 @@ export default function Signup() {
   const formhandleSubmit = async (data) => {
     try {
       const response = await axios.post("/api/sign-up", data);
-      
-      toaster(toast.success , `${response.data.message}`)
-    } catch (error) {      
-      toaster(toast.error , `${error.response.data.message}`)
+      toaster(toast.success, `${response.data.message}`);
+    } catch (error) {
+      toaster(toast.error, `${error.response.data.message}`);
     }
   };
-  
+
   useEffect(() => {
     if (data?.event?.forms?.length > 0) {
       setForm(data.event.forms[0]);
-      setFields(data.event.forms[0].form_section_fields);
+      setFields(data.event.forms[0].form_section_fields);      
     }
   }, [data?.event]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <CircularProgress />;
   if (error) return <p>Error: {error.message}</p>;
   if (!data || !data.event.forms) return <p>No data available</p>;
 
@@ -105,16 +103,19 @@ export default function Signup() {
                   {form?.caption}
                 </Typography>
                 <div className="card-body p-4 p-md-5">
-                  <form  onSubmit={handleSubmit(formhandleSubmit)} className="d-flex flex-wrap">
+                  <form onSubmit={handleSubmit(formhandleSubmit)} className="d-flex flex-wrap">
                     {section_fields.map((item, index) => (
-                      <div key={item.id}   style={{
+
+                      <div
+                      key={item.id}
+                      style={{
                         ...item.is_single_column ? { width: "100%" } : { width: "50%" },
-                        ...(item.readOnly ? { display: 'none' } : {})
-                      }}>
+                        ...(item.onlyReady ? { display: "none" } : {}),
+                      }}
+                      >
                         {/* Email Field */}
                         {item.data_field === "email" && (
-
-                          <div className="col-md-12 mb-4" >
+                          <div className="col-md-12 mb-4">
                             <div className="form-outline">
                               <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
                                 {item.caption}
@@ -126,9 +127,14 @@ export default function Signup() {
                                 className="form-control form-control-lg"
                                 placeholder={item.placeholder}
                                 required={item.is_required}
-                                {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
+                                {...register(item.field_type, {
+                                  required: `${item.caption} is required`,
+                                  pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                })}
                               />
-                                {errors[item.field_type] && <p style={{ color: "red" }}>{errors[item.field_type].message}</p>}
+                              {errors[item.field_type] && (
+                                <FormHelperText error>{errors[item.field_type]?.message}</FormHelperText>
+                              )}
                               <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
                                 Hint: {item.field_hint}
                               </small>
@@ -138,8 +144,7 @@ export default function Signup() {
 
                         {/* Password Field */}
                         {item.data_field === "password" && (
-
-                          <div className="col-md-12 mb-4" >
+                          <div className="col-md-12 mb-4">
                             <div className="form-outline">
                               <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
                                 {item.caption}
@@ -151,9 +156,13 @@ export default function Signup() {
                                 className="form-control form-control-lg"
                                 placeholder={item.placeholder}
                                 required={item.is_required}
-                                {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
+                                {...register(item.field_type, {
+                                  required: `${item.caption} is required`,
+                                })}
                               />
-                                  {errors[item.field_type] && <p style={{ color: "red" }}>{errors[item.field_type].message}</p>}
+                              {errors[item.field_type] && (
+                                <FormHelperText error>{errors[item.field_type]?.message}</FormHelperText>
+                              )}
                               <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
                                 Hint: {item.field_hint}
                               </small>
@@ -161,10 +170,9 @@ export default function Signup() {
                           </div>
                         )}
 
-                        {/* number Field */}
+                        {/* Number Field */}
                         {item.data_field === "number" && (
-
-                          <div className="col-md-12 mb-4" >
+                          <div className="col-md-12 mb-4">
                             <div className="form-outline">
                               <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
                                 {item.caption}
@@ -176,9 +184,13 @@ export default function Signup() {
                                 className="form-control form-control-lg"
                                 placeholder={item.placeholder}
                                 required={item.is_required}
-                                {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
+                                {...register(item.field_type, {
+                                  required: `${item.caption} is required`,
+                                })}
                               />
-                                  {errors[item.field_type] && <p style={{ color: "red" }}>{errors[item.field_type].message}</p>}
+                              {errors[item.field_type] && (
+                                <FormHelperText error>{errors[item.field_type]?.message}</FormHelperText>
+                              )}
                               <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
                                 Hint: {item.field_hint}
                               </small>
@@ -188,7 +200,6 @@ export default function Signup() {
 
                         {/* Radio Field */}
                         {item.data_field === "radio" && (
-        
                           <div className="col-md-12 mb-4">
                             <div className="form-outline">
                               <label className="form-label d-block">{item.caption}:</label>
@@ -202,23 +213,27 @@ export default function Signup() {
                                     value={choice.caption}
                                     required={item.is_required}
                                     defaultChecked={idx === 0}
-                                    {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
+                                    {...register(item.field_type, {
+                                      required: `${item.caption} is required`,
+                                    })}
                                   />
                                   <label className="form-check-label fw-bold text-primary" htmlFor={`${item.data_field}-${index}-${idx}`}>
                                     {choice.caption}
                                   </label>
                                 </div>
                               ))}
-                                  {errors[item.field_type] && <p style={{ color: "red" }}>{errors[item.field_type].message}</p>}
-                                <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
-                                  {item.field_hint}
-                                </small>
+                              {errors[item.field_type] && (
+                                <FormHelperText error>{errors[item.field_type]?.message}</FormHelperText>
+                              )}
+                              <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
+                                Hint: {item.field_hint}
+                              </small>
                             </div>
                           </div>
                         )}
 
+                        {/* Hidden Field */}
                         {item.data_field === "hidden" && (
-                          
                           <div className="col-md-12 mb-4">
                             <div className="form-outline">
                               <label className="form-label" htmlFor={`${item.data_field}-${index}`}>
@@ -228,16 +243,16 @@ export default function Signup() {
                                 type="text"
                                 id={`${item.data_field}-${index}`}
                                 name={item.field_type}
-                                value={item.value} 
+                                value={item.value}
                                 className="form-control form-control-lg"
                                 placeholder={item.placeholder}
                                 required={item.is_required}
-                                {...register(item.field_type, item.is_required ? { required: `${item.caption} is required` } : {})}
+                                {...register(item.field_type, {
+                                  required: `${item.caption} is required`,
+                                })}
                               />
                               {errors[item.field_type] && (
-                                <p style={{ color: "red" }}>
-                                  {errors[item.field_type].message}
-                                </p>
+                                <FormHelperText error>{errors[item.field_type]?.message}</FormHelperText>
                               )}
                               <small className="form-text text-muted d-block mt-1" htmlFor={`${item.data_field}-${index}`}>
                                 Hint: {item.field_hint}
@@ -245,34 +260,24 @@ export default function Signup() {
                             </div>
                           </div>
                         )}
-
                       </div>
                     ))}
-
-                  <div className="mt-auto pt-2 text-center">
-                  <input 
-                    type="hidden"
-                    value={eventId || ''} 
-                    name="current_event_id" 
-                    {...register("current_event_id")}
-                    onChange={(e) => setEventId(e.target.value)} 
-                  />
-                    <button className="btn btn-primary btn-lg px-4 py-2 fw-semibold shadow-sm" type="submit">
-                      Submit
-                    </button>
-                  </div>
-                  <ToastContainer
-                    position="top-center"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                  />
+                    <div className="mt-auto pt-2 text-center">
+                      <input
+                        type="hidden"
+                        value={eventId || ""}
+                        name="current_event_id"
+                        {...register("current_event_id")}
+                        onChange={(e) => setEventId(e.target.value)}
+                      />
+                      <button
+                        className="btn btn-primary btn-lg px-4 py-2 fw-semibold shadow-sm"
+                        type="submit"
+                        disabled={loading || Object.keys(errors).length > 0}
+                      >
+                        Submit
+                      </button>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -281,6 +286,18 @@ export default function Signup() {
         </div>
       </section>
       <Footer_v1 />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 }
