@@ -16,45 +16,63 @@ export const authOptions: AuthOptions = {
         current_event: { label: "current_event_id", type: "hidden" },
       },
       async authorize(credentials: any): Promise<any> {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required!");
+        if (!credentials?.email || !credentials?.password || !credentials?.current_event_id) {
+          throw new Error("Email, password, and current_event_id are required!");
         }
 
-        const user = await prisma.user.findMany({where: { email: credentials?.email , current_event_id: credentials?.current_event_id  }});
+        try {
+         
+          const user = await prisma.user.findFirst({
+            where: {
+              email: credentials.email,
+              current_event_id: credentials.current_event_id,
+            },
+          });
 
-        const isValidPassword =  compare(credentials.password, user?.encrypted_password);
-
-        if (!isValidPassword) {
-            throw new Error("Invalid email or password!");
+         
+          if (!user) {
+            throw new Error('User not found');
           }
-        return {
-            CurrentUser: user,
-          };
+
+          // Compare the password with the encrypted password
+          const isValidPassword = await compare(credentials.password, user.encrypted_password);
+
+          
+          if (isValidPassword) {
+            return {
+              CurrentUser: user,
+            };
+          } else {
+            throw new Error('Invalid password');
+          }
+        } catch (error) {
+          throw new Error(error.message);
+        }
       },
     }),
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      return true
+      return true;
     },
     async redirect({ url, baseUrl }) {
-      return baseUrl
+      return baseUrl;
     },
     async jwt({ token, user }) {
-      if (user) token.user = user as User;
+      if (user) token.user = user as User; 
       return token;
     },
     async session({ session, token }) {
-      session.user = token.user as User;
+      session.user = token.user as User; 
       return session;
     },
   },
   pages: {
     signIn: "/login",
-    signOut: '/signout',
-    error: '/error', // Error code passed in query string as ?error=
-    verifyRequest: '/verify-request', // (used for check email message)
-    newUser: '/signup'
+    signOut: "/signout",
+    error: "/error", 
+    verifyRequest: "/verify-request",
+    newUser: "/signup", 
   },
   session: {
     strategy: 'jwt',

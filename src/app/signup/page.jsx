@@ -7,8 +7,8 @@ import Navbar_v1 from "@/components/navbar/Navbar_v1";
 
 import { useForm } from 'react-hook-form';
 import axios from "axios";
-
-import { ToastContainer, toast } from 'react-toastify';
+import { toast , ToastContainer } from 'react-toastify';
+import toaster from "@/util/toaster";
 
 const GET_DATA = gql`
   query EventData($eventId: ID!) {
@@ -70,29 +70,10 @@ export default function Signup() {
   const formhandleSubmit = async (data) => {
     try {
       const response = await axios.post("/api/sign-up", data);
-      console.log(response);
       
-      toast.success(`Data posted: ${response.data.message}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
+      toaster(toast.success , `${response.data.message}`)
     } catch (error) {      
-      toast.error(`Error posting data: ${error.response.data.message}`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        });
+      toaster(toast.error , `${error.response.data.message}`)
     }
   };
   
