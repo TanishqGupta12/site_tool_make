@@ -33,12 +33,14 @@ export async function POST(req) {
     let password = await hashPassword(encrypted_password, 10);
 
     
-    forms.forEach((form) => {
+    forms.forEach(async (form) => {
         if (form.field_type == 'encrypted_password') {
           // Hash the password before storing it
           field[form.field_type] = password
 
         } else if (form.field_type == 'roleId' ) {
+          const role = await prisma.role.findFirst({where: { name: body[form.field_type] } });
+          field[form.field_type] = role.id
         } else {
           field[form.field_type] = body[form.field_type];
         }
