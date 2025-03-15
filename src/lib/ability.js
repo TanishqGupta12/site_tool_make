@@ -1,11 +1,12 @@
-import { Ability, AbilityBuilder } from '@casl/ability';
+// utils/abilities.ts
+import { AbilityBuilder, Ability } from '@casl/ability';
 
-export function defineAbilitiesFor(user) {
+export default function defineAbilitiesFor(user) {
   const { can, cannot, build } = new AbilityBuilder(Ability);
-
-  if (user.role === 'admin') {
-    can('manage', 'all'); // Admin can manage everything
-  } else if (user.role === 'editor') {
+  
+  if (user.roleId == '1') {
+    can('manage', 'all'); 
+  } else if (user.role == '2') {
     can('read', 'Post');
     can('create', 'Post');
     can('update', 'Post', { authorId: user.id });
