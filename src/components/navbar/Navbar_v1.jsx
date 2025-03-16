@@ -1,21 +1,79 @@
 "use client"
 import Link from 'next/link'
-import React from "react";
+import React  , { useState , useEffect} from "react";
 import GetDomain from "../../Hooks/useGetDmain";
 
 import { useSession , signOut } from "next-auth/react"
 
+
+import Error from "@/components/error/error";
+import Loading from "@/components/loading/loading";
+
+import { gql, useQuery } from '@apollo/client';
+
+const GET_DATA = gql`
+  query EventData($eventId: ID!) {
+    event(id: $eventId) {
+      id
+      name
+      domainId
+      description
+      startDate
+      slug
+      latitude
+      longitude
+      email
+      phone
+      timeZone
+      customCss
+      customJs
+      termsAndConditions
+      paymentNeeded
+      publishableKey
+      secretKey
+      sendRegistrationConfirmationEmailToGuest
+      footerText
+      PageContent
+      galleryText
+      hideAboutPage
+      hideCategory
+      hideCourses
+      hideGallery
+      hideInfo
+      hideTeacherPage
+      hideBlog
+
+    }
+  }
+`;
+
 export default function Navbar_v1() {
+  
+  const session = useSession();
 
-  const session = useSession()
+  const [eventId, setEventId] = useState(null);
+  const [event, setevent] = useState(null);
 
-  console.log(session.data?.user?.user);
+  useEffect(() => {
+    const storedEventId = localStorage.getItem("event_id");
+    if (storedEventId) setEventId(storedEventId);
+  }, []);
+
+  const { loading, error, data } = useQuery(GET_DATA, {
+    variables: { eventId },
+    skip: !eventId,
+  });
+
+    useEffect(() => {
+        setevent(data?.event)
+    }, [data?.event]);
 
   const handleLogout = async () => {
     // Call the signOut function
     await signOut();
   };
 
+  console.log(event);
   
   GetDomain()
   return (
