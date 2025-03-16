@@ -63,8 +63,8 @@ const Footer_v1 = () => {
           setevent(data?.event)
       }, [data?.event]);
 
-    if (loading) return <Loading />;
-    if (error) return <Error error={error} />;
+    // if (loading) return <Loading />;
+    // if (error) return <Error error={error} />;
 
   return (
     <>
@@ -166,13 +166,7 @@ const Footer_v1 = () => {
         style={{ borderColor: "rgba(256, 256, 256, .1)" }}
       >
         <div className="row">
-          <div className="col-lg-6 text-center text-md-left mb-3 mb-md-0">
-            <p className="m-0 text-white">
-              &copy; <a href="#">Domain Name</a>. All Rights Reserved. Designed
-              by <a href="https://htmlcodex.com">HTML Codex</a>
-            </p>
-          </div>
-          <div className="col-lg-6 text-center text-md-right">
+          <div className="col-lg-7 ml-5 text-center text-md-right">
             <ul className="nav d-inline-flex">
               <li className="nav-item">
                 <a className="nav-link text-white py-0" href="#">
@@ -180,19 +174,19 @@ const Footer_v1 = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-white py-0" href="#">
+                <a className="nav-link text-white py-0" href="/academy/termsAndConditions">
                   Terms
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-white py-0" href="#">
+                <a className="nav-link text-white py-0" href="/academy/termsAndConditions">
                   FAQs
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-white py-0" href="#">
-                  Help
-                </a>
+                <Link href="/academy/contact" legacyBehavior>
+                  <a className="nav-link text-white py-0">Contact</a>
+                </Link>
               </li>
             </ul>
           </div>

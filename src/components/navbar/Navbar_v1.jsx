@@ -148,9 +148,7 @@ export default function Navbar_v1() {
                       <a className="nav-item nav-link">blog</a>
                     </Link>
 
-                    <Link href="/academy/contact" legacyBehavior>
-                      <a className="nav-item nav-link">Contact</a>
-                    </Link>
+
 
                     {session.data ? (
                       <Link href="#" legacyBehavior>

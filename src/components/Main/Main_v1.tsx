@@ -77,16 +77,6 @@ export default function Main_v1() {
       {event && event?.hideInfo == true ? "" :  <Testimonial /> }
       {event && event?.hideBlog == true ? "" :  <Blog /> }
 
-      <main className="wrap">
-        <section className="container">
-          <div className="container__heading">
-            <h2>Terms & Conditions</h2>
-          </div>
-          <div className="container__content">
-            <div dangerouslySetInnerHTML={{ __html: event?.termsAndConditions }} />
-          </div>
-        </section>
-      </main>
     </>
   );
 }
