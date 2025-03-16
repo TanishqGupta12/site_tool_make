@@ -1,73 +1,68 @@
-"use client"
-import React  , { useState , useEffect} from "react";
-
+"use client";
+import React, { useState, useEffect } from "react";
 import Blog from "../Main/blog";
 import Testimonial from "../Main/Testimonial";
-
 import Courses from "../Main/Courses";
 import Teacher from "../Main/Teacher";
-
 import Category from "../Main/Category";
-
 import About from "../Main/about";
-
 import Carousel from "../Main/Carousel";
-import {GetDataResponse} from "@/interface/types";
-
+import { GetDataResponse } from "@/interface/types";
 import Error from "@/components/error/error";
 import Loading from "@/components/loading/loading";
 import { gql, useQuery } from '@apollo/client';
 
 const GET_DATA = gql`
 query {
- 
-    events {
-      id
-      name
-   
-      description
-      startDate
-      slug
-      latitude
-      longitude
-      email
-      phone
-      timeZone
-      customCss
-      customJs
-      termsAndConditions
-      paymentNeeded
-      publishableKey
-      secretKey
-      sendRegistrationConfirmationEmailToGuest
-      footerText
-      PageContent
-      galleryText
-      hideAboutPage
-      hideCategory
-      hideCourses
-      hideGallery
-      hideInfo
-      hideTeacherPage
-      hideBlog
-    }
-  
-  roles {
+  events {
     id
     name
+    description
+    startDate
+    slug
+    latitude
+    longitude
+    email
+    phone
+    timeZone
+    customCss
+    customJs
+    termsAndConditions
+    paymentNeeded
+    publishableKey
+    secretKey
+    sendRegistrationConfirmationEmailToGuest
+    footerText
+    PageContent
+    galleryText
+    hideAboutPage
+    hideCategory
+    hideCourses
+    hideGallery
+    hideInfo
+    hideTeacherPage
+    hideBlog
+    address
   }
+
 }
 `;
 
 export default function Main_v1() {
-
   const { loading, error, data } = useQuery<GetDataResponse>(GET_DATA);
-  const [event , Setevent] = useState()
+  const [event, Setevent] = useState(null);
+  
+  useEffect(() => {
+    if (data) {
+      // Assuming the first event is the one you want to use
+      // console.log(data?.events[0]);
+      localStorage.setItem(data?.events[0].id, 'event_id')
+      Setevent(data?.events[0]);
+    }
+  }, [data]);
 
-
-  if (loading) return <Loading/>;
-  if (error) return <Error error={error}/>;
-  if (!data || !data) return <p>No data available </p>;
+  if (loading) return <Loading />;
+  if (error) return <Error error={error} />;
 
   return (
     <>
@@ -88,7 +83,6 @@ export default function Main_v1() {
             <h2>Terms & Conditions</h2>
           </div>
           <div className="container__content">
-
             <div dangerouslySetInnerHTML={{ __html: event?.termsAndConditions }} />
           </div>
         </section>

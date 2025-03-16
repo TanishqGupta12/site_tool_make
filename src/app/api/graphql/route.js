@@ -16,10 +16,8 @@ const typeDefs = `
     name: String!
     email: String!
   }
-  
 
   type FormFieldChoice {
-
     id: BigInt
     sequence: Int
     caption: String
@@ -27,9 +25,7 @@ const typeDefs = `
     specificFieldIfOther: Boolean
     createdAt: String
     updatedAt: String
-
     form_section_field: [FormSectionField]
-
   }
 
   type FormSectionField {
@@ -52,10 +48,9 @@ const typeDefs = `
     form: Form
     value: String           
     onlyReady: Boolean  
-  
     form_field_choices: [FormFieldChoice]
-}
-  
+  }
+
   type Form {
     id: ID!
     caption: String
@@ -63,28 +58,24 @@ const typeDefs = `
     startDate: String
     slug: String
     is_active: Boolean
-
     registration_successful_message: String
     registration_updated_successful_message: String
-
     eventId: ID!
-
     form_section_fields: [FormSectionField]
   }
 
-type Event {
+  type Event {
     id: ID!
     name: String
-
     description: String
     startDate: String
     slug: String
+    address: String
     latitude: Float
     longitude: Float
     email: String
     phone: String
     timeZone: String
-
     customCss: String
     customJs: String
     termsAndConditions: String
@@ -94,7 +85,6 @@ type Event {
     sendRegistrationConfirmationEmailToGuest: Boolean
     footerText: String
     hideBlog: Boolean
-
     PageContent: String
     galleryText: String
     hideAboutPage: Boolean
@@ -103,60 +93,38 @@ type Event {
     hideGallery: Boolean
     hideInfo: Boolean
     hideTeacherPage: Boolean
-
-    forms: [Form] # Forms are now linked correctly!
-
+    forms: [Form] # Correct relationship with Form model
   }
 
-
-  type Role {
-    id: BigInt!
-    name: String!
-  }
-
-  type contact {
-  
-    id:                             Int    
-    name:                            String   
-    email:                          String
-
-    subject:                       String   
-    message:                         String   
-
-    eventId:                         Int 
+  type Contact {
+    id: Int
+    name: String
+    email: String
+    subject: String
+    message: String
+    eventId: Int
   }
 
   type Query {
     users: [User]
     user(id: ID!): User
-    roles: [Role]
-    role(id: ID!): Role
-    
 
     events: [Event]
     event(id: ID!): Event
-
     forms: [Form]
     form(id: ID!): Form
-
     form_section_fields: [FormSectionField]
     form_section_field(id: ID!): FormSectionField
-
     form_field_choices: [FormFieldChoice]
     form_field_choice(id: ID!): FormFieldChoice
-
-    contacts: [contact]
-    contact(id: ID!): contact
+    contacts: [Contact]
+    contact(id: ID!): Contact
   }
 
   type Mutation {
     createUser(name: String!, email: String!): User
-
+    addcontact(name: String!, email: String!, subject: String!, message: String!, event_id: String!): Contact
   }
-  type Mutation {
-      addcontact(name: String!, email: String!, subject: String!, message: String!, event_id: String!): contact
-  }
-
 `;
 
 // Define resolvers
@@ -165,89 +133,44 @@ const resolvers = {
   Query: {
     users: async () => await prisma.user.findMany(),
     user: async (_, { id }) => await prisma.user.findUnique({ where: { id: Number(id) } }),
-    roles: async () => await prisma.role.findMany(),
-    role: async (_, { id }) => await prisma.role.findUnique({ where: { id: Number(id) } }),
     events: async () => {
-    const events = await prisma.event.findMany({include: { forms: true }})
-      return  events
+      return await prisma.event.findMany();
     },
     event: async (_, { id }) => await prisma.event.findUnique({ where: { id: Number(id) } }),
+    forms: async () => await prisma.form.findMany(),
     form: async (_, { id }) => await prisma.form.findUnique({ where: { id: Number(id) } }),
-    forms: async () => await prisma.form.findMany({ where: { is_active: true }}),
     form_section_fields: async () => await prisma.formSectionField.findMany({ where: { is_active: true }}),
-    form_field_choices: async () => await prisma.form_field_choices.findMany({ where: { is_active: true }}),
+    form_field_choices: async () => await prisma.formFieldChoice.findMany({ where: { isActive: true }}),
+    contacts: async () => await prisma.contact.findMany(),
+    contact: async (_, { id }) => await prisma.contact.findUnique({ where: { id: Number(id) } }),
   },
 
   Event: {
     forms: async (parent) => {
       return await prisma.form.findMany({
         where: {
-          is_active: true,
-          event_id: parent.id
+          eventId: parent.id,  // Use the `eventId` to fetch related forms
+          is_active: true
         },
       });
     },
   },
-  Form: {
-    form_section_fields: async (parent) => {
-      
-      return await prisma.formSectionField.findMany({
-        where: {
-          is_active: true,
-          form_id: parent.id
-        },
-        orderBy: {
-          sequence: "asc" 
-        }
-      });
-    },
-  },
-
-  FormSectionField: {
-    form_field_choices: async (parent) => {
-      
-      const data = await prisma.formFieldChoice.findMany({
-        where: {
-          isActive: true, 
-          form_section_field_id: parent.id
-        },
-        orderBy: {
-          sequence: "asc" 
-        }
-      });      return data;
-    },
-  },
-
 
   Mutation: {
     createUser: async (_, { name, email }) => {
       return await prisma.user.create({ data: { name, email } });
     },
-
     addcontact: async (_, { name, email, subject, message, event_id }) => {
-      try {
-        // Simulating database insertion logic
-        if (!name || !email || !subject ||  !message || !event_id) {
-          throw new Error("somrthing missage");
-        }
-
-        // const emailRegex = /\S+@\S+\.\S+/;
-        // if (!emailRegex.test(email)) {
-        //   throw new GraphQLError("Invalid email format");
-        // }
-        
-        const newUser = await prisma.contact.create({ data: {  name: name, email: email  , subject: subject , message: message , eventId: Number(event_id) } })
-
-       console.log(newUser);
-       
-    
-        return newUser;
-      } catch (error) {
-        
-        throw new Error(error.message || "An error occurred while adding the user.");
-      }
+      return await prisma.contact.create({
+        data: {
+          name,
+          email,
+          subject,
+          message,
+          eventId: Number(event_id),
+        },
+      });
     },
-  
   },
 };
 
@@ -265,6 +188,6 @@ export const config = {
   },
 };
 
-const handler = startServerAndCreateNextHandler(apolloServer)
-// Export a single handler for both GET and POST
+const handler = startServerAndCreateNextHandler(apolloServer);
+
 export { handler as GET, handler as POST };

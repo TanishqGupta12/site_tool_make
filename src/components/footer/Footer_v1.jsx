@@ -1,7 +1,71 @@
-import React from "react";
+"use client"
+import React  , { useState , useEffect} from "react";
 
+import Link from 'next/link'
+
+import Error from "@/components/error/error";
+import Loading from "@/components/loading/loading";
+
+import { gql, useQuery } from '@apollo/client';
+
+const GET_DATA = gql`
+  query EventData($eventId: ID!) {
+    event(id: $eventId) {
+      id
+      name
+      
+      description
+      startDate
+      slug
+      latitude
+      longitude
+      email
+      phone
+      timeZone
+      customCss
+      customJs
+      termsAndConditions
+      paymentNeeded
+      publishableKey
+      secretKey
+      sendRegistrationConfirmationEmailToGuest
+      footerText
+      PageContent
+      galleryText
+      hideAboutPage
+      hideCategory
+      hideCourses
+      hideGallery
+      hideInfo
+      hideTeacherPage
+      hideBlog
+      address
+    }
+  }
+`;
 
 const Footer_v1 = () => {
+
+    const [eventId, setEventId] = useState(null);
+    const [event, setevent] = useState(null);
+  
+    useEffect(() => {
+      const storedEventId = localStorage.getItem("event_id");
+      if (storedEventId) setEventId(storedEventId);
+    }, []);
+  
+    const { loading, error, data } = useQuery(GET_DATA, {
+      variables: { eventId },
+      skip: !eventId,
+    });
+  
+      useEffect(() => {
+          setevent(data?.event)
+      }, [data?.event]);
+
+    if (loading) return <Loading />;
+    if (error) return <Error error={error} />;
+
   return (
     <>
       <div
@@ -19,14 +83,13 @@ const Footer_v1 = () => {
                   Get In Touch
                 </h5>
                 <p>
-                  <i className="fa fa-map-marker-alt mr-2"></i>123 Street, New
-                  York, USA
+                  <i className="fa fa-map-marker-alt mr-2"></i>{event?.address}
                 </p>
                 <p>
-                  <i className="fa fa-phone-alt mr-2"></i>+012 345 67890
+                  <i className="fa fa-phone-alt mr-2"></i>{event?.address}
                 </p>
                 <p>
-                  <i className="fa fa-envelope mr-2"></i>info@example.com
+                  <i className="fa fa-envelope mr-2"></i>{event?.email}
                 </p>
                 <div className="d-flex justify-content-start mt-4">
                   <a className="btn btn-outline-light btn-square mr-2" href="#">

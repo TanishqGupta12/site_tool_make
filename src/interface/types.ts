@@ -57,7 +57,7 @@ interface Event {
 
     id: string;
     name: string;
-
+    address: String
     description: string;
     startDate: string;
     slug: string;
@@ -93,8 +93,7 @@ interface Event {
 
 
 export interface GetDataResponse {
-  role: Role;
-  roles: Role[];
+
 
 
   forms: Form[]

@@ -42,7 +42,7 @@ const GET_DATA = gql`
       hideInfo
       hideTeacherPage
       hideBlog
-
+      address
     }
   }
 `;
@@ -73,8 +73,8 @@ export default function Navbar_v1() {
     await signOut();
   };
 
-  console.log(event);
-  
+  if (loading) return <Loading />;
+  if (error) return <Error error={error} />;
 
   return (
     <>
@@ -84,7 +84,7 @@ export default function Navbar_v1() {
           <div className="col-lg-3">
             <Link href="/" className="text-decoration-none">
               <h1 className="m-0">
-                <span className="text-primary">E</span>COURSES
+                <span className="text-primary">{event?.name.charAt(0)}</span>{event?.name.replace('E', '')}
               </h1>
             </Link>
           </div>
@@ -93,7 +93,7 @@ export default function Navbar_v1() {
               <i className="fa fa-2x fa-map-marker-alt text-primary mr-3"></i>
               <div className="text-left">
                 <h6 className="font-weight-semi-bold mb-1">Our Office</h6>
-                <small>123 Street, New York, USA</small>
+                <small>{event?.address}</small> 
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@ export default function Navbar_v1() {
               <i className="fa fa-2x fa-envelope text-primary mr-3"></i>
               <div className="text-left">
                 <h6 className="font-weight-semi-bold mb-1">Email Us</h6>
-                <small>info@example.com</small>
+                <small>{event?.email}/</small>
               </div>
             </div>
           </div>
@@ -111,7 +111,7 @@ export default function Navbar_v1() {
               <i className="fa fa-2x fa-phone text-primary mr-3"></i>
               <div className="text-left">
                 <h6 className="font-weight-semi-bold mb-1">Call Us</h6>
-                <small>+012 345 6789</small>
+                <small>{event?.phone}</small>
               </div>
             </div>
           </div>
@@ -125,12 +125,6 @@ export default function Navbar_v1() {
 
           <div className="col-lg-9">
             <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-              {/* Mobile Brand */}
-              <Link href="/" className="text-decoration-none d-block d-lg-none">
-                <h1 className="m-0">
-                  <span className="text-primary">E</span>COURSES
-                </h1>
-              </Link>
 
 
               {/* Navbar Items */}
