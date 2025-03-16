@@ -179,7 +179,7 @@ const Footer_v1 = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link text-white py-0" href="/academy/termsAndConditions">
+                <a className="nav-link text-white py-0" href="/academy/FaqSection">
                   FAQs
                 </a>
               </li>

@@ -155,6 +155,15 @@ const resolvers = {
       });
     },
   },
+  Form: {
+    form_section_fields: async (parent) => {
+    },
+  },
+
+  FormSectionField: {
+    form_field_choices: async (parent) => {
+    },
+  },
 
   Mutation: {
     createUser: async (_, { name, email }) => {
