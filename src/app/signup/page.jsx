@@ -10,6 +10,9 @@ import { toast, ToastContainer } from "react-toastify";
 import toaster from "@/util/toaster";
 import { CircularProgress, FormHelperText } from "@mui/material";
 
+import Error from "@/components/error/error";
+import Loading from "@/components/loading/loading";
+
 const GET_DATA = gql`
   query EventData($eventId: ID!) {
     event(id: $eventId) {
@@ -84,9 +87,8 @@ export default function Signup() {
     }
   }, [data?.event]);
 
-  if (loading) return <CircularProgress />;
-  if (error) return <p>Error: {error.message}</p>;
-  if (!data || !data.event.forms) return <p>No data available</p>;
+  if (loading) return <Loading />;
+  if (error) return <Error error={error} />;
 
   return (
     <>

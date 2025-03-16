@@ -1,9 +1,9 @@
 "use client"
 import Link from 'next/link'
-import React  , { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 
-import { useSession , signOut } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 
 
 import Error from "@/components/error/error";
@@ -48,7 +48,7 @@ const GET_DATA = gql`
 `;
 
 export default function Navbar_v1() {
-  
+
   const session = useSession();
 
   const [eventId, setEventId] = useState(null);
@@ -64,9 +64,9 @@ export default function Navbar_v1() {
     skip: !eventId,
   });
 
-    useEffect(() => {
-        setevent(data?.event)
-    }, [data?.event]);
+  useEffect(() => {
+    setevent(data?.event)
+  }, [data?.event]);
 
   const handleLogout = async () => {
     // Call the signOut function
@@ -93,7 +93,7 @@ export default function Navbar_v1() {
               <i className="fa fa-2x fa-map-marker-alt text-primary mr-3"></i>
               <div className="text-left">
                 <h6 className="font-weight-semi-bold mb-1">Our Office</h6>
-                <small>{event?.address}</small> 
+                <small>{event?.address}</small>
               </div>
             </div>
           </div>
@@ -122,52 +122,46 @@ export default function Navbar_v1() {
       {/* Navbar Start */}
       <div className="container-fluid">
         <div className="row border-top px-xl-5">
-
           <div className="col-lg-9">
-            <nav className="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
-
-
+            <nav className="navbar navbar-expand-lg navbar-light py-lg-0 px-0">
               {/* Navbar Items */}
-              <div className="d-flex  align-items-center justify-content-center">
-                <div className="navbar-nav ">
-                  <div className="navbar-nav py-0">
-                    <Link href="/" legacyBehavior>
-                      <a className="nav-item nav-link active">Home</a>
-                    </Link>
-                    <Link href="/academy/about" legacyBehavior>
-                      <a className="nav-item nav-link">About</a>
-                    </Link>
-                    <Link href="/academy/course" legacyBehavior>
-                      <a className="nav-item nav-link">Courses</a>
-                    </Link>
-                    <Link href="/academy/teacher" legacyBehavior>
-                      <a className="nav-item nav-link">Teachers</a>
-                    </Link>
+              <div className="d-flex align-items-center justify-content-center w-100">
+                <div className="navbar-nav mx-auto">
+                  <Link href="/" legacyBehavior>
+                    <a className="nav-item nav-link active">Home</a>
+                  </Link>
+                  <Link href="/academy/blog" legacyBehavior>
+                    <a className="nav-item nav-link">Blog</a>
+                  </Link>
+                  {/* Other Navbar Items */}
+                  <Link href="/academy/about" legacyBehavior>
+                    <a className="nav-item nav-link">About</a>
+                  </Link>
+                  <Link href="/academy/course" legacyBehavior>
+                    <a className="nav-item nav-link">Courses</a>
+                  </Link>
+                  <Link href="/academy/teacher" legacyBehavior>
+                    <a className="nav-item nav-link">Teachers</a>
+                  </Link>
 
-                    <Link href="/academy/blog" legacyBehavior>
-                      <a className="nav-item nav-link">blog</a>
+                  {session.data ? (
+                    <Link href="#" legacyBehavior>
+                      <a className="nav-item nav-link ml-5" onClick={handleLogout}>
+                        Logout
+                      </a>
                     </Link>
-
-
-
-                    {session.data ? (
-                      <Link href="#" legacyBehavior>
-                        <a className="nav-item nav-link ml-5" onClick={handleLogout}>
-                          Logout
-                        </a>
-                      </Link>
-                    ) : (
-                      <Link href="/signup" legacyBehavior>
-                        <a className="nav-item nav-link ml-5">Signup</a>
-                      </Link>
-                    )}
-                  </div>
+                  ) : (
+                    <Link href="/signup" legacyBehavior>
+                      <a className="nav-item nav-link ml-5">Signup</a>
+                    </Link>
+                  )}
                 </div>
               </div>
             </nav>
           </div>
         </div>
       </div>
+
     </>
   );
 }

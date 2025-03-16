@@ -40,6 +40,10 @@ const GET_DATA = gql`
       hideTeacherPage
       hideBlog
       address
+      categorys {
+        id
+        content
+      }
     }
   }
 `;
@@ -114,21 +118,12 @@ const Footer_v1 = () => {
                   Our Courses
                 </h5>
                 <div className="d-flex flex-column justify-content-start">
-                  <a className="text-white mb-2" href="#">
-                    <i className="fa fa-angle-right mr-2"></i>Web Design
-                  </a>
-                  <a className="text-white mb-2" href="#">
-                    <i className="fa fa-angle-right mr-2"></i>Apps Design
-                  </a>
-                  <a className="text-white mb-2" href="#">
-                    <i className="fa fa-angle-right mr-2"></i>Marketing
-                  </a>
-                  <a className="text-white mb-2" href="#">
-                    <i className="fa fa-angle-right mr-2"></i>Research
-                  </a>
-                  <a className="text-white" href="#">
-                    <i className="fa fa-angle-right mr-2"></i>SEO
-                  </a>
+                  {event?.categorys ? event?.categorys?.map((category, index) => (
+                    <a key={index} className="text-white mb-2" href="#">
+                      <i className="fa fa-angle-right mr-2"></i>
+                      {category?.content}
+                    </a>
+                  )) : 'category not found'}
                 </div>
               </div>
             </div>

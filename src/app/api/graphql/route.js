@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { GraphQLError } from 'graphql';
+import Category from "@/components/Main/Category";
 
 const prisma = new PrismaClient();
 
@@ -15,6 +16,12 @@ const typeDefs = `
     id: BigInt!
     name: String!
     email: String!
+  }
+
+  type category {
+    id: Int!
+    content: String!
+    eventId: Int!      
   }
 
   type FormFieldChoice {
@@ -94,6 +101,7 @@ const typeDefs = `
     hideInfo: Boolean
     hideTeacherPage: Boolean
     forms: [Form] # Correct relationship with Form model
+    categorys: [category]
   }
 
   type Contact {
@@ -149,8 +157,16 @@ const resolvers = {
     forms: async (parent) => {
       return await prisma.form.findMany({
         where: {
-          eventId: parent.id,  // Use the `eventId` to fetch related forms
+          event_id: parent.id,  // Use the `eventId` to fetch related forms
           is_active: true
+        },
+      });
+    },
+    categorys: async (parent) => {
+      return await prisma.category.findMany({
+        where: {
+          eventId: parent.id,  // Use the `eventId` to fetch related forms
+          // is_active: true
         },
       });
     },
