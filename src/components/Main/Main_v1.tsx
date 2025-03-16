@@ -20,11 +20,11 @@ import { gql, useQuery } from '@apollo/client';
 
 const GET_DATA = gql`
 query {
-  domain(id: 5) {
+ 
     events {
       id
       name
-      domainId
+   
       description
       startDate
       slug
@@ -51,7 +51,7 @@ query {
       hideTeacherPage
       hideBlog
     }
-  }
+  
   roles {
     id
     name
@@ -64,14 +64,10 @@ export default function Main_v1() {
   const { loading, error, data } = useQuery<GetDataResponse>(GET_DATA);
   const [event , Setevent] = useState()
 
-    useEffect(() => {
-      Setevent(data?.domain?.events[0])
-      localStorage.setItem("event_id" ,data?.domain?.events[0]?.id)
-    },[data?.domain]);
 
   if (loading) return <Loading/>;
   if (error) return <Error error={error}/>;
-  if (!data || !data?.domain) return <p>No data available </p>;
+  if (!data || !data) return <p>No data available </p>;
 
   return (
     <>

@@ -17,19 +17,6 @@ const typeDefs = `
     email: String!
   }
   
-  type Domain {
-    id: BigInt
-    domain_name: String
-    subdomain_name: String
-    host: String
-    description: String
-    logo_file_name: String
-    logo_meta: String
-    custom_font_name: String
-    createdAt: String!
-    updatedAt: String!
-    events: [Event]
-  }
 
   type FormFieldChoice {
 
@@ -88,7 +75,7 @@ const typeDefs = `
 type Event {
     id: ID!
     name: String
-    domainId: Int
+
     description: String
     startDate: String
     slug: String
@@ -145,8 +132,6 @@ type Event {
     roles: [Role]
     role(id: ID!): Role
     
-    domains: [Domain]
-    domain(id: ID!): Domain
 
     events: [Event]
     event(id: ID!): Event
@@ -182,20 +167,6 @@ const resolvers = {
     user: async (_, { id }) => await prisma.user.findUnique({ where: { id: Number(id) } }),
     roles: async () => await prisma.role.findMany(),
     role: async (_, { id }) => await prisma.role.findUnique({ where: { id: Number(id) } }),
-    domains: async () => await prisma.domain.findMany(),
-    domain: async (_, { id }, ctx) => {
-      const sub_domain = ctx.domain[0]?.subdomain_name;
-      // console.log(ctx.domain[0].events);
-      // console.log("ctx.domain[0].events");
-      
-      if (!sub_domain) {
-        throw new GraphQLError("Subdomain not found");
-      }
-      return await prisma.domain.findFirst({
-        where: { subdomain_name: sub_domain },
-        include: { events: true },
-      });
-    },
     events: async () => {
     const events = await prisma.event.findMany({include: { forms: true }})
       return  events
@@ -246,16 +217,7 @@ const resolvers = {
       });      return data;
     },
   },
-  // FormFieldChoice: {
-  //   forms: async (parent) => {
-  //     return await prisma.form.findMany({
-  //       where: {
-  //         is_active: true,
-  //         event_id: parent.form_section_field.form_id
-  //       },
-  //     });
-  //   },
-  // },
+
 
   Mutation: {
     createUser: async (_, { name, email }) => {
@@ -303,25 +265,6 @@ export const config = {
   },
 };
 
-const handler = startServerAndCreateNextHandler(apolloServer, {
-  context: async (ctx) => {
-    const sub_domain = ctx.headers.get("sub_domain") || "";
-    if (!sub_domain) {
-      throw new GraphQLError("Subdomain not found in headers");
-    }
-
-    try {
-      const domain = await prisma.domain.findMany({
-        where: { subdomain_name: sub_domain },
-        include: { events: true },
-      });
-
-      return { domain };
-    } catch (error) {
-      throw new GraphQLError( error.message ||"Internal Server Error");
-    }
-  },
-});
-
+const handler = startServerAndCreateNextHandler(apolloServer)
 // Export a single handler for both GET and POST
 export { handler as GET, handler as POST };

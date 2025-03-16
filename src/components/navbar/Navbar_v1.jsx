@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link'
 import React  , { useState , useEffect} from "react";
-import GetDomain from "../../Hooks/useGetDmain";
+
 
 import { useSession , signOut } from "next-auth/react"
 
@@ -16,7 +16,7 @@ const GET_DATA = gql`
     event(id: $eventId) {
       id
       name
-      domainId
+      
       description
       startDate
       slug
@@ -75,7 +75,7 @@ export default function Navbar_v1() {
 
   console.log(event);
   
-  GetDomain()
+
   return (
     <>
       {/* Topbar Start */}

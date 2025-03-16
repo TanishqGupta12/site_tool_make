@@ -19,22 +19,6 @@ const options: NextAdminOptions = {
   title: "Dashboard",
 
   model: {
-    Domain: {
-      toString: (domain) => `(${domain.id})  (${domain.domain_name}) (${domain.subdomain_name})`,
-      title: "Domain",
-      icon: "AdjustmentsVerticalIcon",
-      list: {
-      },
-      edit: {
-        fields: { 
-          description: {
-            format: "textarea",
-            input: <CustomQuill  name="description" disabled={false} required={true} />,
-
-          },
-        },
-      },
-    },
 
     Event: {
       toString: (event) => `(${event.id})  (${event.name})`,
@@ -57,11 +41,6 @@ const options: NextAdminOptions = {
           },
           name: {
             
-          },
-          domain: {
-            relationOptionFormatter: (domain) => {
-              return `${domain.domain_name}`;
-            },
           },
           gallery: {
             format: "file",

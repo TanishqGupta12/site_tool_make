@@ -55,7 +55,7 @@ model Event {
   PostGallery                              PostGallery[]
   Trickets                                 Tricket[]
 
-  @@index([domainId], map: "events_domainId_fkey")
+ 
   @@map("events")
 }
 

@@ -57,7 +57,7 @@ interface Event {
 
     id: string;
     name: string;
-    domainId: string;
+
     description: string;
     startDate: string;
     slug: string;
@@ -89,28 +89,13 @@ interface Event {
   
 }
 
-interface Domain {
-  id:               string;  
-  domain_name:      string;  
-  subdomain_name:   string; 
-  host:             string; 
-  description:      string;  
-  logo_file_name:   string;   
-  logo_meta:        string;   
-  custom_font_name: string;  
 
-  createdAt:        string;
-  updatedAt:        string;
-
-  event: Event[];
-}
 
 
 export interface GetDataResponse {
   role: Role;
   roles: Role[];
 
-  domain: Domain;
 
   forms: Form[]
   form: Form
