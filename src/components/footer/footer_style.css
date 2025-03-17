@@ -1,0 +1,5 @@
+.more-link p {
+    margin: 0; /* Removes extra margin */
+    padding: 0; /* Removes extra padding */
+    line-height: 2; /* Adjusts line spacing */
+  }

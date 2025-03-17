@@ -1,19 +1,20 @@
-"use client"
-import React  , { useState , useEffect} from "react";
-
-import Link from 'next/link'
+"use client";
+import React, { useState, useEffect } from "react";
+import './footer_style.css'
+import Link from "next/link";
 
 import Error from "@/components/error/error";
 import Loading from "@/components/loading/loading";
 
-import { gql, useQuery } from '@apollo/client';
+import Category_footer from "../footer/Category_footer";
+import { gql, useQuery } from "@apollo/client";
 
 const GET_DATA = gql`
   query EventData($eventId: ID!) {
     event(id: $eventId) {
       id
       name
-      
+
       description
       startDate
       slug
@@ -49,33 +50,30 @@ const GET_DATA = gql`
 `;
 
 const Footer_v1 = () => {
+  const [eventId, setEventId] = useState(null);
+  const [event, setevent] = useState(null);
 
-    const [eventId, setEventId] = useState(null);
-    const [event, setevent] = useState(null);
-  
-    useEffect(() => {
-      const storedEventId = localStorage.getItem("event_id");
-      if (storedEventId) setEventId(storedEventId);
-    }, []);
-  
-    const { loading, error, data } = useQuery(GET_DATA, {
-      variables: { eventId },
-      skip: !eventId,
-    });
-  
-      useEffect(() => {
-          setevent(data?.event)
-      }, [data?.event]);
+  useEffect(() => {
+    const storedEventId = localStorage.getItem("event_id");
+    if (storedEventId) setEventId(storedEventId);
+  }, []);
 
-    // if (loading) return <Loading />;
-    // if (error) return <Error error={error} />;
+  const { loading, error, data } = useQuery(GET_DATA, {
+    variables: { eventId },
+    skip: !eventId,
+  });
+
+  useEffect(() => {
+    setevent(data?.event);
+  }, [data?.event]);
+
+  // if (loading) return <Loading />;
+  // if (error) return <Error error={error} />;
 
   return (
     <>
-      <div
-        className="container-fluid bg-dark text-white py-5 px-sm-3 px-lg-5"
-        style={{ marginTop: "90px" }}
-      >
+      <Category_footer />
+      <div className="container-fluid bg-dark text-white py-5 px-sm-3 px-lg-5">
         <div className="row pt-5">
           <div className="col-lg-7 col-md-12">
             <div className="row">
@@ -87,13 +85,16 @@ const Footer_v1 = () => {
                   Get In Touch
                 </h5>
                 <p>
-                  <i className="fa fa-map-marker-alt mr-2"></i>{event?.address}
+                  <i className="fa fa-map-marker-alt mr-2"></i>
+                  {event?.address}
                 </p>
                 <p>
-                  <i className="fa fa-phone-alt mr-2"></i>{event?.address}
+                  <i className="fa fa-phone-alt mr-2"></i>
+                  {event?.address}
                 </p>
                 <p>
-                  <i className="fa fa-envelope mr-2"></i>{event?.email}
+                  <i className="fa fa-envelope mr-2"></i>
+                  {event?.email}
                 </p>
                 <div className="d-flex justify-content-start mt-4">
                   <a className="btn btn-outline-light btn-square mr-2" href="#">
@@ -115,15 +116,45 @@ const Footer_v1 = () => {
                   className="text-primary text-uppercase mb-4"
                   style={{ letterSpacing: "5px" }}
                 >
-                  Our Courses
+                  More Link
                 </h5>
-                <div className="d-flex flex-column justify-content-start">
-                  {event?.categorys ? event?.categorys?.map((category, index) => (
-                    <a key={index} className="text-white mb-2" href="#">
-                      <i className="fa fa-angle-right mr-2"></i>
-                      {category?.content}
+                <div className="d-flex flex-column justify-content-start more-link">
+                  <p>
+                    <Link href="/academy/blog" legacyBehavior>
+                      <a className="nav-link text-white py-0">Blog</a>
+                    </Link>
+                  </p>
+                  <p>
+                    <Link href="/academy/about" legacyBehavior>
+                      <a className="nav-link text-white py-0">About</a>
+                    </Link>
+                  </p>
+                  <p>
+                    <Link href="/academy/contact" legacyBehavior>
+                      <a className="nav-link text-white py-0">Contact</a>
+                    </Link>
+                  </p>
+                  <p>
+                    <a
+                      className="nav-link text-white py-0"
+                      href="/academy/FaqSection"
+                    >
+                      FAQs
                     </a>
-                  )) : 'category not found'}
+                  </p>
+                  <p>
+                    <a
+                      className="nav-link text-white py-0"
+                      href="/academy/termsAndConditions"
+                    >
+                      Terms
+                    </a>
+                  </p>
+                  <p>
+                    <a className="nav-link text-white py-0" href="#">
+                      Privacy
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -161,29 +192,8 @@ const Footer_v1 = () => {
         style={{ borderColor: "rgba(256, 256, 256, .1)" }}
       >
         <div className="row">
-          <div className="col-lg-7 ml-5 text-center text-md-right">
-            <ul className="nav d-inline-flex">
-              <li className="nav-item">
-                <a className="nav-link text-white py-0" href="#">
-                  Privacy
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-white py-0" href="/academy/termsAndConditions">
-                  Terms
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-white py-0" href="/academy/FaqSection">
-                  FAQs
-                </a>
-              </li>
-              <li className="nav-item">
-                <Link href="/academy/contact" legacyBehavior>
-                  <a className="nav-link text-white py-0">Contact</a>
-                </Link>
-              </li>
-            </ul>
+          <div className="col-lg-6 ml-2 text-center text-md-right">
+            {event?.name}
           </div>
         </div>
       </div>

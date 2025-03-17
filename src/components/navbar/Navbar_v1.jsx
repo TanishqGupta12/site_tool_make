@@ -130,13 +130,9 @@ export default function Navbar_v1() {
                   <Link href="/" legacyBehavior>
                     <a className="nav-item nav-link active">Home</a>
                   </Link>
-                  <Link href="/academy/blog" legacyBehavior>
-                    <a className="nav-item nav-link">Blog</a>
-                  </Link>
+
                   {/* Other Navbar Items */}
-                  <Link href="/academy/about" legacyBehavior>
-                    <a className="nav-item nav-link">About</a>
-                  </Link>
+
                   <Link href="/academy/course" legacyBehavior>
                     <a className="nav-item nav-link">Courses</a>
                   </Link>
