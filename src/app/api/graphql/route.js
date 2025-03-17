@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { GraphQLError } from 'graphql';
-import Category from "@/components/Main/Category";
+
 
 const prisma = new PrismaClient();
 
