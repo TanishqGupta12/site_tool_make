@@ -73,8 +73,8 @@ export default function Navbar_v1() {
     await signOut();
   };
 
-  if (loading) return <Loading />;
-  if (error) return <Error error={error} />;
+  // if (loading) return <Loading />;
+  // if (error) return <Error error={error} />;
 
   return (
     <>

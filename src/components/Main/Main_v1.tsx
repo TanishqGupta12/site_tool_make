@@ -56,7 +56,7 @@ export default function Main_v1() {
     if (data) {
       // Assuming the first event is the one you want to use
       // console.log(data?.events[0]);
-      localStorage.setItem(data?.events[0].id, 'event_id')
+      localStorage.setItem(data?.events[0]?.id, 'event_id')
       Setevent(data?.events[0]);
     }
   }, [data]);
