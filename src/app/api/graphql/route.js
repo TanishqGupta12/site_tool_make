@@ -102,6 +102,7 @@ const typeDefs = `
     hideTeacherPage: Boolean
     forms: [Form] # Correct relationship with Form model
     categorys: [category]
+    teachers: [User]
   }
 
   type Contact {
@@ -169,6 +170,16 @@ const resolvers = {
           // is_active: true
         },
       });
+    },
+    teachers: async (parent) => {
+      const adminUsers = await prisma.EventUser.findMany({
+        where: {
+          eventId: parent.id,
+        },
+        
+      });
+      console.log(adminUsers)
+      return adminUsers;
     },
   },
   Form: {

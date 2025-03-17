@@ -14,6 +14,9 @@ const GET_DATA = gql`
     event(id: $eventId) {
       id
       termsAndConditions
+      teachers {
+        id
+      }
     }
   }
 `;

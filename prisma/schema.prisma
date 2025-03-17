@@ -49,7 +49,7 @@ model Event {
   contact                                  contact[]
   Discounts                                Discount[]
   email_content                            EmailContent[]
-  users                                    EventUser[]
+
 
   Form                                     Form[]
   PostGallery                              PostGallery[]
@@ -110,7 +110,7 @@ model User {
   f13                    String?             @db.VarChar(255)
   f14                    String?             @db.VarChar(255)
   f15                    String?             @db.VarChar(255)
-  events                 EventUser[]
+ 
   QuizAttemptResults     QuizAttemptResult[]
   QuizAttempts           QuizAttempt[]
   QuizResults            QuizResult[]
@@ -120,19 +120,7 @@ model User {
   @@map("users")
 }
 
-model EventUser {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  eventId   Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  event     Event    @relation(fields: [eventId], references: [id])
-  user      User     @relation(fields: [userId], references: [id])
 
-  @@index([eventId], map: "event_uses_eventId_fkey")
-  @@index([userId], map: "event_uses_userId_fkey")
-  @@map("event_uses")
-}
 
 model Form {
   id                                      Int                @id @default(autoincrement())
