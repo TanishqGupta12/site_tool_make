@@ -44,7 +44,7 @@ model Event {
   hideInfo                                 Boolean?       @default(false)
   hideTeacherPage                          Boolean?       @default(false)
   EventAgendas                             EventAgenda[]
-  Captions                                 Caption[]
+
   category                                 category[]
   contact                                  contact[]
   Discounts                                Discount[]
@@ -273,6 +273,7 @@ model category {
   updated_at   DateTime?     @updatedAt
   EventAgendas EventAgenda[]
   event        Event?        @relation(fields: [eventId], references: [id])
+  Captions     Caption[]
 
   @@index([eventId], map: "categorys_eventId_fkey")
   @@map("categorys")
@@ -414,11 +415,11 @@ model QuizResult {
 
 model Caption {
   id       Int     @id @default(autoincrement())
+  
   title    String? @db.VarChar(255)
-  event_id Int?
-  event    Event?  @relation(fields: [event_id], references: [id])
+  category_id Int?
+  categorys    category?  @relation(fields: [category_id], references: [id])
 
-  @@index([event_id], map: "captions_event_id_fkey")
   @@map("captions")
 }
 
