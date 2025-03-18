@@ -268,6 +268,7 @@ export default function Signup() {
                         )}
                       </div>
                     ))}
+                    <small className="message ml-3"><a href="/login">Already User ?</a></small>
                     <div className="mt-auto pt-2 text-center">
                       <input
                         type="hidden"
@@ -277,7 +278,7 @@ export default function Signup() {
                         
                       />
                       <button
-                        className="btn btn-primary btn-lg px-4 py-2 fw-semibold shadow-sm"
+                        className="btn btn-primary btn-lg px-4 py-2 fw-semibold shadow-sm mt-5"
                         type="submit"
                         disabled={loading || Object.keys(errors).length > 0}
                       >
