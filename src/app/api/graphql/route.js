@@ -184,6 +184,12 @@ const resolvers = {
   },
   Form: {
     form_section_fields: async (parent) => {
+      return await prisma.formSectionField.findMany({
+        where: {
+          form_id: parent.id,
+        },
+        
+      });
     },
   },
 

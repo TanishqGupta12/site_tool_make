@@ -27,7 +27,7 @@ export default function login() {
         e.preventDefault();
         const email = emails;
         const password = passwords;
-        const current_event_id = event;
+        const current_event_id = event || localStorage.getItem("event_id");
         const result = await signIn("credentials", {
             redirect: true,
             email,

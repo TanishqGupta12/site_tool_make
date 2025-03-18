@@ -72,6 +72,8 @@ export default function Signup() {
   const [section_fields, setFields] = useState([]);
 
   const formhandleSubmit = async (data) => {
+    console.log(data);
+    
     try {
       const response = await axios.post("/api/sign-up", data);
       toaster(toast.success, `${response.data.message}`);
@@ -81,9 +83,11 @@ export default function Signup() {
   };
 
   useEffect(() => {
+    console.log(data?.event);
+    
     if (data?.event?.forms?.length > 0) {
       setForm(data.event.forms[0]);
-      setFields(data.event.forms[0].form_section_fields);      
+      setFields(data.event.forms[0]?.form_section_fields);      
     }
   }, [data?.event]);
 
@@ -267,10 +271,10 @@ export default function Signup() {
                     <div className="mt-auto pt-2 text-center">
                       <input
                         type="hidden"
-                        value={eventId || ""}
+                        value={localStorage.getItem("event_id")}
                         name="current_event_id"
                         {...register("current_event_id")}
-                        onChange={(e) => setEventId(e.target.value)}
+                        
                       />
                       <button
                         className="btn btn-primary btn-lg px-4 py-2 fw-semibold shadow-sm"

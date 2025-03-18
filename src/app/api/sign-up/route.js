@@ -57,10 +57,10 @@ export async function POST(req) {
     }
 
     
-    // Create the user in the database
+
 
     
-    const newUser = await prisma.user.create({
+    await prisma.user.create({
       data: {
         ...field,
         authentication_token: authentication_token(12),
@@ -69,14 +69,7 @@ export async function POST(req) {
     });
 
   
-    
-    // // Create the user in the database
-    const evnt_user = await prisma.eventUser.create({
-      data: {
-        userId: newUser.id,
-        eventId: Number(current_event_id),
-      },
-    });
+  
 
     
 
