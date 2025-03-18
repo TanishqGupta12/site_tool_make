@@ -7,7 +7,7 @@ import { Prisma } from "@prisma/client";
 
 
 import CustomButton from "@/components/Custom/seleted";
-import CustomQuill from "@/components/Custom/CustomQuill";
+import CustomEditor from "@/components/Custom/CustomEditor";
 
 let inputTypes = [
   "text", "password", "checkbox", "radio", "file", "date", 
@@ -37,7 +37,8 @@ const options: NextAdminOptions = {
         // ],
         fields: {
           termsAndConditions: {
-            format: "richtext-html"
+            format: "richtext-html",
+            input: <CustomEditor  name="termsAndConditions" disabled={false} required={true} />,
           },
           name: {
             
