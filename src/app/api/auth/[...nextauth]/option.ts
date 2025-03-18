@@ -16,6 +16,8 @@ export const authOptions: AuthOptions = {
         current_event: { label: "current_event_id", type: "hidden" },
       },
       async authorize(credentials: any): Promise<any> {
+        console.log(credentials);
+        
         if (!credentials?.email || !credentials?.password || !credentials?.current_event_id) {
           throw new Error("Email, password, and current_event_id are required!");
         }

@@ -1,22 +1,19 @@
-"use client"
-import Link from 'next/link'
+"use client";
+
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
-
-
-import { useSession, signOut } from "next-auth/react"
-
+import { useSession, signOut } from "next-auth/react";
+import { gql, useQuery } from "@apollo/client";
 
 import Error from "@/components/error/error";
 import Loading from "@/components/loading/loading";
 
-import { gql, useQuery } from '@apollo/client';
 
 const GET_DATA = gql`
   query EventData($eventId: ID!) {
     event(id: $eventId) {
       id
       name
-      
       description
       startDate
       slug
@@ -48,11 +45,9 @@ const GET_DATA = gql`
 `;
 
 export default function Navbar_v1() {
-
-  const session = useSession();
-
+  const { data: session } = useSession();
   const [eventId, setEventId] = useState(null);
-  const [event, setevent] = useState(null);
+  const [event, setEvent] = useState(null);
 
   useEffect(() => {
     const storedEventId = localStorage.getItem("event_id");
@@ -65,16 +60,17 @@ export default function Navbar_v1() {
   });
 
   useEffect(() => {
-    setevent(data?.event)
-  }, [data?.event]);
+    if (data?.event) {
+      setEvent(data.event);
+    }
+  }, [data]);
 
   const handleLogout = async () => {
-    // Call the signOut function
     await signOut();
   };
 
-  // if (loading) return <Loading />;
-  // if (error) return <Error error={error} />;
+  if (loading) return <Loading />;
+  if (error) return <Error error={error} />;
 
   return (
     <>
@@ -84,7 +80,8 @@ export default function Navbar_v1() {
           <div className="col-lg-3">
             <Link href="/" className="text-decoration-none">
               <h1 className="m-0">
-                <span className="text-primary">{event?.name.charAt(0)}</span>{event?.name.replace('E', '')}
+                <span className="text-primary">{event?.name?.charAt(0) || ''}</span>
+                {event?.name?.replace('E', '') || ''}
               </h1>
             </Link>
           </div>
@@ -93,7 +90,7 @@ export default function Navbar_v1() {
               <i className="fa fa-2x fa-map-marker-alt text-primary mr-3"></i>
               <div className="text-left">
                 <h6 className="font-weight-semi-bold mb-1">Our Office</h6>
-                <small>{event?.address}</small>
+                <small>{event?.address || 'N/A'}</small>
               </div>
             </div>
           </div>
@@ -102,7 +99,7 @@ export default function Navbar_v1() {
               <i className="fa fa-2x fa-envelope text-primary mr-3"></i>
               <div className="text-left">
                 <h6 className="font-weight-semi-bold mb-1">Email Us</h6>
-                <small>{event?.email}/</small>
+                <small>{event?.email || 'N/A'}</small>
               </div>
             </div>
           </div>
@@ -111,7 +108,7 @@ export default function Navbar_v1() {
               <i className="fa fa-2x fa-phone text-primary mr-3"></i>
               <div className="text-left">
                 <h6 className="font-weight-semi-bold mb-1">Call Us</h6>
-                <small>{event?.phone}</small>
+                <small>{event?.phone || 'N/A'}</small>
               </div>
             </div>
           </div>
@@ -124,54 +121,40 @@ export default function Navbar_v1() {
         <div className="row border-top px-xl-5">
           <div className="col-lg-9">
             <nav className="navbar navbar-expand-lg navbar-light py-lg-0 px-0">
-              {/* Navbar Items */}
               <div className="d-flex align-items-center justify-content-center w-100">
                 <div className="navbar-nav mx-auto">
-                  <Link href="/" legacyBehavior>
-                    <a className="nav-item nav-link active">Home</a>
+                  <Link href="/" className="nav-item nav-link active">
+                    Home
+                  </Link>
+                  <Link href="/academy/course" className="nav-item nav-link">
+                    Courses
+                  </Link>
+                  <Link href="/academy/teacher" className="nav-item nav-link">
+                    Teachers
                   </Link>
 
-                  {/* Other Navbar Items */}
+                  {session ? (
+                    <>
 
-                  <Link href="/academy/course" legacyBehavior>
-                    <a className="nav-item nav-link">Courses</a>
-                  </Link>
-                  <Link href="/academy/teacher" legacyBehavior>
-                    <a className="nav-item nav-link">Teachers</a>
-                  </Link>
-
-                  {session.data ? (
-                  <>
-                    <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown hover <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                    </svg>
-                    </button>
-                    <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-                          <li>
-                            <Link href="#" legacyBehavior>
-                              <a href="#" onClick={handleLogout} class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                                Logout
-                              </a>
-                            </Link>
-
-                          </li>
-                          <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                          </li>
-                          <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                          </li>
-                          <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+                    <div className="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                        <ul className="navbar-nav">
+                          <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              Dropdown
+                            </a>
+                            <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                              <li><a className="dropdown-item" href="#">Action</a></li>
+                              <li><a className="dropdown-item" href="#">Another action</a></li>
+                              <li><a className="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
                           </li>
                         </ul>
-                    </div>
-                      
-                  </>
+                      </div>
+
+                    </>
                   ) : (
-                    <Link href="/signup" legacyBehavior>
-                      <a className="nav-item nav-link ml-5">Signup</a>
+                    <Link href="/signup" className="nav-item nav-link ml-5">
+                      Signup
                     </Link>
                   )}
                 </div>
@@ -180,7 +163,6 @@ export default function Navbar_v1() {
           </div>
         </div>
       </div>
-
     </>
   );
 }
