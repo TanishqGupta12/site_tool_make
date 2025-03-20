@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Category_footer_style.css";
+import "./Category.css";
 export default function CategoryFooter() {
   const categories = [
     { title: "Popular Category", links: ["WordPress", "Plugins", "Joomla Template", "Admin Template", "HTML Template"] },
