@@ -1,4 +1,10 @@
-import React from "react";
+"use client"
+import React, { useState, useEffect } from "react";
+
+import { GetDataResponse } from "@/interface/types";
+import Error from "@/components/error/error";
+import Loading from "@/components/loading/loading";
+import { gql, useQuery } from '@apollo/client';
 
 const teachers = [
     { id: 1, img: "img/team-1.jpg", name: "John Doe", role: "Web Designer" },
@@ -7,7 +13,69 @@ const teachers = [
     { id: 4, img: "img/team-4.jpg", name: "David Wilson", role: "Full Stack Developer" },
 ];
 
+
+// const GET_DATA = gql`
+//   query {
+//     events {
+//       id
+//       teachers {
+//         id
+//         email
+//         salutation
+//         first_name
+//         last_name
+//         position
+//         organization
+//         address
+//         city
+//         mobile
+//         online_status
+//         locale
+//         avatar
+//         custom_fields
+//         createdAt
+//         updatedAt
+//         roleId
+//         f1            
+//         f2            
+//         f3            
+//         f4            
+//         f5            
+//         f6            
+//         f7            
+//         f8            
+//         f9            
+//         f10            
+//         f11            
+//         f12            
+//         f13            
+//         f14            
+//         f15
+//       }
+//     }
+//   }
+// `;
+
 export default function Teacher() {
+
+    // const { loading, error, data } = useQuery<GetDataResponse>(GET_DATA);
+    // const [event, Setevent] = useState(null);
+    // const [teachers, Setteacher] = useState(null);
+
+    // useEffect(() => {
+    //     if (data) {
+    //         // Assuming the first event is the one you want to use
+    //         // console.log(data?.events[0]);
+    //         localStorage.setItem('event_id', data?.events[0]?.id)
+
+    //         Setevent(data?.events[0]);
+    //         Setteacher(data?.events[0]?.teachers)
+    //     }
+    // }, [data]);
+
+    // if (loading) return <Loading />;
+    // if (error) return <Error error={error} />;
+
     return (
         <div className="container-fluid py-5">
             <div className="container pt-5 pb-3">
@@ -16,11 +84,11 @@ export default function Teacher() {
                     <h1>Meet Our Teachers</h1>
                 </div>
                 <div className="row">
-                    {teachers.map((teacher) => (
+                    {teachers ? teachers.map((teacher: unknown) => (
                         <div key={teacher.id} className="col-md-6 col-lg-3 text-center team mb-4">
                             <div className="team-item rounded overflow-hidden mb-2">
                                 <div className="team-img position-relative">
-                                    <img className="img-fluid" src={teacher.img} alt={`Teacher ${teacher.name}`} />
+                                    <img className="img-fluid" src={teacher.img} alt={`Teacher ${teacher?.name}`} />
                                     <div className="team-social">
                                         <a className="btn btn-outline-light btn-square mx-1" href="#"><i className="fab fa-twitter"></i></a>
                                         <a className="btn btn-outline-light btn-square mx-1" href="#"><i className="fab fa-facebook-f"></i></a>
@@ -33,7 +101,7 @@ export default function Teacher() {
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )) : " Teacher Not Available"}
                 </div>
             </div>
         </div>

@@ -172,9 +172,25 @@ const resolvers = {
       });
     },
     teachers: async (parent) => {
-      const adminUsers = await prisma.EventUser.findMany({
+      // const role = await prisma.role.findFirst({where: {
+      //   name: 'teachers',
+      //   in_active: true
+      // }})
+      // const adminUsers = await prisma.user.findMany({
+      //   where: {
+      //     current_event_id: parent.id,
+      //     roleId: role?.id
+      //   },
+        
+      // });
+
+      const adminUsers = await prisma.user.findMany({
         where: {
-          eventId: parent.id,
+          current_event_id: String(parent.id),
+          role: {
+            name: 'teachers',
+            in_active: true
+          }
         },
         
       });

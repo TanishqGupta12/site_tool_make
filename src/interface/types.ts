@@ -4,6 +4,47 @@ interface Role {
 
 }
 
+interface User {
+  id: string;                
+  email: string;             
+  salutation: string;             
+  first_name: string;             
+  last_name: string;             
+  position: string;             
+  organization: string;             
+  address: string;             
+  city: string;             
+  mobile: string;             
+  online_status: string;              
+  locale: string;             
+  otp: string;             
+  avatar: string;             
+  authentication_token: string;             
+  custom_fields: string;            
+  encrypted_password: string;             
+  reset_password_token: string;
+  reset_password_sent_at: string;
+  current_event_id: string;
+  createdAt: string;       
+  updatedAt: string;        
+  roleId: string;
+  
+  f1?: string;             
+  f2?: string;             
+  f3?: string;             
+  f4?: string;             
+  f5?: string;             
+  f6?: string;             
+  f7?: string;             
+  f8?: string;             
+  f9?: string;             
+  f10?: string;             
+  f11?: string;             
+  f12?: string;             
+  f13?: string;             
+  f14?: string;             
+  f15?: string;             
+}
 interface FormFieldChoice {
   id: string
   sequence: string
@@ -33,7 +74,7 @@ interface FormSectionField {
   created_at: string;
   updated_at: string;
   is_single_column: boolean;
-  value: String;           
+  value: string;           
   onlyReady: Boolean;  
   form: Form[];
   // form_section: FormSection[];
@@ -57,7 +98,7 @@ interface Event {
 
     id: string;
     name: string;
-    address: String
+    address: string;
     description: string;
     startDate: string;
     slug: string;
@@ -86,6 +127,7 @@ interface Event {
     hideTeacherPage: boolean;
 
     forms: Form[]
+    teachers: User[]
   
 }
 
@@ -96,8 +138,8 @@ export interface GetDataResponse {
 
 
 
-  forms: Form[]
-  form: Form
-  
+  forms: Form[];
+  form: Form;
+  Role: Role;
   event: Event;
 }
