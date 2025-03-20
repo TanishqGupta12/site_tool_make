@@ -201,7 +201,7 @@ const resolvers = {
       return await prisma.role.findMany({
         where: {
           id: parent.roleId, 
-          in_active: true,   // Ensure the role is active
+          in_active: true,  
         },
       });
     },
