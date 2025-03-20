@@ -6,6 +6,9 @@ import Error from "@/components/error/error";
 import Loading from "@/components/loading/loading";
 import { gql, useQuery } from '@apollo/client';
 
+import Navbar_v1 from "@/components/navbar/Navbar_v1";
+import Footer_v1 from "@/components/footer/Footer_v1";
+
 // const teachers = [
 //     { id: 1, img: "img/team-1.jpg", name: "John Doe", role: "Web Designer" },
 //     { id: 2, img: "img/team-2.jpg", name: "Jane Smith", role: "UI/UX Designer" },
@@ -65,14 +68,14 @@ export default function Teacher() {
     const { loading, error, data } = useQuery(GET_DATA);
     const [event, Setevent] = useState(null);
     const [teachers, Setteacher] = useState(null);
-    
+
     useEffect(() => {
         if (data) {
             // Assuming the first event is the one you want to use
             // console.log(data?.events[0]);
             localStorage.setItem('event_id', data?.events[0]?.id)
             console.log(data?.events[0]);
-            
+
             Setevent(data?.events[0]);
             Setteacher(data?.events[0]?.teachers)
         }
@@ -80,38 +83,41 @@ export default function Teacher() {
 
     if (loading) return <Loading />;
     if (error) return <Error error={error} />;
-    console.log( data );
-    console.log(error);
-    
-    
+
+
+
     return (
-        <div className="container-fluid py-5">
-            <div className="container pt-5 pb-3">
-                <div className="text-center mb-5">
-                    <h5 className="text-primary text-uppercase mb-3" style={{ letterSpacing: "5px" }}>Teachers</h5>
-                    <h1>Meet Our Teachers</h1>
-                </div>
-                <div className="row">
-                    {teachers ? teachers.map((teacher) => (
-                        <div key={teacher.id} className="col-md-6 col-lg-3 text-center team mb-4">
-                            <div className="team-item rounded overflow-hidden mb-2">
-                                <div className="team-img position-relative">
-                                    <img className="img-fluid" src={teacher.img} alt={`Teacher ${teacher?.name}`} />
-                                    <div className="team-social">
-                                        <a className="btn btn-outline-light btn-square mx-1" href="#"><i className="fab fa-twitter"></i></a>
-                                        <a className="btn btn-outline-light btn-square mx-1" href="#"><i className="fab fa-facebook-f"></i></a>
-                                        <a className="btn btn-outline-light btn-square mx-1" href="#"><i className="fab fa-linkedin-in"></i></a>
+        <>
+        <Navbar_v1/>
+            <div className="container-fluid py-5">
+                <div className="container pt-5 pb-3">
+                    <div className="text-center mb-5">
+                        <h5 className="text-primary text-uppercase mb-3" style={{ letterSpacing: "5px" }}>Teachers</h5>
+                        <h1>Meet Our Teachers</h1>
+                    </div>
+                    <div className="row">
+                        {teachers ? teachers.map((teacher) => (
+                            <div key={teacher.id} className="col-md-6 col-lg-3 text-center team mb-4">
+                                <div className="team-item rounded overflow-hidden mb-2">
+                                    <div className="team-img position-relative">
+                                        <img className="img-fluid" src={teacher.img} alt={`Teacher ${teacher?.name}`} />
+                                        <div className="team-social">
+                                            <a className="btn btn-outline-light btn-square mx-1" href="#"><i className="fab fa-twitter"></i></a>
+                                            <a className="btn btn-outline-light btn-square mx-1" href="#"><i className="fab fa-facebook-f"></i></a>
+                                            <a className="btn btn-outline-light btn-square mx-1" href="#"><i className="fab fa-linkedin-in"></i></a>
+                                        </div>
+                                    </div>
+                                    <div className="bg-secondary p-4">
+                                        <h5> {teacher?.first_name ?? "N/A"} {teacher?.last_name ?? ""} </h5>
+                                        <p className="m-0">{teacher?.role[0]?.name ?? "No Role Assigned"}</p>
                                     </div>
                                 </div>
-                                <div className="bg-secondary p-4">
-                                    <h5>`{teacher.first_name} {teacher.last_name}`</h5>
-                                    <p className="m-0">{teacher.role}</p>
-                                </div>
                             </div>
-                        </div>
-                    )) : " Teacher Not Available"}
+                        )) : " Teacher Not Available"}
+                    </div>
                 </div>
             </div>
-        </div>
+        <Footer_v1/>
+        </>
     );
 }
