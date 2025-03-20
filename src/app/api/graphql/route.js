@@ -11,47 +11,54 @@ const prisma = new PrismaClient();
 // Define GraphQL schema
 const typeDefs = `
   scalar BigInt
+
+  type Role {
+    id:            Int
+    name:          String     
+    in_active:     Boolean       
+  }
   
   type User {
-    id: BigInt!               
-    email: String;             
-    salutation: String;             
-    first_name: String;             
-    last_name: String;             
-    position: String;             
-    organization: String;             
-    address: String;             
-    city: String;             
-    mobile: String;             
-    online_status: String;              
-    locale: String;             
-    otp: String;             
-    avatar: String;             
-    authentication_token: String;             
-    custom_fields: String;            
-    encrypted_password: String;             
-    reset_password_token: String;
-    reset_password_sent_at: String;
-    current_event_id: String;
-    createdAt: String;       
-    updatedAt: String;        
-    roleId: String;
+    id: BigInt!
+    email: String
+    salutation: String
+    first_name: String
+    last_name: String
+    position: String
+    organization: String
+    address: String
+    city: String
+    mobile: String
+    online_status: String
+    locale: String
+    otp: String
+    avatar: String
+    authentication_token: String
+    custom_fields: String
+    encrypted_password: String
+    reset_password_token: String
+    reset_password_sent_at: String
+    current_event_id: String
+    createdAt: String
+    updatedAt: String
+    roleId: String
     
-    f1?: String;             
-    f2?: String;             
-    f3?: String;             
-    f4?: String;             
-    f5?: String;             
-    f6?: String;             
-    f7?: String;             
-    f8?: String;             
-    f9?: String;             
-    f10?: String;             
-    f11?: String;             
-    f12?: String;             
-    f13?: String;             
-    f14?: String;             
-    f15?: String;
+    f1: String
+    f2: String
+    f3: String
+    f4: String
+    f5: String
+    f6: String
+    f7: String
+    f8: String
+    f9: String
+    f10: String
+    f11: String
+    f12: String
+    f13: String
+    f14: String
+    f15: String
+    role: [Role]
   }
 
   type category {
@@ -189,7 +196,16 @@ const resolvers = {
     contacts: async () => await prisma.contact.findMany(),
     contact: async (_, { id }) => await prisma.contact.findUnique({ where: { id: Number(id) } }),
   },
-
+  User: {
+    role: async(parent) =>{
+      return await prisma.role.findMany({
+        where: {
+          id: parent.roleId, 
+          in_active: true,   // Ensure the role is active
+        },
+      });
+    },
+  },
   Event: {
     forms: async (parent) => {
       return await prisma.form.findMany({
@@ -208,17 +224,6 @@ const resolvers = {
       });
     },
     teachers: async (parent) => {
-      // const role = await prisma.role.findFirst({where: {
-      //   name: 'teachers',
-      //   in_active: true
-      // }})
-      // const adminUsers = await prisma.user.findMany({
-      //   where: {
-      //     current_event_id: parent.id,
-      //     roleId: role?.id
-      //   },
-        
-      // });
 
       const adminUsers = await prisma.user.findMany({
         where: {
@@ -245,10 +250,10 @@ const resolvers = {
     },
   },
 
-  FormSectionField: {
-    form_field_choices: async (parent) => {
-    },
-  },
+  // FormSectionField: {
+  //   form_field_choices: async () => {
+  //   },
+  // },
 
   Mutation: {
     createUser: async (_, { name, email }) => {
