@@ -6,7 +6,7 @@ import Link from "next/link";
 import Error from "@/components/error/error";
 import Loading from "@/components/loading/loading";
 
-import Category_footer from "../footer/Category_footer";
+
 import { gql, useQuery } from "@apollo/client";
 
 const GET_DATA = gql`
@@ -72,7 +72,7 @@ const Footer_v1 = () => {
 
   return (
     <>
-      <Category_footer />
+
       <div className="container-fluid bg-dark text-white py-5 px-sm-3 px-lg-5">
         <div className="row pt-5">
           <div className="col-lg-7 col-md-12">

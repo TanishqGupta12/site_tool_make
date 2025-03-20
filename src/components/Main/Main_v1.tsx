@@ -71,12 +71,12 @@ export default function Main_v1() {
       {event && event?.hideGallery == true ? "" :  <Carousel /> }
       {event && event?.hideAboutPage == true ? "" :  <About /> }
       
-      {event && event?.hideCategory == true ? "" :  <Category /> }
       {event && event?.hideCourses == true ? "" :  <Courses /> }
       {event && event?.hideTeacherPage == true ? "" :  <Teacher /> }
 
       {event && event?.hideInfo == true ? "" :  <Testimonial /> }
       {event && event?.hideBlog == true ? "" :  <Blog /> }
+      {event && event?.hideCategory == true ? "" :  <Category /> }
 
     </>
   );
