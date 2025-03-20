@@ -115,9 +115,9 @@ export default function Navbar_v1() {
       {/* Navbar Start */}
       <div className="container-fluid">
         <div className="row border-top px-xl-5">
-          <div className="col-lg-10">
+          <div className="col"> {/* col-lg-10 */}
             <nav className="navbar navbar-expand-lg navbar-light py-lg-0 px-0">
-              <div className="d-flex align-items-center justify-content-center w-100">
+      
                 <div className="navbar-nav mx-auto">
                   <Link href="/" aria-label="Go to Home" className="nav-item nav-link active">
                     Home
@@ -166,7 +166,7 @@ export default function Navbar_v1() {
                     </Link>
                   )}
                 </div>
-              </div>
+
             </nav>
           </div>
         </div>
