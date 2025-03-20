@@ -13,9 +13,45 @@ const typeDefs = `
   scalar BigInt
   
   type User {
-    id: BigInt!
-    name: String!
-    email: String!
+    id: BigInt!               
+    email: String;             
+    salutation: String;             
+    first_name: String;             
+    last_name: String;             
+    position: String;             
+    organization: String;             
+    address: String;             
+    city: String;             
+    mobile: String;             
+    online_status: String;              
+    locale: String;             
+    otp: String;             
+    avatar: String;             
+    authentication_token: String;             
+    custom_fields: String;            
+    encrypted_password: String;             
+    reset_password_token: String;
+    reset_password_sent_at: String;
+    current_event_id: String;
+    createdAt: String;       
+    updatedAt: String;        
+    roleId: String;
+    
+    f1?: String;             
+    f2?: String;             
+    f3?: String;             
+    f4?: String;             
+    f5?: String;             
+    f6?: String;             
+    f7?: String;             
+    f8?: String;             
+    f9?: String;             
+    f10?: String;             
+    f11?: String;             
+    f12?: String;             
+    f13?: String;             
+    f14?: String;             
+    f15?: String;
   }
 
   type category {

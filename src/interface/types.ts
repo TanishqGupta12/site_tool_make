@@ -49,8 +49,8 @@ interface FormFieldChoice {
   id: string
   sequence: string
   caption: string
-  isActive: Boolean
-  specificFieldIfOther: Boolean
+  isActive: boolean
+  specificFieldIfOther: boolean
   createdAt: string
   updatedAt: string
   form_section_field_id: string
@@ -65,17 +65,17 @@ interface FormSectionField {
   field_type: string;
   data_field: string;
   sequence: string
-  is_required: Boolean;
-  is_active: Boolean;
+  is_required: boolean;
+  is_active: boolean;
   form_id: string;
   form_section_id: string;
-  file_upload_filed: Boolean;
+  file_upload_filed: boolean;
   file_upload_type: string;
   created_at: string;
   updated_at: string;
   is_single_column: boolean;
   value: string;           
-  onlyReady: Boolean;  
+  onlyReady: boolean;  
   form: Form[];
   // form_section: FormSection[];
   form_field_choices: FormFieldChoice[];
