@@ -313,7 +313,7 @@ const options: NextAdminOptions = {
       {
         title: "configuration",
         className: " bg-green-600 p-2 rounded-md", // group title extra classes. (optional)
-        models: ['Event' , "PostGallery" ,"category", "EventAgenda" ,"Caption" ,"EmailContent"],
+        models: ['Event' , "PostGallery" , "EventAgenda" ,"Caption" ,"EmailContent"],
       },
       {
         title: "Registration",
