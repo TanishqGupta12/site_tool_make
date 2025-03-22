@@ -44,6 +44,17 @@ const options: NextAdminOptions = {
                 required={true}
               />
           },
+          customJs: {
+            required: true,
+            tooltip: "ABout Page",
+            helperText: "ABout Page",
+            input: 
+              <CustomEditor
+                name="customJs"
+                disabled={false}
+                required={true}
+              />
+          },
           name: {
             
           },
