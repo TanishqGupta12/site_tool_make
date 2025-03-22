@@ -11,22 +11,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model Event {
   id                                       Int            @id @default(autoincrement())
-  name                                     String        @db.VarChar(255)
-
-  description                              String        @db.Text
+  name                                     String         @db.VarChar(255)
+  description                              String         @db.Text
   startDate                                DateTime?
   slug                                     String?
-  address                                  String?       @db.Text
-  email                                    String        @db.VarChar(255)
-  phone                                    String        @db.VarChar(255)
-  timeZone                                 String        @default("Singapore") @db.VarChar(255)
+  address                                  String?        @db.Text
+  email                                    String         @db.VarChar(255)
+  phone                                    String         @db.VarChar(255)
+  timeZone                                 String         @default("Singapore") @db.VarChar(255)
   customCss                                String?        @db.Text
   customJs                                 String?        @db.Text
-  termsAndConditions                       String        @db.LongText
+  termsAndConditions                       String         @db.LongText
   paymentNeeded                            Boolean?       @default(false)
   publishableKey                           String?        @default("") @db.VarChar(255)
   secretKey                                String?        @default("") @db.VarChar(255)
@@ -43,19 +40,15 @@ model Event {
   galleryText                              String?        @db.VarChar(255)
   hideInfo                                 Boolean?       @default(false)
   hideTeacherPage                          Boolean?       @default(false)
-  EventAgendas                             EventAgenda[]
-
-  category                                 category[]
+  category                                 Category[]
   contact                                  contact[]
   Discounts                                Discount[]
   email_content                            EmailContent[]
-
-
+  event_agenda                             eventagenda[]
   Form                                     Form[]
   PostGallery                              PostGallery[]
   Trickets                                 Tricket[]
 
- 
   @@map("events")
 }
 
@@ -110,7 +103,6 @@ model User {
   f13                    String?             @db.VarChar(255)
   f14                    String?             @db.VarChar(255)
   f15                    String?             @db.VarChar(255)
- 
   QuizAttemptResults     QuizAttemptResult[]
   QuizAttempts           QuizAttempt[]
   QuizResults            QuizResult[]
@@ -119,8 +111,6 @@ model User {
   @@index([roleId], map: "users_roleId_fkey")
   @@map("users")
 }
-
-
 
 model Form {
   id                                      Int                @id @default(autoincrement())
@@ -165,10 +155,8 @@ model FormSectionField {
   field_hint         String?           @db.Text
   field_type         String?           @db.VarChar(255)
   data_field         String?           @db.VarChar(255)
-
   value              String?           @db.VarChar(255)
   onlyReady          Boolean?          @default(false)
-  
   sequence           Int?
   is_required        Boolean           @default(false)
   is_active          Boolean           @default(true)
@@ -253,47 +241,18 @@ model EmailContent {
   @@map("email_contents")
 }
 
-model category {
-  id           Int           @id @default(autoincrement())
-  content      String?       @db.Text
-  eventId      Int?
-  created_at   DateTime?     @default(now())
-  updated_at   DateTime?     @updatedAt
-  EventAgendas EventAgenda[]
-  event        Event?        @relation(fields: [eventId], references: [id])
-  Captions     Caption[]
+model Category {
+  id          Int           @id @default(autoincrement())
+  content     String?       @db.Text
+  eventId     Int?
+  created_at  DateTime?     @default(now())
+  updated_at  DateTime?     @updatedAt
+  Captions    Caption[]
+  event       Event?        @relation(fields: [eventId], references: [id])
+  event_agenda eventagenda[]
 
   @@index([eventId], map: "categorys_eventId_fkey")
   @@map("categorys")
-}
-
-model EventAgenda {
-  id                       Int           @id @default(autoincrement())
-  is_active                Boolean       @default(true)
-  duration                 String?       @db.VarChar(255)
-  category_id              Int?
-  event_id                 Int?
-  has_download_certificate Boolean       @default(false)
-  is_paid                  Boolean       @default(false)
-  total_marks              Float         @default(0)
-  passing_points           Float?        @default(0)
-  has_pass_fail_page       Boolean       @default(false)
-  max_attempts             Int?          @default(0)
-  valid_from               DateTime?
-  valid_upto               DateTime?
-  created_at               DateTime      @default(now())
-  updated_at               DateTime      @updatedAt
-  category                 category?     @relation(fields: [category_id], references: [id])
-  event                    Event?        @relation(fields: [event_id], references: [id])
-  QuizResults              QuizResult[]
-  QuizTopics               QuizTopic[]
-  Tickets                  Tricket[]
-  UserCourses              UserCourse[]
-  User_Notes               User_Note[]
-  User_Tickets             User_Ticket[]
-
-  @@index([category_id], map: "EventAgenda_category_id_fkey")
-  @@index([event_id], map: "EventAgenda_event_id_fkey")
 }
 
 model QuizTopic {
@@ -307,7 +266,7 @@ model QuizTopic {
   event_agenda_id    Int?
   QuizAttemptResults QuizAttemptResult[]
   QuizQuestions      QuizQuestion[]
-  event_agenda       EventAgenda?        @relation(fields: [event_agenda_id], references: [id])
+  event_agenda       eventagenda?        @relation(fields: [event_agenda_id], references: [id])
 
   @@index([event_agenda_id], map: "quiz_topics_event_agenda_id_fkey")
   @@map("quiz_topics")
@@ -391,7 +350,7 @@ model QuizResult {
   created_at      DateTime     @default(now())
   updated_at      DateTime     @updatedAt
   event_agenda_id Int?
-  EventAgenda     EventAgenda? @relation(fields: [event_agenda_id], references: [id])
+  event_agenda     eventagenda? @relation(fields: [event_agenda_id], references: [id])
   QuizAttempt     QuizAttempt? @relation(fields: [quiz_attempt_id], references: [id])
   user            User?        @relation(fields: [user_id], references: [id])
 
@@ -402,12 +361,12 @@ model QuizResult {
 }
 
 model Caption {
-  id       Int     @id @default(autoincrement())
-  
-  title    String? @db.VarChar(255)
+  id          Int       @id @default(autoincrement())
+  title       String?   @db.VarChar(255)
   category_id Int?
-  categorys    category?  @relation(fields: [category_id], references: [id])
+  categorys   Category? @relation(fields: [category_id], references: [id])
 
+  @@index([category_id], map: "captions_category_id_fkey")
   @@map("captions")
 }
 
@@ -445,7 +404,7 @@ model Tricket {
   created_at      DateTime      @default(now())
   updated_at      DateTime      @updatedAt
   event_agenda_id Int?
-  event_agenda    EventAgenda?  @relation(fields: [event_agenda_id], references: [id])
+  event_agenda    eventagenda?  @relation(fields: [event_agenda_id], references: [id])
   event           Event?        @relation(fields: [event_id], references: [id])
   User_Tickets    User_Ticket[]
 
@@ -463,7 +422,7 @@ model User_Note {
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
   event_agenda_id Int?
-  event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
+  event_agenda    eventagenda? @relation(fields: [event_agenda_id], references: [id])
 
   @@index([event_agenda_id], map: "user_notes_event_agenda_id_fkey")
   @@map("user_notes")
@@ -479,7 +438,7 @@ model User_Ticket {
   Tricket_id      Int?
   event_agenda_id Int?
   Tricket         Tricket?     @relation(fields: [Tricket_id], references: [id])
-  event_agenda    EventAgenda? @relation(fields: [event_agenda_id], references: [id])
+  event_agenda    eventagenda? @relation(fields: [event_agenda_id], references: [id])
 
   @@index([Tricket_id], map: "user_tickets_Tricket_id_fkey")
   @@index([event_agenda_id], map: "user_tickets_event_agenda_id_fkey")
@@ -495,8 +454,37 @@ model UserCourse {
   updatedAt       DateTime     @updatedAt
   feedback        String?
   certificateUrl  String?
-  EventAgenda     EventAgenda? @relation(fields: [event_agenda_id], references: [id])
+  event_agenda     eventagenda? @relation(fields: [event_agenda_id], references: [id])
 
   @@index([event_agenda_id], map: "user_courses_event_agenda_id_fkey")
   @@map("user_courses")
+}
+
+model eventagenda {
+  id                       Int           @id @default(autoincrement())
+  is_active                Boolean       @default(true)
+  duration                 String?       @db.VarChar(255)
+  category_id              Int?
+  event_id                 Int?
+  has_download_certificate Boolean       @default(false)
+  is_paid                  Boolean       @default(false)
+  total_marks              Float         @default(0)
+  passing_points           Float?        @default(0)
+  has_pass_fail_page       Boolean       @default(false)
+  max_attempts             Int?          @default(0)
+  valid_from               DateTime?
+  valid_upto               DateTime?
+  created_at               DateTime      @default(now())
+  updated_at               DateTime
+  categorys                Category?     @relation(fields: [category_id], references: [id], map: "EventAgenda_category_id_fkey")
+  events                   Event?        @relation(fields: [event_id], references: [id], map: "EventAgenda_event_id_fkey")
+  QuizResults              QuizResult[]
+  QuizTopics               QuizTopic[]
+  Tickets                  Tricket[]
+  UserCourses              UserCourse[]
+  User_Notes               User_Note[]
+  User_Tickets             User_Ticket[]
+
+  @@index([category_id], map: "EventAgenda_category_id_fkey")
+  @@index([event_id], map: "EventAgenda_event_id_fkey")
 }
