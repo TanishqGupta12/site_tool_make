@@ -431,6 +431,8 @@ const LICENSE_KEY =
 					</div>
 				</div>
 				<div className="editor_container__word-count" ref={editorWordCountRef}></div>
+              {/* Hidden input for form submission */}
+        <input type="hidden" name={name} value={dataText} />
 			</div>
 		</div>
 	);
