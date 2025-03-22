@@ -254,7 +254,7 @@ const options: NextAdminOptions = {
       },
     },
     Caption: {
-      toString: (caption) => `(${caption.id.toString()} ${caption?.title.toString()})  `,
+      toString: (agenda) => `(${agenda.id.toString()})  `,
       title: "Caption",
       icon: "BoldIcon",
       edit: {

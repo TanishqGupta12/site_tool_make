@@ -45,7 +45,7 @@ model Event {
   hideTeacherPage                          Boolean?       @default(false)
   EventAgendas                             EventAgenda[]
 
-  category                                 Category[]
+  category                                 category[]
   contact                                  contact[]
   Discounts                                Discount[]
   email_content                            EmailContent[]
@@ -253,18 +253,18 @@ model EmailContent {
   @@map("email_contents")
 }
 
-model Category {
+model category {
   id           Int           @id @default(autoincrement())
   content      String?       @db.Text
   eventId      Int?
   created_at   DateTime?     @default(now())
   updated_at   DateTime?     @updatedAt
-  event        Event?        @relation(fields: [eventId], references: [id])
   EventAgendas EventAgenda[]
-  Captions     Caption[]     @relation("CategoryCaptions")
+  event        Event?        @relation(fields: [eventId], references: [id])
+  Captions     Caption[]
 
-  @@index([eventId], map: "category_eventId_fkey")
-  @@map("categories")
+  @@index([eventId], map: "categorys_eventId_fkey")
+  @@map("categorys")
 }
 
 model EventAgenda {
@@ -283,7 +283,7 @@ model EventAgenda {
   valid_upto               DateTime?
   created_at               DateTime      @default(now())
   updated_at               DateTime      @updatedAt
-  category                 Category?     @relation(fields: [category_id], references: [id])
+  category                 category?     @relation(fields: [category_id], references: [id])
   event                    Event?        @relation(fields: [event_id], references: [id])
   QuizResults              QuizResult[]
   QuizTopics               QuizTopic[]
@@ -402,10 +402,11 @@ model QuizResult {
 }
 
 model Caption {
-  id          Int      @id @default(autoincrement())
-  title       String?  @db.VarChar(255)
-  categoryId  Int?
-  category    Category? @relation("CategoryCaptions", fields: [categoryId], references: [id])
+  id       Int     @id @default(autoincrement())
+  
+  title    String? @db.VarChar(255)
+  category_id Int?
+  categorys    category?  @relation(fields: [category_id], references: [id])
 
   @@map("captions")
 }
