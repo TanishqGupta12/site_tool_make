@@ -37,8 +37,12 @@ const options: NextAdminOptions = {
         // ],
         fields: {
           termsAndConditions: {
-            format: "richtext-html",
-            input: <CustomEditor  name="termsAndConditions" disabled={false} required={true} />,
+            input: 
+              <CustomEditor
+                name="termsAndConditions"
+                disabled={false}
+                required={true}
+              />
           },
           name: {
             
