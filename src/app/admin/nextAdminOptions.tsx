@@ -74,6 +74,9 @@ const options: NextAdminOptions = {
           },
         },
       },
+      styles: {
+        _form: "",
+      },
     },
     User: {
       toString: (user) => `(${user.id})  (${user.email}) `,
